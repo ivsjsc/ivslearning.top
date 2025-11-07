@@ -270,17 +270,20 @@
             <!-- Logo và Tên Trang -->
             <div class="flex items-center space-x-3">
                 <img alt="IVS Logo" class="h-8 w-auto" src="/images/logo/logo.svg" onerror="this.onerror=null;this.src='https://placehold.co/32x32/4c5ef7/ffffff?text=IVS';"/>
-                <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-ivs-blue to-ivs-cyan">
-                    IVS Learning Hub
-                </span>
+                <div class="flex flex-col">
+                    <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-ivs-blue to-ivs-cyan">
+                        IVS Learning Hub
+                    </span>
+                    <span class="text-xs text-ivs-text-secondary hidden sm:inline">Cổng học tập & ứng dụng</span>
+                </div>
             </div>
             
             <!-- Menu và Trạng thái Auth (Dành cho Desktop) -->
             <nav class="hidden lg:flex items-center space-x-6">
-                <a href="live_index.html" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors font-medium">Giới Thiệu IVS JSC</a>
-                <a href="#applications" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors font-medium">Ứng Dụng Học Tập</a>
-                <a href="learning-resources.html" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors font-medium">Tài Nguyên EdTech</a>
-                <a href="analytics.html" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors font-medium">Thống Kê (Admin)</a>
+                <a href="live_index.html" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors font-medium text-sm">Giới Thiệu IVS JSC</a>
+                <a href="#applications" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors font-medium text-sm">Ứng Dụng Học Tập</a>
+                <a href="learning-resources.html" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors font-medium text-sm">Tài Nguyên EdTech</a>
+                <a href="analytics.html" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors font-medium text-sm">Thống Kê (Admin)</a>
                 <!-- Nút Đăng nhập / Dashboard (Sẽ được cập nhật bằng JS) -->
                 <div id="auth-status-container" class="flex items-center">
                     <div class="loading-spinner w-6 h-6 border-2 border-ivs-cyan border-t-transparent rounded-full animate-spin"></div>
@@ -291,6 +294,10 @@
             <button id="mobile-menu-toggle" class="lg:hidden text-ivs-text-primary p-2 rounded-lg hover:bg-ivs-border transition-colors" aria-label="Mở menu">
                 <i class="fas fa-bars text-xl"></i>
             </button>
+        </div>
+        <!-- Breadcrumb on Secondary Pages -->
+        <div id="breadcrumb-container" class="hidden container mx-auto px-4 sm:px-6 lg:px-8 text-xs text-ivs-text-secondary py-2 border-t ivs-border">
+            <!-- Breadcrumb will be injected here for Pages/* -->
         </div>
     </header>
 
@@ -469,10 +476,72 @@
 
     </main>
 
-    <!-- Footer Placeholder (Sẽ được load bởi loadComponents.js) -->
-    <footer class="bg-ivs-bg border-t ivs-border py-12" id="footer-placeholder">
-        <div class="container mx-auto px-4 text-center text-ivs-text-secondary text-sm">
-            <p>&copy; 2025 IVS JSC. Hệ sinh thái Giáo dục, Công nghệ & Nhân lực.</p>
+    <!-- Footer with Links & Social -->
+    <footer class="bg-ivs-card border-t ivs-border">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <!-- Column 1: About -->
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">IVS Learning Hub</h3>
+                    <p class="text-ivs-text-secondary text-sm leading-relaxed">
+                        Cổng tập trung các ứng dụng học tập, công cụ quản lý và dịch vụ giáo dục toàn diện từ IVS JSC.
+                    </p>
+                </div>
+
+                <!-- Column 2: Quick Links -->
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">Truy cập nhanh</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors">Learning Hub</a></li>
+                        <li><a href="/auth.html" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors">Đăng nhập</a></li>
+                        <li><a href="learning-resources.html" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors">Tài nguyên</a></li>
+                        <li><a href="/Pages/webdesign.html" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors">Dịch vụ Web</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Services -->
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">Dịch vụ</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="live_index.html" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors">Về IVS JSC</a></li>
+                        <li><a href="/Pages/ivscelestech.html" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors">Celestech</a></li>
+                        <li><a href="/Pages/ivs-academy.html" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors">Academy</a></li>
+                        <li><a href="/analytics.html" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors">Admin</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Contact & Social -->
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">Kết nối</h3>
+                    <p class="text-ivs-text-secondary text-sm mb-4">
+                        Liên hệ chúng tôi để biết thêm thông tin về các ứng dụng và dịch vụ.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-ivs-cyan hover:text-white transition-colors text-lg" aria-label="Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-ivs-cyan hover:text-white transition-colors text-lg" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-ivs-cyan hover:text-white transition-colors text-lg" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="text-ivs-cyan hover:text-white transition-colors text-lg" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="border-t ivs-border pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-ivs-text-secondary">
+                <p>&copy; 2025 IVS JSC. Hệ sinh thái Giáo dục, Công nghệ & Nhân lực.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-ivs-cyan transition-colors">Chính sách riêng tư</a>
+                    <a href="#" class="hover:text-ivs-cyan transition-colors">Điều khoản sử dụng</a>
+                    <a href="#" class="hover:text-ivs-cyan transition-colors">Liên hệ</a>
+                </div>
+            </div>
         </div>
     </footer>
     
