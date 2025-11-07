@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html class="dark scroll-smooth" lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>IVS Learning Hub - Trung Tâm Học Tập & Ứng Dụng IVS JSC</title>
+    <!-- SEO Meta Tags -->
+    <meta content="Truy cập IVS Learning Hub - Cổng vào hệ sinh thái giáo dục, công nghệ và các ứng dụng học tập tương tác của IVS JSC. Đồng bộ tài khoản Firebase." name="description"/>
+    <meta content="IVS Learning Hub, IVS JSC, EdTech, Ứng dụng Giáo dục, Hệ sinh thái IVS, Firebase Auth" name="keywords"/>
+    <link href="/images/logo/logo.svg" rel="icon" type="image/svg+xml"/>
+    
+    <!-- Fonts, Tailwind CSS & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="css/tailwind.css" rel="stylesheet"/>
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Firebase CDN Initialization for Global Access (v10.7.1 theo file auth.html) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+
+
+        // Cấu hình Firebase (Lấy từ ivslearning.top/js/firebase.js)
+        const firebaseConfig = {
+            apiKey: "AIzaSyAOxCF0PhA6s3DtvETux-kXGTXRTlpL4vs",
+            authDomain: "ivs-159a7.firebaseapp.com",
+            projectId: "ivs-159a7",
+            storageBucket: "ivs-159a7.firebasestorage.app",
+            messagingSenderId: "452959273724",
+            appId: "1:452959273724:web:17a23e383fb1807c040d79",
+            measurementId: "G-L4KG7BCTJE"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const analytics = getAnalytics(app);
+
+        window.firebaseApp = app;
+        window.firebaseAuth = auth;
+        window.firebaseDB = db;
+        window.firebaseAnalytics = analytics;
+        
+        // Theo dõi trạng thái đăng nhập và cập nhật UI (Cần thiết cho Trang chủ)
+        onAuthStateChanged(auth, (user) => {
+            const authContainer = document.getElementById('auth-status-container');
+            if (authContainer) {
+                if (user) {
+                    // Đã đăng nhập
+                    authContainer.innerHTML = `
+                        <a href="dashboard.html" class="bg-ivs-green text-white px-4 py-2 rounded-full font-semibold hover:bg-green-600 transition-colors flex items-center shadow-lg">
+                            <i class="fas fa-user-circle mr-2"></i> Dashboard (${user.email})
+                        </a>
+                        <button id="logout-btn" class="bg-ivs-red text-white px-4 py-2 rounded-full font-semibold hover:bg-red-600 transition-colors ml-3 shadow-lg">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    `;
+                    document.getElementById('logout-btn').addEventListener('click', async () => {
+                        try {
+                            await auth.signOut();
+                            window.location.reload(); // Tải lại trang sau khi đăng xuất
+                        } catch (error) {
+                            console.error("Lỗi đăng xuất:", error);
+                        }
+                    });
+                } else {
+                    // Chưa đăng nhập
+                    authContainer.innerHTML = `
+                        <a href="auth.html" class="bg-ivs-blue text-white px-6 py-3 rounded-full font-bold hover:bg-blue-600 transition-colors transform hover:scale-105 shadow-xl">
+                            <i class="fas fa-sign-in-alt mr-2"></i> Đăng nhập / Đăng ký
+                        </a>
+                    `;
+                }
+            }
+        });
+
+        // Hằng số màu sắc (Dựa trên live_index.html)
+        const IVS_COLORS = {
+            'ivs-bg': '#1a1a1a',
+            'ivs-card': '#111111',
+            'ivs-border': '#27272A',
+            'ivs-blue': '#4c5ef7',
+            'ivs-green': '#10b981', // Thay thế màu xanh lá cây đậm hơn
+            'ivs-cyan': '#22d3ee',
+            'ivs-orange': '#f97316',
+            'ivs-purple': '#8b5cf6',
+            'ivs-red': '#ef4444',
+            'ivs-text-primary': '#f4f4f5',
+            'ivs-text-secondary': '#a1a1aa'
+        };
+
+        // Thiết lập biến CSS cho Tailwind JIT/Custom Styles
+        document.documentElement.style.setProperty('--ivs-bg', IVS_COLORS['ivs-bg']);
+        document.documentElement.style.setProperty('--ivs-card', IVS_COLORS['ivs-card']);
+        document.documentElement.style.setProperty('--ivs-border', IVS_COLORS['ivs-border']);
+        document.documentElement.style.setProperty('--ivs-blue', IVS_COLORS['ivs-blue']);
+        document.documentElement.style.setProperty('--ivs-green', IVS_COLORS['ivs-green']);
+        document.documentElement.style.setProperty('--ivs-cyan', IVS_COLORS['ivs-cyan']);
+        document.documentElement.style.setProperty('--ivs-orange', IVS_COLORS['ivs-orange']);
+        document.documentElement.style.setProperty('--ivs-purple', IVS_COLORS['ivs-purple']);
+    </script>
+
+    <style>
+        body { 
+            background-color: var(--ivs-bg); 
+            color: var(--ivs-text-primary); 
+            font-family: 'Be Vietnam Pro', sans-serif;
+        }
+        .ivs-card { background: var(--ivs-card); border: 1px solid var(--ivs-border); }
+        .ivs-border { border-color: var(--ivs-border); }
+        .text-ivs-blue { color: var(--ivs-blue); }
+        .text-ivs-green { color: var(--ivs-green); }
+        .bg-ivs-blue { background-color: var(--ivs-blue); }
+        .bg-ivs-green { background-color: var(--ivs-green); }
+        .bg-ivs-red { background-color: var(--ivs-red); }
+        .btn-primary { 
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .app-card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(76, 94, 247, 0.3); /* Shadow xanh dương */
+        }
+        .hero-banner {
+            background-image: url('https://placehold.co/1920x800/101010/8B5CF6?text=IVS+Learning+Hub');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-ivs-bg text-ivs-text-primary antialiased">
+
+    <!-- Header (Simple Fixed Header) -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-ivs-card/90 backdrop-blur-md border-b ivs-border">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+            <!-- Logo và Tên Trang -->
+            <div class="flex items-center space-x-3">
+                <img alt="IVS Logo" class="h-8 w-auto" src="/images/logo/logo.svg" onerror="this.onerror=null;this.src='https://placehold.co/32x32/4c5ef7/ffffff?text=IVS';"/>
+                <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-ivs-blue to-ivs-cyan">
+                    IVS Learning Hub
+                </span>
+            </div>
+            
+            <!-- Menu và Trạng thái Auth -->
+            <nav class="hidden lg:flex items-center space-x-6">
+                <a href="live_index.html" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors font-medium">Giới Thiệu IVS JSC</a>
+                <a href="#applications" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors font-medium">Ứng Dụng Học Tập</a>
+                <a href="analytics.html" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors font-medium">Thống Kê (Admin)</a>
+            </nav>
+
+            <!-- Nút Đăng nhập / Dashboard (Sẽ được cập nhật bằng JS) -->
+            <div id="auth-status-container" class="flex items-center">
+                <div class="loading-spinner w-6 h-6 border-2 border-ivs-cyan border-t-transparent rounded-full animate-spin"></div>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="lg:hidden text-ivs-text-primary p-2 rounded-lg hover:bg-ivs-border transition-colors">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="pt-16">
+        <!-- SECTION 1: HERO - TRUNG TÂM HỌC TẬP -->
+        <section class="hero-banner relative min-h-[70vh] flex items-center justify-center text-center p-8 border-b ivs-border">
+            <div class="absolute inset-0 bg-black/70"></div>
+            <div class="relative max-w-4xl mx-auto z-10" data-aos="fade-up">
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-4">
+                    <span class="block text-ivs-green text-3xl font-semibold mb-2">CHÀO MỪNG ĐẾN VỚI</span> 
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-ivs-blue to-ivs-cyan">IVS Learning Hub</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-ivs-text-secondary mb-8 leading-relaxed">
+                    Cổng thống nhất truy cập toàn bộ hệ sinh thái giáo dục, công nghệ và các ứng dụng học tập tương tác của IVS JSC.
+                </p>
+                <div id="hero-auth-cta" class="flex justify-center">
+                    <!-- Nút Auth sẽ được chèn ở đây qua JS trong auth-status-container -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: GIỚI THIỆU HỆ SINH THÁI -->
+        <section class="py-16 bg-ivs-card" id="about-ecosystem">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-12" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-ivs-orange mb-4">IVS JSC: Integrate - Vision - Synergy</h2>
+                    <p class="text-lg text-ivs-text-secondary">
+                        Hệ sinh thái IVS là sự kết hợp đồng bộ giữa **Giáo dục (Academy)**, **Công nghệ (Celestech)** và **Tư vấn Chiến lược (Consulting)**, tất cả đều được hỗ trợ bởi nền tảng công nghệ mạnh mẽ.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <!-- Card 1: Education -->
+                    <div class="p-6 ivs-card rounded-xl app-card-hover border-l-4 border-ivs-green" data-aos="fade-up" data-aos-delay="100">
+                        <i class="fas fa-book-open text-5xl text-ivs-green mb-4"></i>
+                        <h3 class="text-xl font-bold text-white mb-2">Giáo Dục (Academy)</h3>
+                        <p class="text-ivs-text-secondary text-sm">Cung cấp chương trình liên kết ngoại ngữ, STEM và kỹ năng sống chất lượng cao.</p>
+                    </div>
+                    <!-- Card 2: Technology -->
+                    <div class="p-6 ivs-card rounded-xl app-card-hover border-l-4 border-ivs-cyan" data-aos="fade-up" data-aos-delay="200">
+                        <i class="fas fa-robot text-5xl text-ivs-cyan mb-4"></i>
+                        <h3 class="text-xl font-bold text-white mb-2">Công Nghệ (Celestech)</h3>
+                        <p class="text-ivs-text-secondary text-sm">Thiết kế Web/App, giải pháp chuyển đổi số và cung cấp thiết bị công nghệ.</p>
+                    </div>
+                    <!-- Card 3: Consulting -->
+                    <div class="p-6 ivs-card rounded-xl app-card-hover border-l-4 border-ivs-blue" data-aos="fade-up" data-aos-delay="300">
+                        <i class="fas fa-chart-line text-5xl text-ivs-blue mb-4"></i>
+                        <h3 class="text-xl font-bold text-white mb-2">Tư Vấn (Consulting)</h3>
+                        <p class="text-ivs-text-secondary text-sm">Tư vấn chiến lược nhân sự, tài chính, pháp lý và tối ưu hóa vận hành doanh nghiệp.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: CỔNG ỨNG DỤNG HỌC TẬP (Learning Applications Portal) -->
+        <section class="py-16 bg-ivs-bg" id="applications">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-4xl mx-auto mb-12" data-aos="fade-up">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                        <i class="fas fa-cubes text-ivs-purple mr-2"></i> Ứng Dụng Học Tập Chuyên Môn
+                    </h2>
+                    <p class="text-xl text-ivs-text-secondary">
+                        Các nền tảng được thiết kế riêng, hỗ trợ giáo dục đào tạo ở mọi cấp độ. **Tài khoản của bạn sẽ được đồng bộ** khi truy cập.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- App Card 1: IVS English Learners -->
+                    <div class="ivs-card p-6 rounded-xl app-card-hover flex flex-col justify-between border-b-4 border-ivs-green" data-aos="fade-up" data-aos-delay="100">
+                        <div>
+                            <i class="fas fa-book-reader text-4xl text-ivs-green mb-3"></i>
+                            <h3 class="text-2xl font-bold text-white mb-2">IVS English Learners</h3>
+                            <p class="text-ivs-text-secondary mb-4">Nền tảng học Tiếng Anh tích hợp Sách điện tử, Luyện tập AI và hệ thống gamification.</p>
+                        </div>
+                        <a href="https://ivseng.web.app" target="_blank" rel="noopener noreferrer" class="btn-primary bg-ivs-green text-white px-5 py-2 rounded-lg font-semibold text-center hover:bg-green-600 transition-colors mt-4">
+                            Truy Cập Ứng Dụng <i class="fas fa-external-link-alt ml-2"></i>
+                        </a>
+                    </div>
+
+                    <!-- App Card 2: IVS Testing & Placement -->
+                    <div class="ivs-card p-6 rounded-xl app-card-hover flex flex-col justify-between border-b-4 border-ivs-blue" data-aos="fade-up" data-aos-delay="200">
+                        <div>
+                            <i class="fas fa-clipboard-check text-4xl text-ivs-blue mb-3"></i>
+                            <h3 class="text-2xl font-bold text-white mb-2">IVS Testing & Placement</h3>
+                            <p class="text-ivs-text-secondary mb-4">Hệ thống kiểm tra, đánh giá và xếp lớp trình độ ngoại ngữ chính xác cho học viên.</p>
+                        </div>
+                        <a href="https://testplacement.web.app/" target="_blank" rel="noopener noreferrer" class="btn-primary bg-ivs-blue text-white px-5 py-2 rounded-lg font-semibold text-center hover:bg-blue-600 transition-colors mt-4">
+                            Truy Cập Ứng Dụng <i class="fas fa-external-link-alt ml-2"></i>
+                        </a>
+                    </div>
+
+                    <!-- App Card 3: IVS Kinderlink -->
+                    <div class="ivs-card p-6 rounded-xl app-card-hover flex flex-col justify-between border-b-4 border-ivs-purple" data-aos="fade-up" data-aos-delay="300">
+                        <div>
+                            <i class="fas fa-child text-4xl text-ivs-purple mb-3"></i>
+                            <h3 class="text-2xl font-bold text-white mb-2">IVS Kinderlink</h3>
+                            <p class="text-ivs-text-secondary mb-4">Ứng dụng quản lý trường mầm non, kết nối nhà trường và phụ huynh hiệu quả.</p>
+                        </div>
+                        <a href="https://ivs-7221b.web.app/" target="_blank" rel="noopener noreferrer" class="btn-primary bg-ivs-purple text-white px-5 py-2 rounded-lg font-semibold text-center hover:bg-purple-600 transition-colors mt-4">
+                            Truy Cập Ứng Dụng <i class="fas fa-external-link-alt ml-2"></i>
+                        </a>
+                    </div>
+
+                    <!-- App Card 4: Xem thêm Ứng dụng -->
+                    <a href="#more-apps" class="ivs-card p-6 rounded-xl app-card-hover flex flex-col items-center justify-center text-center border-b-4 border-ivs-orange" data-aos="fade-up" data-aos-delay="400">
+                        <i class="fas fa-shapes text-5xl text-ivs-orange mb-4"></i>
+                        <h3 class="text-xl font-bold text-white mb-2">Và nhiều ứng dụng khác!</h3>
+                        <p class="text-ivs-text-secondary mb-4">Khám phá các nền tảng Quản lý, Games và App khác được phát triển bởi IVS Celestech.</p>
+                        <button class="bg-ivs-orange text-white px-5 py-2 rounded-lg font-semibold hover:bg-orange-600 transition-colors mt-4">
+                            Xem Danh Sách Đầy Đủ
+                        </button>
+                    </a>
+                </div>
+                
+                <div class="text-center mt-12 pt-8 border-t ivs-border max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="500">
+                    <p class="text-lg text-ivs-text-secondary italic">
+                        <i class="fas fa-info-circle text-ivs-cyan mr-2"></i> Lưu ý: Để có trải nghiệm đồng bộ tài khoản (SSO) tốt nhất, vui lòng đăng nhập trước khi truy cập các ứng dụng.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: CALL TO ACTION - Dịch vụ Tùy chỉnh -->
+        <section class="py-16 bg-ivs-card border-t ivs-border">
+            <div class="container mx-auto px-6 lg:px-8 text-center" data-aos="zoom-in">
+                <h2 class="text-3xl lg:text-5xl font-bold text-white mb-4">
+                    Cần Ứng Dụng Chuyên Biệt?
+                </h2>
+                <p class="text-xl text-ivs-text-secondary max-w-4xl mx-auto mb-8">
+                    Đội ngũ IVS Celestech sẵn sàng phát triển các giải pháp Web/App Quản lý, Giáo dục theo yêu cầu riêng của bạn.
+                </p>
+                <a href="Pages/webdesign.html" class="inline-block bg-ivs-cyan hover:bg-cyan-600 text-white font-bold py-4 px-10 rounded-full text-lg transition-all transform hover:scale-105 shadow-xl shadow-cyan-500/40 btn-primary">
+                    <i class="fas fa-code mr-2"></i> Yêu Cầu Phát Triển Tùy Chỉnh
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Placeholder (Sẽ được load bởi loadComponents.js) -->
+    <footer class="bg-ivs-bg border-t ivs-border py-12" id="footer-placeholder">
+        <div class="container mx-auto px-4 text-center text-ivs-text-secondary text-sm">
+            <p>&copy; 2025 IVS JSC. Hệ sinh thái Giáo dục, Công nghệ & Nhân lực.</p>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <script defer="" src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Khởi tạo AOS
+            if (typeof AOS !== 'undefined') {
+                AOS.init({
+                    duration: 800,
+                    once: true,
+                    offset: 50,
+                    easing: 'ease-out-quad',
+                });
+            }
+            
+            // Logic Smooth Scroll (Lấy từ live_index.html)
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        const headerOffset = 70; 
+                        const elementPosition = target.getBoundingClientRect().top;
+                        const offsetPosition = window.pageYOffset + elementPosition - headerOffset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Tải logic Firebase Auth Controller (Mặc dù logic auth cơ bản đã nằm trong module script phía trên)
+            // Tải các script khác (utils, language, loadComponents)
+            const scriptFiles = [
+                "js/utils.js",
+                "js/language.js",
+                "ai/js/loadComponents.js"
+            ];
+
+            scriptFiles.forEach(src => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.defer = true;
+                document.body.appendChild(script);
+            });
+        });
+    </script>
+</body>
+</html>
