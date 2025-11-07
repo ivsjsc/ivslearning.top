@@ -22,6 +22,12 @@ Tài liệu này tổng hợp tất cả thông tin về IVS Learning Hub.
 | **[SUMMARY.md](./SUMMARY.md)** | 📊 Tóm tắt thực hiện | 10 mins |
 | **[CHECKLIST.md](./CHECKLIST.md)** | ✅ Danh sách kiểm tra | 5 mins |
 | **[functions/README.md](./functions/README.md)** | ☁️ Cloud Functions | 15 mins |
+| **[EXECUTIVE_SUMMARY.md](./EXECUTIVE_SUMMARY.md)** | 🎯 Business Strategy | 20 mins |
+| **[PORTAL_ARCHITECTURE_STRATEGY.md](./PORTAL_ARCHITECTURE_STRATEGY.md)** | 🏗️ Portal Design | 45 mins |
+| **[UI_UX_COMPONENT_SPECS.md](./UI_UX_COMPONENT_SPECS.md)** | 🎨 Design System | 40 mins |
+| **[IMPLEMENTATION_ROADMAP.md](./IMPLEMENTATION_ROADMAP.md)** | 📊 Dev Timeline | 30 mins |
+| **[QUICK_REFERENCE_GUIDE.md](./QUICK_REFERENCE_GUIDE.md)** | ⚡ Dev Reference | 10 mins |
+| **[RESEARCH_LEARNING_PLATFORMS.md](./RESEARCH_LEARNING_PLATFORMS.md)** | 📚 Platform Research | 30 mins |
 
 ---
 

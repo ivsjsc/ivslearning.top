@@ -17,12 +17,12 @@
     <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    <!-- Firebase CDN Initialization for Global Access (v10.7.1 theo file auth.html) -->
+    <!-- Firebase CDN Initialization for Global Access (v12.5.0) -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
 
 
         // Cấu hình Firebase (Lấy từ ivslearning.top/js/firebase.js)
@@ -50,53 +50,85 @@
         onAuthStateChanged(auth, (user) => {
             const authContainer = document.getElementById('auth-status-container');
             const heroAuthCta = document.getElementById('hero-auth-cta');
+            
+            // Hàm tạo nút Dashboard/Logout cho Header
+            function createHeaderAuth(user) {
+                const emailPart = user.email.split('@')[0];
+                return `
+                    <div class="dropdown relative">
+                        <a href="dashboard.html" class="bg-ivs-green text-white px-4 py-2 rounded-full font-semibold hover:bg-green-600 transition-colors flex items-center shadow-lg">
+                            <i class="fas fa-user-circle mr-2"></i> ${emailPart}
+                        </a>
+                        <button id="logout-btn-header" class="bg-ivs-red text-white px-4 py-2 rounded-full font-semibold hover:bg-red-600 transition-colors ml-3 shadow-lg">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
+                `;
+            }
+
+            // Hàm tạo nút Đăng nhập/Đăng ký cho Header
+            function createHeaderLogin() {
+                 return `
+                    <a href="auth.html" class="bg-ivs-blue text-white px-4 py-2 rounded-full font-bold hover:bg-blue-600 transition-colors transform hover:scale-105 shadow-xl btn-glow text-sm">
+                        <i class="fas fa-sign-in-alt mr-2"></i> Đăng nhập / Đăng ký
+                    </a>
+                `;
+            }
+
             if (authContainer) {
                 if (user) {
                     // Đã đăng nhập
-                    const dashboardBtn = `
-                        <a href="dashboard.html" class="bg-ivs-green text-white px-4 py-2 rounded-full font-semibold hover:bg-green-600 transition-colors flex items-center shadow-lg">
-                            <i class="fas fa-user-circle mr-2"></i> Dashboard (${user.email})
-                        </a>
-                    `;
-                    const logoutBtn = `
-                        <button id="logout-btn" class="bg-ivs-red text-white px-4 py-2 rounded-full font-semibold hover:bg-red-600 transition-colors ml-3 shadow-lg">
-                            <i class="fas fa-sign-out-alt"></i>
-                        </button>
-                    `;
-                    authContainer.innerHTML = dashboardBtn + logoutBtn;
+                    authContainer.innerHTML = createHeaderAuth(user);
                     
                     // Cập nhật CTA trong Hero Section
                     if (heroAuthCta) {
-                        heroAuthCta.innerHTML = `
-                            ${dashboardBtn.replace('px-4 py-2', 'px-8 py-4 text-xl')}
+                        const dashboardBtnLarge = `
+                            <a href="dashboard.html" class="bg-ivs-green text-white px-8 py-4 text-xl rounded-full font-semibold hover:bg-green-600 transition-colors flex items-center shadow-lg">
+                                <i class="fas fa-rocket mr-2"></i> Đi đến Dashboard
+                            </a>
                         `;
+                        heroAuthCta.innerHTML = dashboardBtnLarge;
                     }
 
-
-                    document.getElementById('logout-btn').addEventListener('click', async () => {
+                    // Logout listener
+                    document.getElementById('logout-btn-header')?.addEventListener('click', async () => {
                         try {
-                            await auth.signOut();
-                            window.location.reload(); // Tải lại trang sau khi đăng xuất
+                            await signOut(auth);
+                            window.location.reload(); 
                         } catch (error) {
                             console.error("Lỗi đăng xuất:", error);
                         }
                     });
                 } else {
                     // Chưa đăng nhập
-                    const loginBtn = `
-                        <a href="auth.html" class="bg-ivs-blue text-white px-6 py-3 rounded-full font-bold hover:bg-blue-600 transition-colors transform hover:scale-105 shadow-xl btn-glow">
-                            <i class="fas fa-sign-in-alt mr-2"></i> Đăng nhập / Đăng ký
-                        </a>
-                    `;
-                    authContainer.innerHTML = loginBtn.replace('px-6 py-3', 'px-4 py-2 text-sm'); // Nút header nhỏ hơn
+                    authContainer.innerHTML = createHeaderLogin();
                     
                     // Cập nhật CTA trong Hero Section
                     if (heroAuthCta) {
-                        heroAuthCta.innerHTML = `
-                            ${loginBtn.replace('px-6 py-3', 'px-8 py-4 text-xl')}
+                        const loginBtnLarge = `
+                            <a href="auth.html" class="bg-ivs-blue text-white px-8 py-4 text-xl rounded-full font-bold hover:bg-blue-600 transition-colors transform hover:scale-105 shadow-xl btn-glow">
+                                <i class="fas fa-sign-in-alt mr-2"></i> Bắt đầu học tập ngay
+                            </a>
                         `;
+                        heroAuthCta.innerHTML = loginBtnLarge;
                     }
                 }
+            }
+
+            // Đồng bộ trạng thái Auth cho Mobile
+            const authContainerMobile = document.getElementById('auth-status-container-mobile');
+            if (authContainerMobile) {
+                authContainerMobile.innerHTML = user ? createHeaderAuth(user) : createHeaderLogin();
+                
+                // Re-attach logout listener for mobile
+                document.getElementById('logout-btn-header')?.addEventListener('click', async () => {
+                    try {
+                        await signOut(auth);
+                        window.location.reload(); 
+                    } catch (error) {
+                        console.error("Lỗi đăng xuất:", error);
+                    }
+                });
             }
         });
 
@@ -240,6 +272,7 @@
             <nav class="hidden lg:flex items-center space-x-6">
                 <a href="live_index.html" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors font-medium">Giới Thiệu IVS JSC</a>
                 <a href="#applications" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors font-medium">Ứng Dụng Học Tập</a>
+                <a href="learning-resources.html" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors font-medium">Tài Nguyên EdTech</a>
                 <a href="analytics.html" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors font-medium">Thống Kê (Admin)</a>
                 <!-- Nút Đăng nhập / Dashboard (Sẽ được cập nhật bằng JS) -->
                 <div id="auth-status-container" class="flex items-center">
@@ -259,6 +292,7 @@
         <nav class="flex flex-col space-y-4">
             <a href="live_index.html" class="text-2xl text-ivs-text-primary hover:text-ivs-cyan transition-colors font-medium border-b ivs-border pb-2">Giới Thiệu IVS JSC</a>
             <a href="#applications" class="text-2xl text-ivs-text-primary hover:text-ivs-cyan transition-colors font-medium border-b ivs-border pb-2">Ứng Dụng Học Tập</a>
+            <a href="learning-resources.html" class="text-2xl text-ivs-text-primary hover:text-ivs-cyan transition-colors font-medium border-b ivs-border pb-2">Tài Nguyên EdTech</a>
             <a href="analytics.html" class="text-2xl text-ivs-text-primary hover:text-ivs-cyan transition-colors font-medium border-b ivs-border pb-2">Thống Kê (Admin)</a>
             <div id="auth-status-container-mobile" class="pt-4">
                 <!-- Nút Auth sẽ được chèn ở đây -->
@@ -522,7 +556,7 @@
                             });
                             
                             // Re-attach logout event listener for mobile
-                            const mobileLogoutBtn = authContainerMobile.querySelector('#logout-btn');
+                            const mobileLogoutBtn = authContainerMobile.querySelector('#logout-btn-header');
                             if (mobileLogoutBtn) {
                                 mobileLogoutBtn.addEventListener('click', async () => {
                                     const auth = window.firebaseAuth;
