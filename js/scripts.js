@@ -82,5 +82,3 @@ if (document.readyState === 'loading') {
 } else {
   window.scriptManager = new ScriptManager();
 }
-
-export { ScriptManager };

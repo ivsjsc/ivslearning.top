@@ -71,5 +71,3 @@ if (document.readyState === 'loading') {
 } else {
   window.componentLoader = new ComponentLoader();
 }
-
-export { ComponentLoader };
