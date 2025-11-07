@@ -59,7 +59,7 @@
                         <a href="dashboard.html" class="bg-ivs-green text-white px-4 py-2 rounded-full font-semibold hover:bg-green-600 transition-colors flex items-center shadow-lg">
                             <i class="fas fa-user-circle mr-2"></i> ${emailPart}
                         </a>
-                        <button id="logout-btn-header" class="bg-ivs-red text-white px-4 py-2 rounded-full font-semibold hover:bg-red-600 transition-colors ml-3 shadow-lg">
+                        <button class="logout-btn-header-btn bg-ivs-red text-white px-4 py-2 rounded-full font-semibold hover:bg-red-600 transition-colors ml-3 shadow-lg">
                             <i class="fas fa-sign-out-alt"></i>
                         </button>
                     </div>
@@ -91,13 +91,16 @@
                     }
 
                     // Logout listener
-                    document.getElementById('logout-btn-header')?.addEventListener('click', async () => {
-                        try {
-                            await signOut(auth);
-                            window.location.reload(); 
-                        } catch (error) {
-                            console.error("Lỗi đăng xuất:", error);
-                        }
+                    const logoutBtns = authContainer.querySelectorAll('.logout-btn-header-btn');
+                    logoutBtns.forEach(btn => {
+                        btn.addEventListener('click', async () => {
+                            try {
+                                await signOut(auth);
+                                window.location.reload(); 
+                            } catch (error) {
+                                console.error("Lỗi đăng xuất:", error);
+                            }
+                        });
                     });
                 } else {
                     // Chưa đăng nhập
@@ -120,14 +123,17 @@
             if (authContainerMobile) {
                 authContainerMobile.innerHTML = user ? createHeaderAuth(user) : createHeaderLogin();
                 
-                // Re-attach logout listener for mobile
-                document.getElementById('logout-btn-header')?.addEventListener('click', async () => {
-                    try {
-                        await signOut(auth);
-                        window.location.reload(); 
-                    } catch (error) {
-                        console.error("Lỗi đăng xuất:", error);
-                    }
+                // Re-attach logout listeners for mobile
+                const logoutBtnsMobile = authContainerMobile.querySelectorAll('.logout-btn-header-btn');
+                logoutBtnsMobile.forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        try {
+                            await signOut(auth);
+                            window.location.reload(); 
+                        } catch (error) {
+                            console.error("Lỗi đăng xuất:", error);
+                        }
+                    });
                 });
             }
         });
@@ -175,7 +181,8 @@
 
         /* HERO SECTION */
         .hero-banner {
-            background-image: linear-gradient(rgba(26, 26, 26, 0.85), rgba(26, 26, 26, 0.85)), url('https://placehold.co/1920x800/101010/8B5CF6?text=IVS+Learning+Hub'); /* Ảnh nền mờ */
+            background: linear-gradient(135deg, rgba(76, 94, 247, 0.15) 0%, rgba(22, 163, 74, 0.1) 50%, rgba(34, 211, 238, 0.15) 100%), linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+            background-attachment: fixed;
             background-size: cover;
             background-position: center;
             position: relative;
@@ -281,14 +288,17 @@
             </nav>
 
             <!-- Mobile Menu Toggle -->
-            <button class="lg:hidden text-ivs-text-primary p-2 rounded-lg hover:bg-ivs-border transition-colors">
+            <button id="mobile-menu-toggle" class="lg:hidden text-ivs-text-primary p-2 rounded-lg hover:bg-ivs-border transition-colors" aria-label="Mở menu">
                 <i class="fas fa-bars text-xl"></i>
             </button>
         </div>
     </header>
 
-    <!-- Mobile Menu Overlay (Placeholder for future implementation) -->
-    <div id="mobile-menu-overlay" class="fixed inset-0 bg-ivs-bg/95 backdrop-blur-md z-40 hidden lg:hidden p-8 pt-20">
+    <!-- Mobile Menu Overlay (With Close Button & Accessibility) -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-ivs-bg/95 backdrop-blur-md z-40 hidden lg:hidden p-8 pt-20" role="navigation" aria-label="Mobile Menu">
+        <button id="mobile-menu-close" class="fixed top-4 right-4 text-ivs-text-primary p-2 rounded-lg hover:bg-ivs-border transition-colors z-50" aria-label="Đóng menu">
+            <i class="fas fa-times text-2xl"></i>
+        </button>
         <nav class="flex flex-col space-y-4">
             <a href="live_index.html" class="text-2xl text-ivs-text-primary hover:text-ivs-cyan transition-colors font-medium border-b ivs-border pb-2">Giới Thiệu IVS JSC</a>
             <a href="#applications" class="text-2xl text-ivs-text-primary hover:text-ivs-cyan transition-colors font-medium border-b ivs-border pb-2">Ứng Dụng Học Tập</a>
@@ -451,7 +461,7 @@
                 <p class="text-xl text-ivs-text-secondary max-w-4xl mx-auto mb-8">
                     Đội ngũ **IVS Celestech** sẵn sàng phát triển các giải pháp Web/App Quản lý, Giáo dục theo yêu cầu riêng của bạn.
                 </p>
-                <a href="Pages/webdesign.html" class="inline-block bg-ivs-cyan hover:bg-cyan-600 text-white font-bold py-4 px-10 rounded-full text-xl transition-all transform hover:scale-105 shadow-xl shadow-cyan-500/40 btn-glow">
+                <a href="/Pages/webdesign.html" class="inline-block bg-ivs-cyan hover:bg-cyan-600 text-white font-bold py-4 px-10 rounded-full text-xl transition-all transform hover:scale-105 shadow-xl shadow-cyan-500/40 btn-glow">
                     <i class="fas fa-code mr-2"></i> Yêu Cầu Phát Triển Tùy Chỉnh
                 </a>
             </div>
@@ -513,66 +523,43 @@
                 document.body.appendChild(script);
             });
             
-            // Xử lý Mobile Menu (New Logic)
-            const mobileMenuToggle = document.querySelector('.lg\\:hidden:not(#auth-status-container-mobile button)');
+            // Xử lý Mobile Menu (Fixed Logic with Close Button)
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
             const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
 
-            if (mobileMenuToggle && mobileMenuOverlay) {
-                mobileMenuToggle.addEventListener('click', () => {
-                    const isHidden = mobileMenuOverlay.classList.contains('hidden');
-                    if (isHidden) {
-                        mobileMenuOverlay.classList.remove('hidden');
-                        document.body.style.overflow = 'hidden'; // Ngăn cuộn nền
-                    } else {
-                        mobileMenuOverlay.classList.add('hidden');
-                        document.body.style.overflow = '';
-                    }
-                });
-
-                // Đóng menu khi click vào link
-                mobileMenuOverlay.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', () => {
-                        mobileMenuOverlay.classList.add('hidden');
-                        document.body.style.overflow = '';
-                    });
-                });
+            function openMobileMenu() {
+                mobileMenuOverlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                mobileMenuOverlay.focus(); // Focus trap
             }
 
-            // Đồng bộ trạng thái Auth cho Mobile (Do JS trên không thể ghi vào 2 container cùng lúc)
-            const authContainer = document.getElementById('auth-status-container');
-            const authContainerMobile = document.getElementById('auth-status-container-mobile');
+            function closeMobileMenu() {
+                mobileMenuOverlay.classList.add('hidden');
+                document.body.style.overflow = '';
+                mobileMenuToggle?.focus(); // Restore focus
+            }
 
-            const observer = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    if (mutation.type === 'childList') {
-                        if (authContainer.innerHTML && authContainerMobile) {
-                            // Copy và điều chỉnh style cho mobile
-                            authContainerMobile.innerHTML = authContainer.innerHTML;
-                            
-                            // Điều chỉnh kích thước nút trên mobile
-                            authContainerMobile.querySelectorAll('a, button').forEach(el => {
-                                el.classList.remove('px-4', 'py-2', 'text-sm');
-                                el.classList.add('px-6', 'py-3', 'text-base', 'w-full', 'justify-center', 'mb-2');
-                            });
-                            
-                            // Re-attach logout event listener for mobile
-                            const mobileLogoutBtn = authContainerMobile.querySelector('#logout-btn-header');
-                            if (mobileLogoutBtn) {
-                                mobileLogoutBtn.addEventListener('click', async () => {
-                                    const auth = window.firebaseAuth;
-                                    if(auth) {
-                                        await auth.signOut();
-                                        window.location.reload(); 
-                                    }
-                                });
-                            }
-                        }
+            if (mobileMenuToggle) {
+                mobileMenuToggle.addEventListener('click', openMobileMenu);
+            }
+
+            if (mobileMenuClose) {
+                mobileMenuClose.addEventListener('click', closeMobileMenu);
+            }
+
+            // Đóng menu khi click vào link
+            if (mobileMenuOverlay) {
+                mobileMenuOverlay.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', closeMobileMenu);
+                });
+                
+                // Đóng khi nhấn Escape
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && !mobileMenuOverlay.classList.contains('hidden')) {
+                        closeMobileMenu();
                     }
                 });
-            });
-
-            if(authContainer) {
-                observer.observe(authContainer, { childList: true, subtree: true });
             }
         });
     </script>
