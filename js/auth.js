@@ -1,4 +1,4 @@
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js';
 
 document.addEventListener('DOMContentLoaded', function() {
     const auth = window.firebaseAuth;
@@ -62,9 +62,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Login
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 showMessage('Đăng nhập thành công!', 'success');
-                // Redirect or update UI
+                // Redirect to dashboard
                 setTimeout(() => {
-                    window.location.href = 'admin.html'; // or wherever
+                    window.location.href = 'dashboard.html';
                 }, 1000);
             } else {
                 // Register

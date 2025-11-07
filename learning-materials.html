@@ -26,9 +26,40 @@
     <script defer src="../js/language-init.js"></script>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/animations.css">
+    <!-- Firebase CDN v12.5.0 -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAOxCF0PhA6s3DtvETux-kXGTXRTlpL4vs",
+            authDomain: "ivs-159a7.firebaseapp.com",
+            projectId: "ivs-159a7",
+            storageBucket: "ivs-159a7.firebasestorage.app",
+            messagingSenderId: "452959273724",
+            appId: "1:452959273724:web:17a23e383fb1807c040d79",
+            measurementId: "G-L4KG7BCTJE"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth(app);
+
+        window.firebaseApp = app;
+        window.firebaseAuth = auth;
+        window.firebaseAnalytics = analytics;
+
+        // Initialize global auth listener
+        import('./app.js').then(module => {
+            module.initializeGlobalAuthListener();
+        });
+    </script>
 </head>
 <body class="bg-gray-100 text-gray-800 font-sans">
-    <div id="header-placeholder"></div>
+    <header id="header-placeholder">
+        <div id="header-auth" style="position: absolute; top: 20px; right: 20px;"></div>
+    </header>
 
     <main>
         <!-- Banner Section -->
@@ -307,7 +338,9 @@
             </div>
         </section>
     </main>
-    <div id="footer-placeholder"></div>
+    <footer id="footer-placeholder">
+        <div id="footer-auth" style="margin-top: 20px; text-align: center;"></div>
+    </footer>
     <div id="fab-container-placeholder"></div>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="../js/scripts.js"></script>
