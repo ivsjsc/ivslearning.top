@@ -49,72 +49,103 @@
         
         // Theo dõi trạng thái đăng nhập và cập nhật UI (Cần thiết cho Trang chủ)
         onAuthStateChanged(auth, (user) => {
-            const authContainer = document.getElementById('auth-status-container');
+            const headerAuthContainer = document.getElementById('header-auth-container');
+            const mobileAuthContainer = document.getElementById('mobile-auth-container');
             const heroAuthCta = document.getElementById('hero-auth-cta');
             
-            // Hàm tạo nút Dashboard/Logout cho Header
-            function createHeaderAuth(user) {
+            // Hàm tạo nút cho Logged-in User
+            function createUserAuthUI(user) {
                 const emailPart = user.email.split('@')[0];
-                return `
-                    <div class="dropdown relative">
-                        <a href="dashboard.html" class="bg-ivs-green text-white px-4 py-2 rounded-full font-semibold hover:bg-green-600 transition-colors flex items-center shadow-lg">
-                            <i class="fas fa-user-circle mr-2"></i> ${emailPart}
+                return {
+                    header: `
+                        <a href="dashboard.html" class="header-auth-button header-auth-user">
+                            <i class="fas fa-user-circle"></i> ${emailPart}
                         </a>
-                        <button class="logout-btn-header-btn bg-ivs-red text-white px-4 py-2 rounded-full font-semibold hover:bg-red-600 transition-colors ml-3 shadow-lg">
-                            <i class="fas fa-sign-out-alt"></i>
+                        <button class="header-auth-button header-auth-logout logout-btn" style="gap: 8px;">
+                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
                         </button>
-                    </div>
-                `;
+                    `,
+                    mobile: `
+                        <a href="dashboard.html" class="mobile-auth-button" style="background: linear-gradient(135deg, var(--color-success), #059669); color: white;">
+                            <i class="fas fa-user-circle"></i> Xem Dashboard
+                        </a>
+                        <button class="mobile-auth-button logout-btn" style="background: linear-gradient(135deg, var(--color-error), #dc2626); color: white;">
+                            <i class="fas fa-sign-out-alt"></i> Đăng Xuất
+                        </button>
+                    `
+                };
             }
 
-            // Hàm tạo nút Đăng nhập/Đăng ký cho Header
-            function createHeaderLogin() {
-                 return `
-                    <a href="auth.html" class="bg-ivs-blue text-white px-4 py-2 rounded-full font-bold hover:bg-blue-600 transition-colors transform hover:scale-105 shadow-xl btn-glow text-sm">
-                        <i class="fas fa-sign-in-alt mr-2"></i> Đăng nhập / Đăng ký
-                    </a>
-                `;
+            // Hàm tạo nút Đăng nhập/Đăng ký
+            function createLoginAuthUI() {
+                return {
+                    header: `
+                        <a href="auth.html" class="header-auth-button header-auth-login">
+                            <i class="fas fa-sign-in-alt"></i> Đăng nhập
+                        </a>
+                        <a href="auth.html" class="header-auth-button header-auth-signup">
+                            <i class="fas fa-user-plus"></i> Đăng ký
+                        </a>
+                    `,
+                    mobile: `
+                        <a href="auth.html" class="mobile-auth-button" style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); color: white;">
+                            <i class="fas fa-sign-in-alt"></i> Đăng nhập / Đăng ký
+                        </a>
+                    `
+                };
             }
 
-            if (authContainer) {
+            // Update Header & Mobile Auth UI
+            if (headerAuthContainer && mobileAuthContainer) {
                 if (user) {
-                    // Đã đăng nhập
-                    authContainer.innerHTML = createHeaderAuth(user);
+                    const authUI = createUserAuthUI(user);
+                    headerAuthContainer.innerHTML = authUI.header;
+                    mobileAuthContainer.innerHTML = authUI.mobile;
                     
-                    // Cập nhật CTA trong Hero Section
-                    if (heroAuthCta) {
-                        const dashboardBtnLarge = `
-                            <a href="dashboard.html" class="bg-ivs-green text-white px-8 py-4 text-xl rounded-full font-semibold hover:bg-green-600 transition-colors flex items-center shadow-lg">
-                                <i class="fas fa-rocket mr-2"></i> Đi đến Dashboard
-                            </a>
-                        `;
-                        heroAuthCta.innerHTML = dashboardBtnLarge;
-                    }
-
-                    // Logout listener
-                    const logoutBtns = authContainer.querySelectorAll('.logout-btn-header-btn');
-                    logoutBtns.forEach(btn => {
-                        btn.addEventListener('click', async () => {
+                    // Logout listeners
+                    headerAuthContainer.querySelectorAll('.logout-btn').forEach(btn => {
+                        btn.addEventListener('click', async (e) => {
+                            e.preventDefault();
                             try {
                                 await signOut(auth);
-                                window.location.reload(); 
+                                window.location.reload();
                             } catch (error) {
                                 console.error("Lỗi đăng xuất:", error);
                             }
                         });
                     });
-                } else {
-                    // Chưa đăng nhập
-                    authContainer.innerHTML = createHeaderLogin();
+                    mobileAuthContainer.querySelectorAll('.logout-btn').forEach(btn => {
+                        btn.addEventListener('click', async (e) => {
+                            e.preventDefault();
+                            try {
+                                await signOut(auth);
+                                window.location.reload();
+                            } catch (error) {
+                                console.error("Lỗi đăng xuất:", error);
+                            }
+                        });
+                    });
                     
-                    // Cập nhật CTA trong Hero Section
+                    // Update Hero CTA
                     if (heroAuthCta) {
-                        const loginBtnLarge = `
-                            <a href="auth.html" class="bg-ivs-blue text-white px-8 py-4 text-xl rounded-full font-bold hover:bg-blue-600 transition-colors transform hover:scale-105 shadow-xl btn-glow">
-                                <i class="fas fa-sign-in-alt mr-2"></i> Bắt đầu học tập ngay
+                        heroAuthCta.innerHTML = `
+                            <a href="dashboard.html" class="btn btn-lg btn-success">
+                                <i class="fas fa-rocket"></i> Đi đến Dashboard
                             </a>
                         `;
-                        heroAuthCta.innerHTML = loginBtnLarge;
+                    }
+                } else {
+                    const authUI = createLoginAuthUI();
+                    headerAuthContainer.innerHTML = authUI.header;
+                    mobileAuthContainer.innerHTML = authUI.mobile;
+                    
+                    // Update Hero CTA
+                    if (heroAuthCta) {
+                        heroAuthCta.innerHTML = `
+                            <a href="auth.html" class="btn btn-lg btn-primary">
+                                <i class="fas fa-sign-in-alt"></i> Bắt đầu học tập ngay
+                            </a>
+                        `;
                     }
                 }
             }
@@ -164,6 +195,34 @@
         document.documentElement.style.setProperty('--ivs-orange', IVS_COLORS['ivs-orange']);
         document.documentElement.style.setProperty('--ivs-purple', IVS_COLORS['ivs-purple']);
         document.documentElement.style.setProperty('--ivs-text-secondary', IVS_COLORS['ivs-text-secondary']);
+
+        // Mobile Menu Toggle Handler
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        
+        if (mobileMenuToggle && mobileMenuOverlay) {
+            // Open menu
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenuOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            // Close menu on link click
+            mobileMenuOverlay.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenuOverlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            });
+            
+            // Close menu on Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && mobileMenuOverlay.classList.contains('active')) {
+                    mobileMenuOverlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
     </script>
 
     <style>
@@ -266,59 +325,52 @@
 <body class="bg-ivs-bg text-ivs-text-primary antialiased">
 
     <!-- Header (Simple Fixed Header) -->
-    <header class="fixed top-0 left-0 w-full z-50 bg-ivs-card/90 backdrop-blur-md border-b ivs-border">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-            <!-- Logo và Tên Trang -->
-            <div class="flex items-center space-x-3">
-                <img alt="IVS Logo" class="h-8 w-auto" src="/images/logo/logo.svg" onerror="this.onerror=null;this.src='https://placehold.co/32x32/4c5ef7/ffffff?text=IVS';"/>
-                <div class="flex flex-col">
-                    <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-ivs-blue to-ivs-cyan">
-                        IVS Learning Hub
-                    </span>
-                    <span class="text-xs text-ivs-text-secondary hidden sm:inline">Cổng học tập & ứng dụng</span>
+    <!-- PROFESSIONAL HEADER -->
+    <header>
+        <div class="header-inner">
+            <!-- Logo Section -->
+            <a href="/" class="header-logo">
+                <img alt="IVS Logo" class="header-logo-img" src="/images/logo/logo.svg" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4c5ef7/ffffff?text=IVS';"/>
+                <div class="header-logo-text">
+                    <span class="header-logo-text-main">IVS Learning Hub</span>
+                    <span class="header-logo-text-sub">Cổng học tập & ứng dụng</span>
                 </div>
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <nav class="header-nav">
+                <a href="live_index.html" class="header-nav-item">Giới Thiệu IVS JSC</a>
+                <a href="#applications" class="header-nav-item">Ứng Dụng Học Tập</a>
+                <a href="learning-resources.html" class="header-nav-item">Tài Nguyên EdTech</a>
+                <a href="analytics.html" class="header-nav-item">Thống Kê (Admin)</a>
+            </nav>
+            
+            <!-- Auth Section (Desktop & Mobile) -->
+            <div class="header-auth" id="header-auth-container">
+                <div style="width: 24px; height: 24px; border: 2px solid var(--color-secondary); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
             </div>
             
-            <!-- Menu và Trạng thái Auth (Dành cho Desktop) -->
-            <nav class="hidden lg:flex items-center space-x-6">
-                <a href="live_index.html" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors font-medium text-sm">Giới Thiệu IVS JSC</a>
-                <a href="#applications" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors font-medium text-sm">Ứng Dụng Học Tập</a>
-                <a href="learning-resources.html" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors font-medium text-sm">Tài Nguyên EdTech</a>
-                <a href="analytics.html" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors font-medium text-sm">Thống Kê (Admin)</a>
-                <!-- Nút Đăng nhập / Dashboard (Sẽ được cập nhật bằng JS) -->
-                <div id="auth-status-container" class="flex items-center">
-                    <div class="loading-spinner w-6 h-6 border-2 border-ivs-cyan border-t-transparent rounded-full animate-spin"></div>
-                </div>
-            </nav>
-
             <!-- Mobile Menu Toggle -->
-            <button id="mobile-menu-toggle" class="lg:hidden text-ivs-text-primary p-2 rounded-lg hover:bg-ivs-border transition-colors" aria-label="Mở menu">
-                <i class="fas fa-bars text-xl"></i>
+            <button class="header-menu-toggle" id="mobile-menu-toggle" aria-label="Mở menu">
+                <i class="fas fa-bars"></i>
             </button>
-        </div>
-        <!-- Breadcrumb on Secondary Pages -->
-        <div id="breadcrumb-container" class="hidden container mx-auto px-4 sm:px-6 lg:px-8 text-xs text-ivs-text-secondary py-2 border-t ivs-border">
-            <!-- Breadcrumb will be injected here for Pages/* -->
         </div>
     </header>
 
-    <!-- Mobile Menu Overlay (With Close Button & Accessibility) -->
-    <div id="mobile-menu-overlay" class="fixed inset-0 bg-ivs-bg/95 backdrop-blur-md z-40 hidden lg:hidden p-8 pt-20" role="navigation" aria-label="Mobile Menu">
-        <button id="mobile-menu-close" class="fixed top-4 right-4 text-ivs-text-primary p-2 rounded-lg hover:bg-ivs-border transition-colors z-50" aria-label="Đóng menu">
-            <i class="fas fa-times text-2xl"></i>
-        </button>
-        <nav class="flex flex-col space-y-4">
-            <a href="live_index.html" class="text-2xl text-ivs-text-primary hover:text-ivs-cyan transition-colors font-medium border-b ivs-border pb-2">Giới Thiệu IVS JSC</a>
-            <a href="#applications" class="text-2xl text-ivs-text-primary hover:text-ivs-cyan transition-colors font-medium border-b ivs-border pb-2">Ứng Dụng Học Tập</a>
-            <a href="learning-resources.html" class="text-2xl text-ivs-text-primary hover:text-ivs-cyan transition-colors font-medium border-b ivs-border pb-2">Tài Nguyên EdTech</a>
-            <a href="analytics.html" class="text-2xl text-ivs-text-primary hover:text-ivs-cyan transition-colors font-medium border-b ivs-border pb-2">Thống Kê (Admin)</a>
-            <div id="auth-status-container-mobile" class="pt-4">
-                <!-- Nút Auth sẽ được chèn ở đây -->
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay" role="navigation" aria-label="Mobile Menu">
+        <nav class="mobile-nav">
+            <a href="live_index.html" class="mobile-nav-item">Giới Thiệu IVS JSC</a>
+            <a href="#applications" class="mobile-nav-item">Ứng Dụng Học Tập</a>
+            <a href="learning-resources.html" class="mobile-nav-item">Tài Nguyên EdTech</a>
+            <a href="analytics.html" class="mobile-nav-item">Thống Kê (Admin)</a>
+            <div class="mobile-auth" id="mobile-auth-container">
+                <!-- Auth buttons injected here -->
             </div>
         </nav>
     </div>
 
-    <main class="pt-16">
+    <main class="pt-20">
         <!-- SECTION 1: HERO - TRUNG TÂM HỌC TẬP -->
         <section class="hero-banner relative min-h-[85vh] flex items-center justify-center text-center p-8 border-b ivs-border">
             <div class="relative max-w-5xl mx-auto z-10" data-aos="fade-up">

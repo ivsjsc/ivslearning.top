@@ -62,7 +62,54 @@
     </style>
 </head>
 <body class="bg-ivs-bg text-ivs-text-primary antialiased">
-<header id="header-placeholder"></header>
+    <!-- PROFESSIONAL HEADER -->
+    <header>
+        <div class="header-inner">
+            <!-- Logo Section -->
+            <a href="/" class="header-logo">
+                <img alt="IVS Logo" class="header-logo-img" src="/images/logo/logo.svg" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4c5ef7/ffffff?text=IVS';"/>
+                <div class="header-logo-text">
+                    <span class="header-logo-text-main">IVS Learning Hub</span>
+                    <span class="header-logo-text-sub">Cổng học tập & ứng dụng</span>
+                </div>
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <nav class="header-nav">
+                <a href="live_index.html" class="header-nav-item">Giới Thiệu IVS JSC</a>
+                <a href="index.html#applications" class="header-nav-item">Ứng Dụng Học Tập</a>
+                <a href="learning-resources.html" class="header-nav-item">Tài Nguyên EdTech</a>
+                <a href="analytics.html" class="header-nav-item">Thống Kê (Admin)</a>
+            </nav>
+            
+            <!-- Auth Section (Desktop & Mobile) -->
+            <div class="header-auth" id="header-auth-container">
+                <button class="header-auth-button header-auth-logout" id="logout-btn" style="gap: 8px;">
+                    <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                </button>
+            </div>
+            
+            <!-- Mobile Menu Toggle -->
+            <button class="header-menu-toggle" id="mobile-menu-toggle" aria-label="Mở menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay" role="navigation" aria-label="Mobile Menu">
+        <nav class="mobile-nav">
+            <a href="live_index.html" class="mobile-nav-item">Giới Thiệu IVS JSC</a>
+            <a href="index.html#applications" class="mobile-nav-item">Ứng Dụng Học Tập</a>
+            <a href="learning-resources.html" class="mobile-nav-item">Tài Nguyên EdTech</a>
+            <a href="analytics.html" class="mobile-nav-item">Thống Kê (Admin)</a>
+            <div class="mobile-auth">
+                <button class="mobile-auth-button" id="logout-btn-mobile" style="background: linear-gradient(135deg, var(--color-error), #dc2626); color: white;">
+                    <i class="fas fa-sign-out-alt"></i> Đăng Xuất
+                </button>
+            </div>
+        </nav>
+    </div>
 
 <main class="min-h-screen dashboard-container py-12 px-4">
     <div class="max-w-7xl mx-auto">
@@ -188,5 +235,48 @@
 <script defer src="js/utils.js"></script>
 <script defer src="js/language.js"></script>
 <script type="module" src="js/dashboard.js"></script>
+
+<script>
+    // Logout Handler
+    const logoutBtn = document.getElementById('logout-btn');
+    const logoutBtnMobile = document.getElementById('logout-btn-mobile');
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+    
+    function handleLogout() {
+        window.firebaseAuth.signOut().then(() => {
+            window.location.href = '/index.html';
+        });
+    }
+    
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', handleLogout);
+    }
+    if (logoutBtnMobile) {
+        logoutBtnMobile.addEventListener('click', handleLogout);
+    }
+
+    // Mobile Menu Toggle
+    if (mobileMenuToggle && mobileMenuOverlay) {
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenuOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        mobileMenuOverlay.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenuOverlay.classList.contains('active')) {
+                mobileMenuOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    }
+</script>
 </body>
 </html>
