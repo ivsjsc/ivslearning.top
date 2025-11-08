@@ -10,21 +10,17 @@
  * - Error handling without exposing sensitive info
  */
 
+require('dotenv').config();
 const https = require('https');
-const { RateLimiter } = require('bottleneck');
 
 class GrokAiService {
   constructor() {
-    // Initialize rate limiter: 10 requests per 60 seconds
-    this.limiter = new RateLimiter({
-      maxConcurrent: 1,
-      minTime: 100, // 100ms between requests
-      reservoir: 10, // 10 requests
-      reservoirRefreshAmount: 10,
-      reservoirRefreshInterval: 60 * 1000 // per 60 seconds
-    });
-
+    // Load API key from environment
     this.apiKey = process.env.GROK_API_KEY;
+    if (!this.apiKey) {
+      throw new Error('GROK_API_KEY environment variable is required');
+    }
+    
     this.apiEndpoint = 'https://api.x.ai/v1/chat/completions';
     this.model = process.env.GROK_MODEL || 'grok-2';
     this.maxTokens = 1024;
