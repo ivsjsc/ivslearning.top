@@ -777,23 +777,7 @@
             }
         });
     </script>
-    <!-- Ensure AIVY chatbot loads on this page -->
-    <script>
-        (function(){
-            try {
-                if (document.getElementById('aivy-root') || document.getElementById('aivy-chat-window')) return;
-                fetch('/components/aivy-chatbot.html').then(function(res){
-                    if (!res.ok) throw new Error('AIVY component not found');
-                    return res.text();
-                }).then(function(html){
-                    var div = document.createElement('div');
-                    div.innerHTML = html;
-                    document.body.appendChild(div.firstElementChild);
-                }).catch(function(err){
-                    console.warn('AIVY loader (applications) failed:', err);
-                });
-            } catch (e) { console.warn('AIVY loader (applications) exception:', e); }
-        })();
-    </script>
+    <!-- Universal Loader - Load header, footer, and AIVY chatbot in one go -->
+    <script defer src="/js/universal-loader.js"></script>
 </body>
 </html>
