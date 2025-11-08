@@ -1,0 +1,500 @@
+/* ============================================
+   IVS Learning Hub - Design System v2.0
+   Consolidated CSS - Replace 13 files
+   Colors, Typography, Spacing, Components
+   ============================================ */
+
+/* ========== ROOT DESIGN TOKENS ========== */
+:root {
+  /* ===== COLOR SYSTEM ===== */
+  /* Primary Brand */
+  --color-primary: #4c5ef7;
+  --color-primary-light: #5d6eff;
+  --color-primary-dark: #3b4fd6;
+  
+  /* Secondary Brand */
+  --color-secondary: #22d3ee;
+  --color-secondary-light: #4dd9f2;
+  --color-secondary-dark: #0ea5e9;
+  
+  /* Semantic Colors */
+  --color-success: #10b981;
+  --color-success-light: #6ee7b7;
+  --color-warning: #f97316;
+  --color-warning-light: #fb923c;
+  --color-error: #ef4444;
+  --color-error-light: #f87171;
+  
+  /* Neutral - Dark Theme */
+  --color-bg: #0f0f0f;
+  --color-bg-secondary: #1a1a1a;
+  --color-bg-tertiary: #262626;
+  --color-border: #27272a;
+  --color-text: #f5f5f5;
+  --color-text-secondary: #a8a8a8;
+  --color-text-tertiary: #71717a;
+  
+  /* ===== SPACING SYSTEM (8px Grid) ===== */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 40px;
+  --spacing-3xl: 48px;
+  --spacing-4xl: 56px;
+  --spacing-5xl: 64px;
+  
+  /* ===== TYPOGRAPHY ===== */
+  --font-primary: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-secondary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'Fira Code', 'Courier New', monospace;
+  
+  /* Font Sizes - Mobile First */
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 28px;
+  --font-size-4xl: 36px;
+  --font-size-5xl: 48px;
+  
+  /* Font Sizes - Tablet/Desktop */
+  --font-size-base-desktop: 16px;
+  --font-size-lg-desktop: 18px;
+  --font-size-xl-desktop: 20px;
+  --font-size-2xl-desktop: 28px;
+  --font-size-3xl-desktop: 32px;
+  --font-size-4xl-desktop: 42px;
+  --font-size-5xl-desktop: 56px;
+  
+  /* Line Heights */
+  --line-height-tight: 1.4;
+  --line-height-normal: 1.6;
+  --line-height-relaxed: 1.8;
+  --line-height-loose: 2;
+  
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  
+  /* ===== SHADOWS ===== */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.5);
+  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.7);
+  
+  /* ===== BORDER RADIUS ===== */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-3xl: 24px;
+  --radius-full: 9999px;
+  
+  /* ===== TRANSITIONS ===== */
+  --transition-instant: 0.05s ease-in-out;
+  --transition-fast: 0.15s ease-in-out;
+  --transition-normal: 0.3s ease-in-out;
+  --transition-slow: 0.5s ease-in-out;
+  --transition-slower: 0.7s ease-in-out;
+  
+  /* ===== ICON SIZING ===== */
+  --icon-xs: 12px;
+  --icon-sm: 16px;
+  --icon-base: 20px;
+  --icon-md: 24px;
+  --icon-lg: 32px;
+  --icon-xl: 40px;
+  --icon-2xl: 48px;
+  
+  /* ===== Z-INDEX ===== */
+  --z-hide: -1;
+  --z-auto: auto;
+  --z-base: 0;
+  --z-dropdown: 1000;
+  --z-modal: 1100;
+  --z-popover: 1200;
+  --z-tooltip: 1300;
+}
+
+/* ========== GLOBAL RESET ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  font-weight: var(--font-weight-normal);
+  overflow-x: hidden;
+}
+
+/* ========== TYPOGRAPHY ========== */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text);
+}
+
+h1 {
+  font-size: var(--font-size-4xl);
+}
+
+h2 {
+  font-size: var(--font-size-3xl);
+}
+
+h3 {
+  font-size: var(--font-size-2xl);
+}
+
+h4 {
+  font-size: var(--font-size-xl);
+}
+
+h5 {
+  font-size: var(--font-size-lg);
+}
+
+h6 {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+}
+
+p {
+  margin-bottom: var(--spacing-md);
+  line-height: var(--line-height-normal);
+}
+
+/* ========== LINKS ========== */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-primary-light);
+}
+
+a:active {
+  color: var(--color-primary-dark);
+}
+
+/* ========== BUTTON COMPONENT ========== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  
+  /* Sizing */
+  padding: var(--spacing-md) var(--spacing-lg);
+  min-height: 40px;
+  min-width: 44px;
+  
+  /* Typography */
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  
+  /* Styling */
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-primary);
+  color: white;
+  
+  /* Transitions */
+  transition: all var(--transition-normal);
+  cursor: pointer;
+  
+  /* Remove default button styles */
+  font-family: inherit;
+  text-align: center;
+  user-select: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Button Hover State */
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  background-color: var(--color-primary-light);
+}
+
+/* Button Active State */
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Button Focus State */
+.btn:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 2px;
+}
+
+/* Button Disabled State */
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Button Variants */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: white;
+}
+
+.btn-success {
+  background-color: var(--color-success);
+  color: white;
+}
+
+.btn-warning {
+  background-color: var(--color-warning);
+  color: white;
+}
+
+.btn-error {
+  background-color: var(--color-error);
+  color: white;
+}
+
+.btn-outline {
+  background-color: transparent;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn-outline:hover:not(:disabled) {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--color-text);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background-color: var(--color-bg-secondary);
+}
+
+/* Button Sizes */
+.btn-sm {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-xs);
+  min-height: 32px;
+}
+
+.btn-lg {
+  padding: var(--spacing-lg) var(--spacing-xl);
+  font-size: var(--font-size-base);
+  min-height: 48px;
+}
+
+.btn-xl {
+  padding: var(--spacing-xl) var(--spacing-2xl);
+  font-size: var(--font-size-lg);
+  min-height: 56px;
+}
+
+/* Button Full Width */
+.btn-full {
+  width: 100%;
+}
+
+/* Button Icon Only */
+.btn-icon {
+  padding: var(--spacing-md);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-lg);
+}
+
+/* ========== ICON COMPONENT ========== */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-base);
+  height: var(--icon-base);
+  flex-shrink: 0;
+}
+
+.icon-xs { width: var(--icon-xs); height: var(--icon-xs); }
+.icon-sm { width: var(--icon-sm); height: var(--icon-sm); }
+.icon-md { width: var(--icon-md); height: var(--icon-md); }
+.icon-lg { width: var(--icon-lg); height: var(--icon-lg); }
+.icon-xl { width: var(--icon-xl); height: var(--icon-xl); }
+.icon-2xl { width: var(--icon-2xl); height: var(--icon-2xl); }
+
+/* Icon in Button */
+.btn i, .btn .icon {
+  width: var(--icon-base);
+  height: var(--icon-base);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-sm i, .btn-sm .icon {
+  width: var(--icon-sm);
+  height: var(--icon-sm);
+}
+
+.btn-lg i, .btn-lg .icon {
+  width: var(--icon-md);
+  height: var(--icon-md);
+}
+
+/* ========== SPACING UTILITIES ========== */
+/* Margin */
+.m-xs  { margin: var(--spacing-xs); }
+.m-sm  { margin: var(--spacing-sm); }
+.m-md  { margin: var(--spacing-md); }
+.m-lg  { margin: var(--spacing-lg); }
+.m-xl  { margin: var(--spacing-xl); }
+
+.mx-auto { margin-left: auto; margin-right: auto; }
+
+/* Padding */
+.p-xs  { padding: var(--spacing-xs); }
+.p-sm  { padding: var(--spacing-sm); }
+.p-md  { padding: var(--spacing-md); }
+.p-lg  { padding: var(--spacing-lg); }
+.p-xl  { padding: var(--spacing-xl); }
+
+/* ========== ANIMATION UNIFIED ========== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.fade-in { animation: fadeIn var(--transition-normal); }
+.slide-up { animation: slideUp var(--transition-normal); }
+.slide-down { animation: slideDown var(--transition-normal); }
+.spin { animation: spin 1s linear infinite; }
+.pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+
+/* ========== RESPONSIVE UTILITIES ========== */
+@media (min-width: 768px) {
+  /* Scale font sizes up on larger screens */
+  h1 { font-size: var(--font-size-4xl); }
+  h2 { font-size: var(--font-size-3xl); }
+  h3 { font-size: var(--font-size-2xl); }
+  
+  /* Increase button padding */
+  .btn {
+    padding: var(--spacing-lg) var(--spacing-2xl);
+    min-height: 44px;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* Desktop optimizations */
+  h1 { font-size: var(--font-size-5xl); }
+  h2 { font-size: var(--font-size-4xl); }
+}
+
+/* ========== ACCESSIBILITY ========== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Focus Visible for keyboard navigation */
+:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: more) {
+  :root {
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background-color: white;
+    color: black;
+  }
+}
