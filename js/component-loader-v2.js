@@ -1,22 +1,44 @@
 /**
- * Component Loader v2 - Inject header, footer, bottom nav vào tất cả pages
- * Tách từ auth.html style - minimal & clean
+ * Component Loader v2 - Unified Header & Footer Injector
+ * Loads clean, consistent components across all pages
  */
 
 class ComponentLoaderV2 {
     static async load() {
         try {
+            // Remove old/duplicate components first
+            this.cleanupOldComponents();
+            
+            // Load unified components
             await this.loadHeader();
             await this.loadFooter();
-            await this.loadBottomNav();
         } catch (error) {
             console.error('Error loading components:', error);
         }
     }
 
+    static cleanupOldComponents() {
+        // Hide old headers (but keep our new unified one)
+        document.querySelectorAll('header').forEach(header => {
+            if (!header.id || header.id !== 'app-header') {
+                header.style.display = 'none';
+            }
+        });
+        
+        // Hide old footers (but keep our new unified one)
+        document.querySelectorAll('footer').forEach(footer => {
+            if (!footer.id || footer.id !== 'app-footer') {
+                footer.style.display = 'none';
+            }
+        });
+    }
+
     static async loadHeader() {
         try {
-            const response = await fetch('/components/header-auth.html');
+            // Skip if unified header already exists
+            if (document.getElementById('app-header')) return;
+            
+            const response = await fetch('/components/header.html');
             if (!response.ok) throw new Error('Failed to load header');
             
             const content = await response.text();
@@ -32,33 +54,20 @@ class ComponentLoaderV2 {
 
     static async loadFooter() {
         try {
-            const response = await fetch('/components/footer-auth.html');
+            // Skip if unified footer already exists
+            if (document.getElementById('app-footer')) return;
+            
+            const response = await fetch('/components/footer.html');
             if (!response.ok) throw new Error('Failed to load footer');
             
             const content = await response.text();
             const footer = document.createElement('div');
             footer.innerHTML = content;
             
-            // Insert before body close
+            // Insert at the end of body
             document.body.appendChild(footer.firstElementChild);
         } catch (error) {
             console.warn('Footer loading failed:', error);
-        }
-    }
-
-    static async loadBottomNav() {
-        try {
-            const response = await fetch('/components/bottom-nav.html');
-            if (!response.ok) throw new Error('Failed to load bottom nav');
-            
-            const content = await response.text();
-            const nav = document.createElement('div');
-            nav.innerHTML = content;
-            
-            // Insert before body close
-            document.body.appendChild(nav.firstElementChild);
-        } catch (error) {
-            console.warn('Bottom nav loading failed:', error);
         }
     }
 }
