@@ -659,5 +659,23 @@
                 '<i class="fas fa-chevron-down"></i>';
         };
     </script>
+    <!-- Ensure AIVY chatbot loads on this page -->
+    <script>
+        (function(){
+            try {
+                if (document.getElementById('aivy-root') || document.getElementById('aivy-chat-window')) return;
+                fetch('/components/aivy-chatbot.html').then(function(res){
+                    if (!res.ok) throw new Error('AIVY component not found');
+                    return res.text();
+                }).then(function(html){
+                    var div = document.createElement('div');
+                    div.innerHTML = html;
+                    document.body.appendChild(div.firstElementChild);
+                }).catch(function(err){
+                    console.warn('AIVY loader (course-detail) failed:', err);
+                });
+            } catch (e) { console.warn('AIVY loader (course-detail) exception:', e); }
+        })();
+    </script>
 </body>
 </html>

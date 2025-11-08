@@ -12,6 +12,9 @@ class ComponentLoaderV2 {
             // Load unified components
             await this.loadHeader();
             await this.loadFooter();
+            // Also load the AIVY floating chatbot component so it appears wherever
+            // this loader is used (single source of truth for global components)
+            await this.loadAivy();
         } catch (error) {
             console.error('Error loading components:', error);
         }
@@ -68,6 +71,25 @@ class ComponentLoaderV2 {
             document.body.appendChild(footer.firstElementChild);
         } catch (error) {
             console.warn('Footer loading failed:', error);
+        }
+    }
+
+    static async loadAivy() {
+        try {
+            // Skip if already loaded
+            if (document.getElementById('aivy-root') || document.getElementById('aivy-chat-window')) return;
+
+            const response = await fetch('/components/aivy-chatbot.html');
+            if (!response.ok) throw new Error('Failed to load AIVY chatbot');
+
+            const content = await response.text();
+            const wrapper = document.createElement('div');
+            wrapper.innerHTML = content;
+
+            // append chatbot root to body
+            document.body.appendChild(wrapper.firstElementChild);
+        } catch (error) {
+            console.warn('AIVY loading failed:', error);
         }
     }
 }

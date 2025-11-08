@@ -159,3 +159,25 @@
         }
     }
 </style>
+
+<!-- AIVY chatbot loader: when this footer is used in pages, ensure chatbot is injected -->
+<script>
+    (function(){
+        try {
+            if (document.getElementById('aivy-root') || document.getElementById('aivy-chat-window')) return;
+
+            fetch('/components/aivy-chatbot.html').then(function(res){
+                if (!res.ok) throw new Error('AIVY component not found');
+                return res.text();
+            }).then(function(html){
+                var container = document.createElement('div');
+                container.innerHTML = html;
+                document.body.appendChild(container.firstElementChild);
+            }).catch(function(err){
+                console.warn('AIVY loader (public footer) failed:', err);
+            });
+        } catch (e) {
+            console.warn('AIVY loader (public footer) exception:', e);
+        }
+    })();
+</script>
