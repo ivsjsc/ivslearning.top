@@ -35,6 +35,7 @@
     ]
   },
   "hosting": {
+    "site": "ivslearning",
     "public": "public",
     "ignore": [
       "firebase.json",
