@@ -1,0 +1,158 @@
+<!-- FOOTER COMPONENT - Minimal Style từ Auth Page -->
+<footer class="app-footer">
+    <div class="footer-wrapper">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img alt="IVS Logo" src="/images/logo/logo.svg" class="footer-logo" onerror="this.onerror=null;this.src='https://placehold.co/30x30/4c5ef7/ffffff?text=IVS';"/>
+                <span class="footer-brand-name">IVS Learning Hub</span>
+            </div>
+            
+            <div class="footer-links">
+                <div class="footer-section">
+                    <h4>Sản Phẩm</h4>
+                    <ul>
+                        <li><a href="/">Trang Chủ</a></li>
+                        <li><a href="index.html#applications">Ứng Dụng</a></li>
+                        <li><a href="learning-materials.html">Học Tập</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Công Ty</h4>
+                    <ul>
+                        <li><a href="live_index.html">Giới Thiệu</a></li>
+                        <li><a href="#">Liên Hệ</a></li>
+                        <li><a href="#">Tuyển Dụng</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Pháp Lý</h4>
+                    <ul>
+                        <li><a href="#">Điều Khoản</a></li>
+                        <li><a href="#">Bảo Mật</a></li>
+                        <li><a href="#">Cookie</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 IVS JSC - Nền tảng học tập hiện đại</p>
+            <p class="footer-version">v2.0.0 | Built with <span style="color: #ef4444;">❤</span></p>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .app-footer {
+        background: linear-gradient(135deg, rgba(10, 10, 10, 0.9), rgba(26, 26, 46, 0.9));
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: 4rem;
+        padding: 2rem 1rem;
+    }
+
+    .footer-wrapper {
+        max-width: 1280px;
+        margin: 0 auto;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        align-items: start;
+    }
+
+    .footer-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        text-align: center;
+        min-width: 150px;
+    }
+
+    .footer-logo {
+        width: 40px;
+        height: 40px;
+    }
+
+    .footer-brand-name {
+        font-weight: 600;
+        font-size: 0.875rem;
+        color: var(--color-text);
+    }
+
+    .footer-links {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 2rem;
+    }
+
+    .footer-section h4 {
+        font-size: 0.875rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        color: var(--color-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .footer-section ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-section li {
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-section a {
+        color: var(--color-text-secondary);
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: color 0.2s;
+    }
+
+    .footer-section a:hover {
+        color: var(--color-secondary);
+    }
+
+    .footer-bottom {
+        text-align: center;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-bottom p {
+        font-size: 0.75rem;
+        color: var(--color-text-secondary);
+        margin: 0.25rem 0;
+    }
+
+    .footer-version {
+        font-size: 0.7rem;
+        margin-top: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .footer-content {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .footer-links {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .footer-brand {
+            text-align: left;
+            flex-direction: row;
+            align-items: center;
+        }
+    }
+</style>
