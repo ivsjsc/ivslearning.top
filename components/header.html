@@ -1,57 +1,96 @@
-<!-- HEADER COMPONENT - Minimal Style từ Auth Page -->
-<header class="app-header">
+<!-- HEADER COMPONENT - Unified & Clean -->
+<header id="app-header" class="app-header">
     <div class="header-wrapper">
         <a href="/" class="header-logo-link">
-            <img alt="IVS Logo" src="/images/logo/logo.svg" class="header-logo-img" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4c5ef7/ffffff?text=IVS';"/>
-            <span class="header-logo-text">IVS Learning</span>
+            <img alt="IVS Logo" src="/images/logo/logo.svg" class="header-logo-img" onerror="this.onerror=null;this.src='https://placehold.co/48x48/4c5ef7/ffffff?text=IVS';"/>
+            <span class="header-logo-text">IVS Learning Hub</span>
         </a>
+        <nav class="header-nav"></nav>
     </div>
 </header>
 
 <style>
+    :root {
+        --color-primary: #4c5ef7;
+        --color-secondary: #22d3ee;
+        --color-text: #ffffff;
+        --color-text-secondary: #a3a9d1;
+        --color-border: rgba(255, 255, 255, 0.1);
+    }
+
     .app-header {
-        background: linear-gradient(135deg, rgba(76, 94, 247, 0.1), rgba(34, 211, 238, 0.1));
+        background: linear-gradient(135deg, rgba(13, 17, 23, 0.95), rgba(26, 26, 46, 0.95));
         backdrop-filter: blur(10px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 1rem;
+        border-bottom: 1px solid var(--color-border);
+        padding: 1rem 1.5rem;
         position: sticky;
         top: 0;
         z-index: 50;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
 
     .header-wrapper {
         display: flex;
         align-items: center;
-        justify-content: center;
-        max-width: 1280px;
+        justify-content: flex-start;
+        max-width: 1400px;
         margin: 0 auto;
+        gap: 2rem;
     }
 
     .header-logo-link {
         display: flex;
         align-items: center;
-        justify-content: center;
         gap: 0.75rem;
         text-decoration: none;
         transition: all 0.3s ease;
+        flex-shrink: 0;
     }
 
     .header-logo-img {
-        width: 40px;
-        height: 40px;
+        width: 48px;
+        height: 48px;
         object-fit: contain;
+        border-radius: 8px;
     }
 
     .header-logo-text {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         font-weight: 700;
+        letter-spacing: -0.5px;
+        color: var(--color-text);
+        white-space: nowrap;
+    }
+
+    .header-logo-link:hover .header-logo-img {
+        transform: scale(1.05);
+    }
+
+    .header-logo-link:hover .header-logo-text {
         background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
     }
 
-    .header-logo-link:hover {
-        transform: scale(1.02);
+    .header-nav {
+        display: flex;
+        gap: 2rem;
+        margin-left: auto;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .header-wrapper {
+            justify-content: center;
+        }
+        
+        .header-nav {
+            margin-left: 0;
+        }
+
+        .header-logo-text {
+            display: none;
+        }
     }
 </style>
