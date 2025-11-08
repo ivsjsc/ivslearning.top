@@ -34,7 +34,7 @@ class AivyGrokService {
   private conversationHistory: Array<{ role: string; content: string }> = [];
   private maxHistoryLength = 10;
 
-  constructor(backendUrl: string = process.env.VITE_BACKEND_URL || 'http://localhost:3000/api') {
+  constructor(backendUrl: string = process.env.VITE_BACKEND_URL || 'https://backend-studio-ivssever--ivs-159a7.us-east4.hosted.app/api') {
     this.backendUrl = backendUrl;
     console.log('[Aivy] Grok service initialized', { backendUrl });
   }
