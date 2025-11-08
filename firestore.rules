@@ -1,0 +1,214 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function getUserRole() {
+      let profile = get(/databases/$(database)/documents/userProfiles/$(request.auth.uid)).data;
+      return profile.role != null ? profile.data.role : 'student';
+    }
+
+    function isAdmin() {
+      let profile = get(/databases/$(database)/documents/userProfiles/$(request.auth.uid)).data;
+      return profile != null && profile.role == 'admin';
+    }
+
+    function isTeacher() {
+      let profile = get(/databases/$(database)/documents/userProfiles/$(request.auth.uid)).data;
+      return profile != null && profile.role == 'teacher';
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // ==========================================
+    // USER PROGRESS COLLECTION
+    // ==========================================
+    // Stores: xp, completedLessons, bookmarkedLessons, pinnedClasses, schedule, achievements, badges, streakDays, lastLessonDate
+    match /users/{userId} {
+      // User can read/write their own progress
+      allow read, write: if isOwner(userId);
+      // Admin can read all user progress
+      allow read: if isAdmin();
+      // Admin can update any user progress
+      allow update, delete: if isAdmin();
+    }
+
+    // ==========================================
+    // USER SETTINGS COLLECTION
+    // ==========================================
+    // Stores: theme, language, audioSettings, notifications preferences, etc.
+    match /userSettings/{userId} {
+      // User can read/write their own settings
+      allow read, write: if isOwner(userId);
+      // Admin can read user settings
+      allow read: if isAdmin();
+    }
+
+    // ==========================================
+    // USER PROFILE COLLECTION
+    // ==========================================
+    // Stores: role, name, avatarUrl, bio, phone, location, dateOfBirth, school, grade, interests, socialLinks, isPremium, premiumUntil, premiumHistory
+    match /userProfiles/{userId} {
+      // User can read their own profile
+      allow read: if isOwner(userId);
+      // User can write to specific fields in their profile (non-sensitive)
+      allow write: if isOwner(userId) && 
+        request.resource.data.keys().hasOnly(['name', 'avatarUrl', 'bio', 'phone', 'location', 'dateOfBirth', 'school', 'grade', 'interests', 'socialLinks', 'lastUpdated']);
+      
+      // Admin can read all profiles
+      allow read: if isAdmin();
+      // Admin can update all profile fields
+      allow update: if isAdmin();
+      // Admin can delete profiles
+      allow delete: if isAdmin();
+    }
+
+    // ==========================================
+    // LESSON PROGRESS COLLECTION
+    // ==========================================
+    // Stores: detailed lesson-by-lesson progress for personalization
+    match /lessonProgress/{userId}/{document=**} {
+      // User can read/write their own lesson progress
+      allow read, write: if isOwner(userId);
+      // Admin can read all lesson progress
+      allow read: if isAdmin();
+    }
+
+    // ==========================================
+    // ANALYTICS COLLECTION
+    // ==========================================
+    // Stores: user activity logs, interactions, behavior tracking
+    match /analytics/{document=**} {
+      // User can create/read/delete their own analytics
+      allow read, write: if isAuthenticated() && (
+        (request.resource != null && request.resource.data.userId == request.auth.uid) ||
+        (resource != null && resource.data.userId == request.auth.uid)
+      );
+      // Admin can read all analytics
+      allow read: if isAdmin();
+    }
+
+    // ==========================================
+    // USER GENERATED CONTENT COLLECTION
+    // ==========================================
+    // Stores: AI-generated tests, lesson plans, feedback, processed content
+    match /userGenerated/{document=**} {
+      // User can create/read/delete their own generated content
+      allow read, write: if isAuthenticated() && (
+        (request.resource != null && request.resource.data.userId == request.auth.uid) ||
+        (resource != null && resource.data.userId == request.auth.uid)
+      );
+      // Admin can read all generated content
+      allow read: if isAdmin();
+      // Admin can delete generated content
+      allow delete: if isAdmin();
+    }
+
+    // ==========================================
+    // CURRICULUM DATA COLLECTION
+    // ==========================================
+    // Stores: curriculum structure, lesson data, exercises (public read access)
+    match /curriculum/{document=**} {
+      // Authenticated users can read curriculum
+      allow read: if isAuthenticated();
+      // Only admin can create/update/delete curriculum
+      allow write: if isAdmin();
+    }
+
+    // ==========================================
+    // PUBLIC CONTENT COLLECTION
+    // ==========================================
+    // Stores: ebooks, public resources, guides (publicly readable)
+    match /content/{document=**} {
+      // Anyone can read public content
+      allow read: if true;
+      // Only admin can create/update/delete
+      allow write: if isAdmin();
+    }
+
+    // ==========================================
+    // ADMIN COLLECTION
+    // ==========================================
+    // Stores: admin-only data, configuration, system info
+    match /admin/{document=**} {
+      // Only admin can access admin collection
+      allow read, write: if isAdmin();
+    }
+
+    // ==========================================
+    // NOTIFICATIONS COLLECTION (OPTIONAL)
+    // ==========================================
+    // Stores: user notifications, messages, alerts
+    match /notifications/{userId}/{document=**} {
+      // User can read their own notifications
+      allow read: if isOwner(userId);
+      // User can delete their own notifications
+      allow delete: if isOwner(userId);
+      // System/Cloud Functions can create notifications for users
+      allow create: if isAdmin();
+      // Admin can read all notifications
+      allow read: if isAdmin();
+    }
+
+    // ==========================================
+    // ACHIEVEMENTS COLLECTION (OPTIONAL)
+    // ==========================================
+    // Stores: global achievement definitions and user achievement records
+    match /achievements/{document=**} {
+      // Authenticated users can read achievements
+      allow read: if isAuthenticated();
+      // Only admin can create/update/delete achievements
+      allow write: if isAdmin();
+    }
+
+    // ==========================================
+    // BADGES COLLECTION (OPTIONAL)
+    // ==========================================
+    // Stores: user badges and badge definitions
+    match /badges/{userId}/{document=**} {
+      // User can read their own badges
+      allow read: if isOwner(userId);
+      // System/Cloud Functions can create badges
+      allow create: if isAdmin();
+      // Admin can manage badges
+      allow read, write: if isAdmin();
+    }
+
+    // ==========================================
+    // STREAKS COLLECTION (OPTIONAL)
+    // ==========================================
+    // Stores: user learning streaks, consistency data
+    match /streaks/{userId}/{document=**} {
+      // User can read their own streaks
+      allow read: if isOwner(userId);
+      // User can write to their own streaks
+      allow write: if isOwner(userId);
+      // Admin can read all streaks
+      allow read: if isAdmin();
+    }
+
+    // ==========================================
+    // PREFERENCES COLLECTION (OPTIONAL)
+    // ==========================================
+    // Stores: user learning preferences, goals, interests
+    match /preferences/{userId}/{document=**} {
+      // User can read/write their own preferences
+      allow read, write: if isOwner(userId);
+      // Admin can read all preferences
+      allow read: if isAdmin();
+    }
+
+    // ==========================================
+    // CATCH-ALL (DENY BY DEFAULT)
+    // ==========================================
+    // Any other collection not explicitly defined is denied
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
