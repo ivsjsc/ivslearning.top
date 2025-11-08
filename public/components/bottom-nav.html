@@ -1,0 +1,91 @@
+<!-- BOTTOM NAVIGATION COMPONENT -->
+<nav class="bottom-nav-bar">
+    <a href="/" class="bottom-nav-link" data-page="home">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+    <a href="learning-materials.html" class="bottom-nav-link" data-page="learning">
+        <i class="fas fa-book"></i>
+        <span>Learning</span>
+    </a>
+    <a href="index.html#applications" class="bottom-nav-link" data-page="apps">
+        <i class="fas fa-th"></i>
+        <span>Apps</span>
+    </a>
+    <a href="profile.html" class="bottom-nav-link" data-page="profile">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+    </a>
+</nav>
+
+<style>
+    .bottom-nav-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(180deg, rgba(26, 26, 26, 0.8), rgba(26, 26, 26, 0.95));
+        backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0.75rem 0;
+        z-index: 40;
+        height: 70px;
+    }
+
+    .bottom-nav-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.25rem;
+        flex: 1;
+        padding: 0.75rem 0;
+        color: var(--color-text-secondary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 0.75rem;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+    .bottom-nav-link i {
+        font-size: 1.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .bottom-nav-link:hover,
+    .bottom-nav-link.active {
+        color: var(--color-secondary);
+    }
+
+    .bottom-nav-link:hover i,
+    .bottom-nav-link.active i {
+        transform: scale(1.2);
+        color: var(--color-secondary);
+    }
+
+    body {
+        padding-bottom: 70px;
+    }
+</style>
+
+<script>
+    // Activate bottom nav based on current page
+    document.addEventListener('DOMContentLoaded', () => {
+        const currentPath = window.location.pathname;
+        const links = document.querySelectorAll('.bottom-nav-link');
+        
+        links.forEach(link => {
+            const href = link.getAttribute('href');
+            if (currentPath.includes(href.split('/')[1]) || 
+                (currentPath === '/' && link.dataset.page === 'home')) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    });
+</script>
