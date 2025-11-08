@@ -1,6 +1,7 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const cors = require('cors')({ origin: true });
+const express = require('express');
 
 // Initialize Firebase Admin SDK
 admin.initializeApp();
@@ -227,4 +228,15 @@ exports.updateUserClaims = functions.https.onRequest((req, res) => {
             });
         }
     });
+});
+
+/**
+ * Cloud Function: grokApi
+ * Purpose: Secure backend for Grok AI integration with Aivy
+ */
+const grokApiRouter = require('./grok-api');
+exports.grokApi = functions.https.onRequest((req, res) => {
+    const app = express();
+    app.use('/api/grok', grokApiRouter);
+    return app(req, res);
 });
