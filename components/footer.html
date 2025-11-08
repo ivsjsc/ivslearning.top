@@ -1,8 +1,112 @@
-<!-- UNIFIED FOOTER COMPONENT -->
+<!-- UNIFIED FOOTER COMPONENT - Responsive & Clean -->
 <footer id="app-footer" style="background: linear-gradient(135deg, #0d1117 0%, #1a1a2e 100%); border-top: 1px solid rgba(255, 255, 255, 0.1); margin-top: auto;">
-    <div style="max-width: 1400px; margin: 0 auto; padding: 3rem 1.5rem;">
+    <div style="max-width: 1400px; margin: 0 auto; padding: 2.5rem 1.25rem 1.5rem;">
         <!-- Footer Content Grid -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
+        <div class="footer-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2.5rem; margin-bottom: 2rem;">
+            
+            <!-- Brand Section -->
+            <div>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                    <img alt="IVS Logo" src="/images/logo/logo.svg" style="height: 36px; width: 36px; object-fit: contain; border-radius: 6px;" onerror="this.onerror=null;this.src='https://placehold.co/36x36/4c5ef7/ffffff?text=IVS';"/>
+                    <div>
+                        <h3 style="font-size: 15px; font-weight: 700; margin: 0; color: white;">IVS Learning Hub</h3>
+                        <p style="font-size: 11px; color: rgba(255, 255, 255, 0.5); margin: 2px 0 0 0;">Cổng học tập & ứng dụng</p>
+                    </div>
+                </div>
+                <p style="color: rgba(255, 255, 255, 0.65); font-size: 13px; line-height: 1.5; margin-bottom: 14px;">
+                    Nền tảng học tập hiện đại của IVS JSC.
+                </p>
+                <!-- Social Links -->
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <a href="#" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; background: rgba(76, 94, 247, 0.15); border-radius: 6px; color: #58a6ff; transition: all 0.2s; border: none; cursor: pointer;" onmouseover="this.style.background='rgba(76, 94, 247, 0.3)'" onmouseout="this.style.background='rgba(76, 94, 247, 0.15)'" aria-label="Facebook">
+                        <i class="fab fa-facebook-f" style="font-size: 13px;"></i>
+                    </a>
+                    <a href="#" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; background: rgba(34, 211, 238, 0.15); border-radius: 6px; color: #79c0ff; transition: all 0.2s; border: none; cursor: pointer;" onmouseover="this.style.background='rgba(34, 211, 238, 0.3)'" onmouseout="this.style.background='rgba(34, 211, 238, 0.15)'" aria-label="Twitter">
+                        <i class="fab fa-twitter" style="font-size: 13px;"></i>
+                    </a>
+                    <a href="#" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; background: rgba(16, 185, 129, 0.15); border-radius: 6px; color: #3fb950; transition: all 0.2s; border: none; cursor: pointer;" onmouseover="this.style.background='rgba(16, 185, 129, 0.3)'" onmouseout="this.style.background='rgba(16, 185, 129, 0.15)'" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in" style="font-size: 13px;"></i>
+                    </a>
+                    <a href="#" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; background: rgba(249, 115, 22, 0.15); border-radius: 6px; color: #fb8500; transition: all 0.2s; border: none; cursor: pointer;" onmouseover="this.style.background='rgba(249, 115, 22, 0.3)'" onmouseout="this.style.background='rgba(249, 115, 22, 0.15)'" aria-label="YouTube">
+                        <i class="fab fa-youtube" style="font-size: 13px;"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Product Links -->
+            <div>
+                <h4 style="color: white; font-size: 12px; font-weight: 700; margin: 0 0 14px 0; text-transform: uppercase; letter-spacing: 0.8px;">Sản Phẩm</h4>
+                <nav style="display: flex; flex-direction: column; gap: 8px;">
+                    <a href="/" style="color: rgba(255, 255, 255, 0.65); text-decoration: none; font-size: 13px; transition: color 0.2s; display: flex; align-items: center; gap: 5px;" onmouseover="this.style.color='#79c0ff'" onmouseout="this.style.color='rgba(255, 255, 255, 0.65)'">
+                        <i class="fas fa-chevron-right" style="font-size: 9px;"></i> Trang Chủ
+                    </a>
+                    <a href="/dashboard.html" style="color: rgba(255, 255, 255, 0.65); text-decoration: none; font-size: 13px; transition: color 0.2s; display: flex; align-items: center; gap: 5px;" onmouseover="this.style.color='#79c0ff'" onmouseout="this.style.color='rgba(255, 255, 255, 0.65)'">
+                        <i class="fas fa-chevron-right" style="font-size: 9px;"></i> Dashboard
+                    </a>
+                    <a href="/learning-materials.html" style="color: rgba(255, 255, 255, 0.65); text-decoration: none; font-size: 13px; transition: color 0.2s; display: flex; align-items: center; gap: 5px;" onmouseover="this.style.color='#79c0ff'" onmouseout="this.style.color='rgba(255, 255, 255, 0.65)'">
+                        <i class="fas fa-chevron-right" style="font-size: 9px;"></i> Tài Liệu
+                    </a>
+                    <a href="/learning-resources.html" style="color: rgba(255, 255, 255, 0.65); text-decoration: none; font-size: 13px; transition: color 0.2s; display: flex; align-items: center; gap: 5px;" onmouseover="this.style.color='#79c0ff'" onmouseout="this.style.color='rgba(255, 255, 255, 0.65)'">
+                        <i class="fas fa-chevron-right" style="font-size: 9px;"></i> Tài Nguyên
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Company Links -->
+            <div>
+                <h4 style="color: white; font-size: 12px; font-weight: 700; margin: 0 0 14px 0; text-transform: uppercase; letter-spacing: 0.8px;">Công Ty</h4>
+                <nav style="display: flex; flex-direction: column; gap: 8px;">
+                    <a href="/live_index.html" style="color: rgba(255, 255, 255, 0.65); text-decoration: none; font-size: 13px; transition: color 0.2s; display: flex; align-items: center; gap: 5px;" onmouseover="this.style.color='#79c0ff'" onmouseout="this.style.color='rgba(255, 255, 255, 0.65)'">
+                        <i class="fas fa-chevron-right" style="font-size: 9px;"></i> Về IVS JSC
+                    </a>
+                    <a href="#" style="color: rgba(255, 255, 255, 0.65); text-decoration: none; font-size: 13px; transition: color 0.2s; display: flex; align-items: center; gap: 5px;" onmouseover="this.style.color='#79c0ff'" onmouseout="this.style.color='rgba(255, 255, 255, 0.65)'">
+                        <i class="fas fa-chevron-right" style="font-size: 9px;"></i> Liên Hệ
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Legal Links -->
+            <div>
+                <h4 style="color: white; font-size: 12px; font-weight: 700; margin: 0 0 14px 0; text-transform: uppercase; letter-spacing: 0.8px;">Pháp Lý</h4>
+                <nav style="display: flex; flex-direction: column; gap: 8px;">
+                    <a href="#" style="color: rgba(255, 255, 255, 0.65); text-decoration: none; font-size: 13px; transition: color 0.2s; display: flex; align-items: center; gap: 5px;" onmouseover="this.style.color='#79c0ff'" onmouseout="this.style.color='rgba(255, 255, 255, 0.65)'">
+                        <i class="fas fa-chevron-right" style="font-size: 9px;"></i> Điều Khoản
+                    </a>
+                    <a href="#" style="color: rgba(255, 255, 255, 0.65); text-decoration: none; font-size: 13px; transition: color 0.2s; display: flex; align-items: center; gap: 5px;" onmouseover="this.style.color='#79c0ff'" onmouseout="this.style.color='rgba(255, 255, 255, 0.65)'">
+                        <i class="fas fa-chevron-right" style="font-size: 9px;"></i> Riêng Tư
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 1.5rem; text-align: center;">
+            <p style="color: rgba(255, 255, 255, 0.55); font-size: 12px; margin: 0;">
+                © 2025 IVS JSC. Hệ sinh thái Giáo dục & Công nghệ.
+            </p>
+        </div>
+    </div>
+
+    <style>
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 2rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem !important;
+            }
+
+            #app-footer > div {
+                padding: 2rem 1rem 1rem !important;
+            }
+        }
+    </style>
+</footer>
             
             <!-- Brand Section -->
             <div>
