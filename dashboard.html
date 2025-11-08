@@ -13,6 +13,7 @@
     <link href="/images/logo/logo.svg" rel="icon" type="image/svg+xml"/>
     <link href="css/tailwind.css" rel="stylesheet"/>
     <link href="css/modern-ui.css" rel="stylesheet"/>
+    <link href="css/design-system.css" rel="stylesheet"/>
     <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
     <link href="css/styles.css" rel="stylesheet"/>
     <!-- Firebase CDN v12.5.0 -->
@@ -111,66 +112,63 @@
         </div>
 
         <!-- Quick Stats -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg p-6 text-white">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-semibold">Khóa học</h3>
-                    <i class="fas fa-book text-2xl opacity-50"></i>
+        <div id="dashboard-content">
+            <!-- User Profile Stats -->
+            <div id="dashboard-user-profile" class="mb-8">
+                <div class="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-8 text-white shadow-2xl">
+                    <h2 class="text-3xl font-bold mb-2">Đang tải...</h2>
+                    <p class="text-blue-100">Chờ xíu</p>
                 </div>
-                <p class="text-3xl font-bold" id="total-courses">0</p>
-                <p class="text-sm opacity-75 mt-2">đã đăng ký</p>
             </div>
-            <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-lg p-6 text-white">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-semibold">Tiến độ</h3>
-                    <i class="fas fa-chart-pie text-2xl opacity-50"></i>
-                </div>
-                <p class="text-3xl font-bold" id="avg-progress">0%</p>
-                <p class="text-sm opacity-75 mt-2">trung bình</p>
-            </div>
-            <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg p-6 text-white">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-semibold">Ứng dụng</h3>
-                    <i class="fas fa-cube text-2xl opacity-50"></i>
-                </div>
-                <p class="text-3xl font-bold" id="total-apps">5</p>
-                <p class="text-sm opacity-75 mt-2">có sẵn</p>
-            </div>
-        </div>
 
-        <!-- Main Content -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Courses Section -->
-            <div class="lg:col-span-2">
-                <h2 class="text-2xl font-bold mb-6">Khóa học của tôi</h2>
-                <div class="space-y-4" id="courses-container">
-                    <!-- Course cards will be loaded here -->
-                    <div class="course-card p-6 rounded-lg">
-                        <div class="flex items-start justify-between mb-4">
-                            <div>
-                                <h3 class="text-lg font-semibold mb-1">Chưa có khóa học nào</h3>
-                                <p class="text-sm text-gray-400">Hãy truy cập Learning Hub để đăng ký khóa học</p>
-                            </div>
-                            <i class="fas fa-graduation-cap text-2xl text-gray-500"></i>
+            <!-- Main Content -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
+                <!-- Posts Section -->
+                <div class="lg:col-span-2">
+                    <h2 class="text-2xl font-bold mb-6">Bài viết của tôi</h2>
+                    <div id="dashboard-posts" class="space-y-4">
+                        <div class="text-center py-12">
+                            <i class="fas fa-spinner fa-spin text-gray-400 text-4xl mb-4"></i>
+                            <p class="text-gray-500">Đang tải bài viết...</p>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Browse Apps Button -->
-                <div class="mt-8 p-6 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg text-white">
-                    <h3 class="text-lg font-semibold mb-2">Khám phá thêm</h3>
-                    <p class="text-sm mb-4 opacity-90">Truy cập Learning Hub để xem tất cả các ứng dụng và khóa học có sẵn</p>
-                    <a href="learning-materials.html" class="inline-block bg-white text-blue-600 font-semibold px-6 py-2 rounded-lg hover:bg-gray-100 transition">
-                        <i class="fas fa-arrow-right mr-2"></i> Đi đến Learning Hub
-                    </a>
+
+                <!-- Quick Stats Section -->
+                <div class="lg:col-span-1">
+                    <h2 class="text-2xl font-bold mb-6">Thống kê nhanh</h2>
+                    <div class="space-y-4">
+                        <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg p-6 text-white">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm opacity-75">Tổng bài viết</p>
+                                    <p class="text-2xl font-bold">-</p>
+                                </div>
+                                <i class="fas fa-file-alt text-2xl opacity-50"></i>
+                            </div>
+                        </div>
+                        <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-lg p-6 text-white">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm opacity-75">Lượt xem</p>
+                                    <p class="text-2xl font-bold">-</p>
+                                </div>
+                                <i class="fas fa-eye text-2xl opacity-50"></i>
+                            </div>
+                        </div>
+                        <div class="bg-gradient-to-br from-pink-500 to-pink-600 rounded-lg p-6 text-white">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm opacity-75">Lượt thích</p>
+                                    <p class="text-2xl font-bold">-</p>
+                                </div>
+                                <i class="fas fa-heart text-2xl opacity-50"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <!-- Available Apps Section -->
-            <div class="lg:col-span-1">
-                <h2 class="text-2xl font-bold mb-6">Ứng dụng khả dụng</h2>
-                <div class="space-y-4" id="apps-container">
-                    <!-- App cards will be loaded here -->
+        </div>
                     <div class="course-card p-4 rounded-lg cursor-pointer hover:bg-blue-500/20">
                         <div class="flex items-start justify-between mb-2">
                             <div class="flex-1">
@@ -272,5 +270,13 @@
 
 <!-- Component Loader v2 - Load header, footer, bottom nav -->
 <script defer src="js/component-loader-v2.js"></script>
+
+<!-- API Service Initialization -->
+<script>
+    // Set backend URL - replace with your actual backend URL
+    window.BACKEND_URL = window.BACKEND_URL || 'http://localhost:3000';
+</script>
+<script src="js/api-init.js"></script>
+<script src="js/dashboard-loader.js"></script>
 </body>
 </html>
