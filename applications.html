@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html class="dark scroll-smooth" lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Ứng Dụng - IVS Learning Hub</title>
+    <meta content="Khám phá các ứng dụng và công cụ học tập của IVS. Tích hợp với hệ sinh thái IVS." name="description"/>
+    <link href="/images/logo/logo.svg" rel="icon" type="image/svg+xml"/>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="css/tailwind.css" rel="stylesheet"/>
+    <link href="css/modern-ui.css" rel="stylesheet"/>
+    <link href="css/design-system.css" rel="stylesheet"/>
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
+    
+    <style>
+        .apps-page {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #4c5ef7 0%, #22d3ee 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--color-text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Section */
+        .apps-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-header {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-description {
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Apps Grid */
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .app-card {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-card:hover {
+            border-color: #4c5ef7;
+            transform: translateY(-12px);
+            box-shadow: 0 20px 40px rgba(76, 94, 247, 0.2);
+        }
+
+        .app-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(76, 94, 247, 0.2), rgba(34, 211, 238, 0.2));
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .app-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+        }
+
+        .app-description {
+            color: var(--color-text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        .app-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .app-features li {
+            color: var(--color-text-secondary);
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .app-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .app-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            width: fit-content;
+        }
+
+        .status-active {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .status-beta {
+            background: rgba(249, 115, 22, 0.2);
+            color: #f97316;
+        }
+
+        .status-coming {
+            background: rgba(99, 102, 241, 0.2);
+            color: #6366f1;
+        }
+
+        .app-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .app-btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .app-btn-primary {
+            background: #4c5ef7;
+            color: white;
+        }
+
+        .app-btn-primary:hover {
+            background: #3b4fd6;
+        }
+
+        .app-btn-secondary {
+            background: transparent;
+            color: #4c5ef7;
+            border: 2px solid #4c5ef7;
+        }
+
+        .app-btn-secondary:hover {
+            background: rgba(76, 94, 247, 0.1);
+        }
+
+        /* Featured App Banner */
+        .featured-banner {
+            background: linear-gradient(135deg, rgba(76, 94, 247, 0.2) 0%, rgba(34, 211, 238, 0.1) 100%);
+            border: 2px solid #4c5ef7;
+            border-radius: 1.5rem;
+            padding: 3rem;
+            margin-bottom: 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .featured-content h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--color-text);
+        }
+
+        .featured-content p {
+            color: var(--color-text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .featured-icon {
+            font-size: 5rem;
+            text-align: center;
+        }
+
+        /* Integration Section */
+        .integration-info {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .integration-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--color-text);
+        }
+
+        .integration-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .integration-item {
+            padding: 1rem;
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 0.75rem;
+            text-align: center;
+        }
+
+        .integration-item-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .integration-item-name {
+            font-weight: 600;
+            color: var(--color-text);
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 1.75rem;
+            }
+
+            .apps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-banner {
+                grid-template-columns: 1fr;
+                padding: 1.5rem;
+            }
+
+            .app-actions {
+                flex-direction: column;
+            }
+
+            .app-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-[var(--color-bg)]/80 backdrop-blur border-b border-[var(--color-border)]">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="/" class="flex items-center gap-2">
+                <i class="fas fa-graduation-cap text-2xl text-[#4c5ef7]"></i>
+                <span class="font-bold text-xl">IVS Learning</span>
+            </a>
+            
+            <nav class="hidden md:flex gap-8 items-center">
+                <a href="index-new.html" class="hover:text-[#4c5ef7] transition">Trang Chủ</a>
+                <a href="courses.html" class="hover:text-[#4c5ef7] transition">Khóa Học</a>
+                <a href="learning-paths.html" class="hover:text-[#4c5ef7] transition">Lộ Trình</a>
+                <a href="applications.html" class="text-[#4c5ef7] font-semibold transition">Ứng Dụng</a>
+            </nav>
+
+            <div id="header-auth-container" class="flex gap-3 items-center">
+                <a href="auth.html" class="px-4 py-2 rounded-lg hover:bg-[var(--color-bg-secondary)] transition">Đăng nhập</a>
+                <a href="auth.html" class="px-4 py-2 bg-[#4c5ef7] text-white rounded-lg hover:bg-[#3b4fd6] transition">Đăng ký</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="apps-page">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Hệ Sinh Thái Ứng Dụng IVS</h1>
+            <p class="page-subtitle">Khám phá các công cụ, ứng dụng và dịch vụ học tập tích hợp của IVS</p>
+        </div>
+
+        <!-- Featured App Banner -->
+        <div class="featured-banner">
+            <div class="featured-content">
+                <h2>AIVY - AI Assistant Thông Minh</h2>
+                <p>Trợ lý AI thông minh hỗ trợ học tập. Giải đáp câu hỏi, hướng dẫn bài tập, và cung cấp gợi ý học tập cá nhân hóa.</p>
+                <button class="app-btn app-btn-primary">
+                    <i class="fas fa-rocket"></i> Khám Phá AIVY
+                </button>
+            </div>
+            <div class="featured-icon">
+                🤖
+            </div>
+        </div>
+
+        <!-- Learning Tools Section -->
+        <div class="apps-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-tools"></i> Công Cụ Học Tập
+                </h2>
+                <p class="section-description">Các công cụ hỗ trợ quá trình học tập của bạn</p>
+            </div>
+
+            <div class="apps-grid">
+                <!-- AIVY -->
+                <div class="app-card">
+                    <div class="app-status status-active">✓ Đang Hoạt Động</div>
+                    <div class="app-icon">🤖</div>
+                    <h3 class="app-title">AIVY - AI Learning Assistant</h3>
+                    <p class="app-description">Trợ lý AI thông minh giúp bạn học tập hiệu quả hơn.</p>
+                    <ul class="app-features">
+                        <li>Giải đáp câu hỏi tức thì</li>
+                        <li>Hướng dẫn giải bài tập</li>
+                        <li>Cá nhân hóa lộ trình học</li>
+                    </ul>
+                    <div class="app-actions">
+                        <button class="app-btn app-btn-primary">
+                            <i class="fas fa-play-circle"></i> Bắt Đầu
+                        </button>
+                        <button class="app-btn app-btn-secondary">
+                            <i class="fas fa-info-circle"></i> Tìm Hiểu
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Code IDE -->
+                <div class="app-card">
+                    <div class="app-status status-active">✓ Đang Hoạt Động</div>
+                    <div class="app-icon">💻</div>
+                    <h3 class="app-title">IVS Code IDE</h3>
+                    <p class="app-description">Môi trường lập trình trực tuyến cho bài tập và dự án.</p>
+                    <ul class="app-features">
+                        <li>Hỗ trợ 20+ ngôn ngữ lập trình</li>
+                        <li>Biên dịch và chạy ngay</li>
+                        <li>Lưu trữ dự án trên cloud</li>
+                    </ul>
+                    <div class="app-actions">
+                        <button class="app-btn app-btn-primary">
+                            <i class="fas fa-play-circle"></i> Bắt Đầu
+                        </button>
+                        <button class="app-btn app-btn-secondary">
+                            <i class="fas fa-info-circle"></i> Tìm Hiểu
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Builder -->
+                <div class="app-card">
+                    <div class="app-status status-active">✓ Đang Hoạt Động</div>
+                    <div class="app-icon">📝</div>
+                    <h3 class="app-title">Quiz & Assessment Tool</h3>
+                    <p class="app-description">Tạo và làm các bài kiểm tra trực tuyến với phân tích chi tiết.</p>
+                    <ul class="app-features">
+                        <li>Tạo bài quiz tùy chỉnh</li>
+                        <li>Phân tích kết quả từng câu</li>
+                        <li>So sánh kết quả với bạn bè</li>
+                    </ul>
+                    <div class="app-actions">
+                        <button class="app-btn app-btn-primary">
+                            <i class="fas fa-play-circle"></i> Bắt Đầu
+                        </button>
+                        <button class="app-btn app-btn-secondary">
+                            <i class="fas fa-info-circle"></i> Tìm Hiểu
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress Tracker -->
+                <div class="app-card">
+                    <div class="app-status status-active">✓ Đang Hoạt Động</div>
+                    <div class="app-icon">📊</div>
+                    <h3 class="app-title">Learning Analytics</h3>
+                    <p class="app-description">Theo dõi tiến độ học tập với biểu đồ và thống kê chi tiết.</p>
+                    <ul class="app-features">
+                        <li>Thống kê tiến độ tổng quát</li>
+                        <li>Phân tích điểm mạnh yếu</li>
+                        <li>Gợi ý cải thiện cá nhân</li>
+                    </ul>
+                    <div class="app-actions">
+                        <button class="app-btn app-btn-primary">
+                            <i class="fas fa-play-circle"></i> Bắt Đầu
+                        </button>
+                        <button class="app-btn app-btn-secondary">
+                            <i class="fas fa-info-circle"></i> Tìm Hiểu
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Collaboration -->
+                <div class="app-card">
+                    <div class="app-status status-beta">🔶 Beta</div>
+                    <div class="app-icon">👥</div>
+                    <h3 class="app-title">Team Collaboration</h3>
+                    <p class="app-description">Làm việc nhóm và cộng tác trên các dự án học tập.</p>
+                    <ul class="app-features">
+                        <li>Tạo nhóm học tập</li>
+                        <li>Chia sẻ tài liệu và bài tập</li>
+                        <li>Chat và video conference</li>
+                    </ul>
+                    <div class="app-actions">
+                        <button class="app-btn app-btn-primary">
+                            <i class="fas fa-play-circle"></i> Tham Gia Beta
+                        </button>
+                        <button class="app-btn app-btn-secondary">
+                            <i class="fas fa-info-circle"></i> Tìm Hiểu
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Certification -->
+                <div class="app-card">
+                    <div class="app-status status-coming">📅 Sắp Ra Mắt</div>
+                    <div class="app-icon">🏆</div>
+                    <h3 class="app-title">Certification Program</h3>
+                    <p class="app-description">Nhận chứng chỉ khi hoàn thành khóa học.</p>
+                    <ul class="app-features">
+                        <li>Chứng chỉ có giá trị công nhân</li>
+                        <li>Xuất chứng chỉ dưới dạng PDF</li>
+                        <li>Chia sẻ trên LinkedIn</li>
+                    </ul>
+                    <div class="app-actions">
+                        <button class="app-btn app-btn-secondary">
+                            <i class="fas fa-bell"></i> Thông Báo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resources Section -->
+        <div class="apps-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-book"></i> Tài Nguyên Học Tập
+                </h2>
+                <p class="section-description">Các tài nguyên bổ trợ hỗ trợ học tập của bạn</p>
+            </div>
+
+            <div class="apps-grid">
+                <!-- Documentation -->
+                <div class="app-card">
+                    <div class="app-status status-active">✓ Đang Hoạt Động</div>
+                    <div class="app-icon">📚</div>
+                    <h3 class="app-title">Knowledge Base</h3>
+                    <p class="app-description">Kho tàng tài liệu hướng dẫn và hướng dẫn chi tiết.</p>
+                    <ul class="app-features">
+                        <li>1000+ bài viết chi tiết</li>
+                        <li>Code examples và tutorials</li>
+                        <li>Tìm kiếm nhanh chóng</li>
+                    </ul>
+                    <div class="app-actions">
+                        <button class="app-btn app-btn-primary">
+                            <i class="fas fa-external-link-alt"></i> Truy Cập
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Resources Library -->
+                <div class="app-card">
+                    <div class="app-status status-active">✓ Đang Hoạt Động</div>
+                    <div class="app-icon">💾</div>
+                    <h3 class="app-title">Resource Library</h3>
+                    <p class="app-description">Thư viện tài nguyên: templates, assets, tools hữu ích.</p>
+                    <ul class="app-features">
+                        <li>Project templates</li>
+                        <li>Design assets & icons</li>
+                        <li>Code snippets</li>
+                    </ul>
+                    <div class="app-actions">
+                        <button class="app-btn app-btn-primary">
+                            <i class="fas fa-external-link-alt"></i> Truy Cập
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Community -->
+                <div class="app-card">
+                    <div class="app-status status-active">✓ Đang Hoạt Động</div>
+                    <div class="app-icon">💬</div>
+                    <h3 class="app-title">Community Forum</h3>
+                    <p class="app-description">Cộng đồng học viên, thảo luận, hỏi đáp, chia sẻ kinh nghiệm.</p>
+                    <ul class="app-features">
+                        <li>Diễn đàn thảo luận sôi động</li>
+                        <li>Hỏi đáp từ cộng đồng</li>
+                        <li>Chia sẻ dự án & kinh nghiệm</li>
+                    </ul>
+                    <div class="app-actions">
+                        <button class="app-btn app-btn-primary">
+                            <i class="fas fa-external-link-alt"></i> Truy Cập
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Integration Info -->
+        <div class="integration-info">
+            <h3 class="integration-title">
+                <i class="fas fa-puzzle-piece"></i> Tích Hợp Với
+            </h3>
+            <div class="integration-list">
+                <div class="integration-item">
+                    <div class="integration-item-icon">🔐</div>
+                    <div class="integration-item-name">Firebase</div>
+                </div>
+                <div class="integration-item">
+                    <div class="integration-item-icon">☁️</div>
+                    <div class="integration-item-name">Google Cloud</div>
+                </div>
+                <div class="integration-item">
+                    <div class="integration-item-icon">🎯</div>
+                    <div class="integration-item-name">Analytics</div>
+                </div>
+                <div class="integration-item">
+                    <div class="integration-item-icon">💳</div>
+                    <div class="integration-item-name">Stripe</div>
+                </div>
+                <div class="integration-item">
+                    <div class="integration-item-icon">📧</div>
+                    <div class="integration-item-name">Email Services</div>
+                </div>
+                <div class="integration-item">
+                    <div class="integration-item-icon">🔔</div>
+                    <div class="integration-item-name">Notifications</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[var(--color-bg-secondary)] border-t border-[var(--color-border)] py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h4 class="font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-graduation-cap text-[#4c5ef7]"></i> IVS Learning
+                    </h4>
+                    <p class="text-[var(--color-text-secondary)] text-sm">Nền tảng học tập trực tuyến hàng đầu</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Khám Phá</h4>
+                    <ul class="space-y-2 text-sm text-[var(--color-text-secondary)]">
+                        <li><a href="courses.html" class="hover:text-[#4c5ef7] transition">Khóa Học</a></li>
+                        <li><a href="learning-paths.html" class="hover:text-[#4c5ef7] transition">Lộ Trình</a></li>
+                        <li><a href="applications.html" class="hover:text-[#4c5ef7] transition">Ứng Dụng</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Công Ty</h4>
+                    <ul class="space-y-2 text-sm text-[var(--color-text-secondary)]">
+                        <li><a href="#" class="hover:text-[#4c5ef7] transition">Về Chúng Tôi</a></li>
+                        <li><a href="#" class="hover:text-[#4c5ef7] transition">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Hỗ Trợ</h4>
+                    <ul class="space-y-2 text-sm text-[var(--color-text-secondary)]">
+                        <li><a href="#" class="hover:text-[#4c5ef7] transition">Liên Hệ</a></li>
+                        <li><a href="#" class="hover:text-[#4c5ef7] transition">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-[var(--color-border)] pt-8 text-center text-[var(--color-text-secondary)] text-sm">
+                <p>&copy; 2024 IVS Learning Hub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+        import { firebaseConfig } from "/js/firebase-config.js";
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, (user) => {
+            const headerAuthContainer = document.getElementById('header-auth-container');
+            if (user) {
+                const emailPart = user.email.split('@')[0];
+                headerAuthContainer.innerHTML = `
+                    <a href="my-learning.html" class="px-4 py-2 rounded-lg hover:bg-[var(--color-bg-secondary)] transition">
+                        <i class="fas fa-book-open"></i> Khóa Học Của Tôi
+                    </a>
+                    <a href="dashboard.html" class="px-4 py-2 rounded-lg hover:bg-[var(--color-bg-secondary)] transition">
+                        ${emailPart}
+                    </a>
+                    <button class="px-4 py-2 bg-[#ef4444] text-white rounded-lg hover:bg-[#dc2626] transition logout-btn">
+                        Đăng Xuất
+                    </button>
+                `;
+                document.querySelectorAll('.logout-btn').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        await signOut(auth);
+                        window.location.reload();
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

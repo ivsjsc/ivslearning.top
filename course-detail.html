@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html class="dark scroll-smooth" lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Chi Tiết Khóa Học - IVS Learning Hub</title>
+    <link href="/images/logo/logo.svg" rel="icon" type="image/svg+xml"/>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="css/tailwind.css" rel="stylesheet"/>
+    <link href="css/modern-ui.css" rel="stylesheet"/>
+    <link href="css/design-system.css" rel="stylesheet"/>
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
+    
+    <style>
+        .course-detail-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Hero Section */
+        .course-hero {
+            background: linear-gradient(135deg, rgba(76, 94, 247, 0.2) 0%, rgba(34, 211, 238, 0.1) 100%);
+            padding: 3rem 2rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            color: var(--color-text);
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .course-meta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--color-text-secondary);
+        }
+
+        .meta-item i {
+            color: #4c5ef7;
+            font-size: 1.1rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-enroll {
+            background: #4c5ef7;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-enroll:hover {
+            background: #3b4fd6;
+            transform: translateY(-2px);
+        }
+
+        .btn-wishlist {
+            background: transparent;
+            color: #4c5ef7;
+            padding: 1rem 2rem;
+            border: 2px solid #4c5ef7;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-wishlist:hover {
+            background: rgba(76, 94, 247, 0.1);
+        }
+
+        .hero-image {
+            background: linear-gradient(135deg, rgba(76, 94, 247, 0.3), rgba(34, 211, 238, 0.3));
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            height: 300px;
+        }
+
+        /* Main Content */
+        .course-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            padding: 3rem 2rem;
+        }
+
+        .content-main h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--color-text);
+        }
+
+        .content-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .content-section p {
+            color: var(--color-text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        /* Modules/Curriculum */
+        .modules-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--color-text);
+        }
+
+        .module-item {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .module-item:hover {
+            border-color: #4c5ef7;
+            background: rgba(76, 94, 247, 0.05);
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .module-title {
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 0.5rem;
+        }
+
+        .module-info {
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .module-toggle {
+            background: none;
+            border: none;
+            color: #4c5ef7;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .module-lessons {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .module-lessons.active {
+            display: block;
+        }
+
+        .lesson-item {
+            padding: 0.75rem 0;
+            color: var(--color-text-secondary);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .lesson-item i {
+            color: #10b981;
+            font-size: 0.8rem;
+        }
+
+        /* Sidebar */
+        .content-sidebar {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .course-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 1rem;
+            background: var(--color-bg);
+            border-radius: 0.75rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4c5ef7;
+        }
+
+        .stat-label {
+            color: var(--color-text-secondary);
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+
+        .instructor-card {
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .instructor-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #4c5ef7, #22d3ee);
+            border-radius: 50%;
+            margin: 0 auto 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .instructor-name {
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 0.25rem;
+        }
+
+        .instructor-title {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+        }
+
+        .features-list {
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .feature-item:last-child {
+            border-bottom: none;
+        }
+
+        .feature-item i {
+            color: #10b981;
+            margin-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .feature-item span {
+            font-size: 0.95rem;
+            color: var(--color-text-secondary);
+        }
+
+        @media (max-width: 1024px) {
+            .course-content {
+                grid-template-columns: 1fr;
+            }
+
+            .content-sidebar {
+                position: relative;
+                top: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-text h1 {
+                font-size: 1.75rem;
+            }
+
+            .course-meta {
+                flex-wrap: wrap;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn-enroll,
+            .btn-wishlist {
+                width: 100%;
+            }
+
+            .course-hero {
+                padding: 2rem 1rem;
+            }
+
+            .course-content {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-[var(--color-bg)]/80 backdrop-blur border-b border-[var(--color-border)]">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="/" class="flex items-center gap-2">
+                <i class="fas fa-graduation-cap text-2xl text-[#4c5ef7]"></i>
+                <span class="font-bold text-xl">IVS Learning</span>
+            </a>
+            
+            <nav class="hidden md:flex gap-8 items-center">
+                <a href="index-new.html" class="hover:text-[#4c5ef7] transition">Trang Chủ</a>
+                <a href="courses.html" class="hover:text-[#4c5ef7] transition">Khóa Học</a>
+                <a href="learning-paths.html" class="hover:text-[#4c5ef7] transition">Lộ Trình</a>
+                <a href="applications.html" class="hover:text-[#4c5ef7] transition">Ứng Dụng</a>
+            </nav>
+
+            <div id="header-auth-container" class="flex gap-3 items-center">
+                <a href="auth.html" class="px-4 py-2 rounded-lg hover:bg-[var(--color-bg-secondary)] transition">Đăng nhập</a>
+                <a href="auth.html" class="px-4 py-2 bg-[#4c5ef7] text-white rounded-lg hover:bg-[#3b4fd6] transition">Đăng ký</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="course-detail-container">
+        <!-- Hero Section -->
+        <div class="course-hero">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>React.js Từ Cơ Bản Đến Nâng Cao</h1>
+                    <p>Học React từ đầu với các dự án thực tế. Nắm vững hooks, state management, và best practices.</p>
+                    <div class="course-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-star"></i>
+                            <span>4.8 (2,543 đánh giá)</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-users"></i>
+                            <span>25,000+ học viên</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-clock"></i>
+                            <span>42 giờ</span>
+                        </div>
+                    </div>
+                    <div class="cta-buttons">
+                        <button class="btn-enroll">
+                            <i class="fas fa-play-circle"></i> Ghi Danh Ngay
+                        </button>
+                        <button class="btn-wishlist">
+                            <i class="fas fa-heart"></i> Thêm Vào Yêu Thích
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-image">📱</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="course-content">
+            <!-- Left Column -->
+            <div class="content-main">
+                <!-- About -->
+                <div class="content-section">
+                    <h2>Về Khóa Học</h2>
+                    <p>
+                        React.js là một thư viện JavaScript mạnh mẽ để xây dựng giao diện người dùng. Khóa học này sẽ đưa bạn từ những kiến thức cơ bản đến các kỹ thuật nâng cao như hooks, context API, và state management với Redux.
+                    </p>
+                    <p>
+                        Qua các dự án thực tế, bạn sẽ học cách xây dựng ứng dụng web hiệu suất cao, tối ưu hóa rendering, và làm việc với API.
+                    </p>
+                </div>
+
+                <!-- Learning Outcomes -->
+                <div class="content-section">
+                    <h2>Bạn Sẽ Học Được</h2>
+                    <ul class="space-y-2">
+                        <li class="flex gap-2 items-start">
+                            <i class="fas fa-check-circle text-[#10b981] mt-1"></i>
+                            <span class="text-[var(--color-text-secondary)]">Hiểu rõ React components, JSX, props, và state</span>
+                        </li>
+                        <li class="flex gap-2 items-start">
+                            <i class="fas fa-check-circle text-[#10b981] mt-1"></i>
+                            <span class="text-[var(--color-text-secondary)]">Sử dụng React Hooks (useState, useEffect, useContext...)</span>
+                        </li>
+                        <li class="flex gap-2 items-start">
+                            <i class="fas fa-check-circle text-[#10b981] mt-1"></i>
+                            <span class="text-[var(--color-text-secondary)]">Quản lý state với Redux và Context API</span>
+                        </li>
+                        <li class="flex gap-2 items-start">
+                            <i class="fas fa-check-circle text-[#10b981] mt-1"></i>
+                            <span class="text-[var(--color-text-secondary)]">Xây dựng form, validation, và API integration</span>
+                        </li>
+                        <li class="flex gap-2 items-start">
+                            <i class="fas fa-check-circle text-[#10b981] mt-1"></i>
+                            <span class="text-[var(--color-text-secondary)]">Testing, optimization, và deployment</span>
+                        </li>
+                        <li class="flex gap-2 items-start">
+                            <i class="fas fa-check-circle text-[#10b981] mt-1"></i>
+                            <span class="text-[var(--color-text-secondary)]">Xây dựng các dự án real-world</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Curriculum -->
+                <div class="modules-section">
+                    <h2>Nội Dung Khóa Học</h2>
+
+                    <div class="module-item">
+                        <div class="module-header">
+                            <div>
+                                <div class="module-title">
+                                    <i class="fas fa-folder-open text-[#4c5ef7]"></i> Module 1: React Basics
+                                </div>
+                                <div class="module-info">4 bài học • 3 giờ</div>
+                            </div>
+                            <button class="module-toggle" onclick="toggleModule(this)">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="module-lessons">
+                            <div class="lesson-item"><i class="fas fa-play-circle"></i> React là gì? JSX là gì?</div>
+                            <div class="lesson-item"><i class="fas fa-play-circle"></i> Components và Props</div>
+                            <div class="lesson-item"><i class="fas fa-play-circle"></i> State và Events</div>
+                            <div class="lesson-item"><i class="fas fa-play-circle"></i> Lifecycle Methods</div>
+                        </div>
+                    </div>
+
+                    <div class="module-item">
+                        <div class="module-header">
+                            <div>
+                                <div class="module-title">
+                                    <i class="fas fa-folder-open text-[#4c5ef7]"></i> Module 2: React Hooks
+                                </div>
+                                <div class="module-info">5 bài học • 4 giờ</div>
+                            </div>
+                            <button class="module-toggle" onclick="toggleModule(this)">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="module-lessons">
+                            <div class="lesson-item"><i class="fas fa-play-circle"></i> Giới thiệu Hooks</div>
+                            <div class="lesson-item"><i class="fas fa-play-circle"></i> useState Hook</div>
+                            <div class="lesson-item"><i class="fas fa-play-circle"></i> useEffect Hook</div>
+                            <div class="lesson-item"><i class="fas fa-play-circle"></i> Custom Hooks</div>
+                            <div class="lesson-item"><i class="fas fa-play-circle"></i> useContext & useReducer</div>
+                        </div>
+                    </div>
+
+                    <div class="module-item">
+                        <div class="module-header">
+                            <div>
+                                <div class="module-title">
+                                    <i class="fas fa-folder-open text-[#4c5ef7]"></i> Module 3: State Management
+                                </div>
+                                <div class="module-info">6 bài học • 5 giờ</div>
+                            </div>
+                            <button class="module-toggle" onclick="toggleModule(this)">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="module-lessons">
+                            <div class="lesson-item"><i class="fas fa-play-circle"></i> Context API</div>
+                            <div class="lesson-item"><i class="fas fa-play-circle"></i> Redux Basics</div>
+                            <div class="lesson-item"><i class="fas fa-play-circle"></i> Redux Middleware</div>
+                            <div class="lesson-item"><i class="fas fa-play-circle"></i> Redux Toolkit</div>
+                        </div>
+                    </div>
+
+                    <div class="module-item">
+                        <div class="module-header">
+                            <div>
+                                <div class="module-title">
+                                    <i class="fas fa-folder-open text-[#4c5ef7]"></i> Module 4: Projects & Deployment
+                                </div>
+                                <div class="module-info">3 dự án • 8 giờ</div>
+                            </div>
+                            <button class="module-toggle" onclick="toggleModule(this)">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="module-lessons">
+                            <div class="lesson-item"><i class="fas fa-play-circle"></i> Project 1: Todo App</div>
+                            <div class="lesson-item"><i class="fas fa-play-circle"></i> Project 2: Weather App</div>
+                            <div class="lesson-item"><i class="fas fa-play-circle"></i> Project 3: E-commerce App</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="content-sidebar">
+                <!-- Quick Stats -->
+                <div class="course-stats">
+                    <div class="stat">
+                        <div class="stat-value">42h</div>
+                        <div class="stat-label">Tổng Thời Gian</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">18</div>
+                        <div class="stat-label">Bài Học</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">Dự Án</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">∞</div>
+                        <div class="stat-label">Truy Cập</div>
+                    </div>
+                </div>
+
+                <!-- Instructor -->
+                <div class="instructor-card">
+                    <div class="instructor-avatar">👨‍🏫</div>
+                    <div class="instructor-name">Nguyễn Dev</div>
+                    <div class="instructor-title">React Expert & Instructor</div>
+                </div>
+
+                <!-- Features -->
+                <div class="features-list">
+                    <h3 style="font-weight: 700; margin-bottom: 1rem; color: var(--color-text);">Bao Gồm</h3>
+                    <div class="feature-item">
+                        <i class="fas fa-video"></i>
+                        <span>42 giờ video chất lượng HD</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-code"></i>
+                        <span>Code examples & projects</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-award"></i>
+                        <span>Chứng chỉ hoàn thành</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>Học trên mọi thiết bị</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-download"></i>
+                        <span>Tải xuống bài giảng</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-headset"></i>
+                        <span>Hỗ trợ 24/7</span>
+                    </div>
+                </div>
+
+                <!-- Enroll Button -->
+                <button class="btn-enroll w-full" style="margin-top: 2rem;">
+                    <i class="fas fa-play-circle"></i> Ghi Danh Ngay
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[var(--color-bg-secondary)] border-t border-[var(--color-border)] py-12 mt-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center text-[var(--color-text-secondary)] text-sm">
+                <p>&copy; 2024 IVS Learning Hub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+        import { firebaseConfig } from "/js/firebase-config.js";
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, (user) => {
+            const headerAuthContainer = document.getElementById('header-auth-container');
+            if (user) {
+                const emailPart = user.email.split('@')[0];
+                headerAuthContainer.innerHTML = `
+                    <a href="my-learning.html" class="px-4 py-2 rounded-lg hover:bg-[var(--color-bg-secondary)] transition">
+                        <i class="fas fa-book-open"></i> Khóa Học Của Tôi
+                    </a>
+                    <a href="dashboard.html" class="px-4 py-2 rounded-lg hover:bg-[var(--color-bg-secondary)] transition">
+                        ${emailPart}
+                    </a>
+                    <button class="px-4 py-2 bg-[#ef4444] text-white rounded-lg hover:bg-[#dc2626] transition logout-btn">
+                        Đăng Xuất
+                    </button>
+                `;
+                document.querySelectorAll('.logout-btn').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        await signOut(auth);
+                        window.location.reload();
+                    });
+                });
+            }
+        });
+
+        window.toggleModule = function(btn) {
+            const moduleItem = btn.closest('.module-item');
+            const lessons = moduleItem.querySelector('.module-lessons');
+            lessons.classList.toggle('active');
+            btn.innerHTML = lessons.classList.contains('active') ? 
+                '<i class="fas fa-chevron-up"></i>' : 
+                '<i class="fas fa-chevron-down"></i>';
+        };
+    </script>
+</body>
+</html>

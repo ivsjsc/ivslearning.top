@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html class="dark scroll-smooth" lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Khóa Học - IVS Learning Hub</title>
+    <meta content="Duyệt tất cả khóa học IVS Learning. Tìm kiếm, lọc theo danh mục, và bắt đầu học ngay." name="description"/>
+    <link href="/images/logo/logo.svg" rel="icon" type="image/svg+xml"/>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="css/tailwind.css" rel="stylesheet"/>
+    <link href="css/modern-ui.css" rel="stylesheet"/>
+    <link href="css/design-system.css" rel="stylesheet"/>
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
+    
+    <style>
+        .courses-page {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--color-text-secondary);
+        }
+
+        .filters-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .sidebar {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 80px;
+        }
+
+        .filter-group {
+            margin-bottom: 2rem;
+        }
+
+        .filter-title {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--color-text);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .filter-option:hover {
+            background: rgba(76, 94, 247, 0.1);
+        }
+
+        .filter-option input[type="checkbox"] {
+            cursor: pointer;
+            accent-color: #4c5ef7;
+        }
+
+        .filter-option label {
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .filter-count {
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+            margin-left: auto;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            flex: 1;
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            color: var(--color-text);
+            font-size: 1rem;
+        }
+
+        .search-input::placeholder {
+            color: var(--color-text-secondary);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #4c5ef7;
+            box-shadow: 0 0 0 3px rgba(76, 94, 247, 0.1);
+        }
+
+        .sort-select {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            color: var(--color-text);
+            cursor: pointer;
+        }
+
+        .sort-select:focus {
+            outline: none;
+            border-color: #4c5ef7;
+        }
+
+        .courses-content {
+            flex: 1;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .results-count {
+            color: var(--color-text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .view-options {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .view-btn {
+            padding: 0.5rem 0.75rem;
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 0.5rem;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .view-btn.active {
+            background: #4c5ef7;
+            color: white;
+            border-color: #4c5ef7;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .course-card {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .course-card:hover {
+            border-color: #4c5ef7;
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(76, 94, 247, 0.2);
+        }
+
+        .course-image {
+            width: 100%;
+            height: 160px;
+            background: linear-gradient(135deg, rgba(76, 94, 247, 0.3), rgba(34, 211, 238, 0.3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .course-content {
+            padding: 1rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-category {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            background: rgba(76, 94, 247, 0.2);
+            color: #5d6eff;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            width: fit-content;
+        }
+
+        .course-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+            color: var(--color-text);
+        }
+
+        .course-meta {
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .course-stats {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .course-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--color-border);
+            margin-top: auto;
+        }
+
+        .course-rating {
+            display: flex;
+            gap: 0.25rem;
+            color: #f97316;
+            font-size: 0.9rem;
+        }
+
+        .course-price {
+            font-weight: 700;
+            color: #10b981;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+        }
+
+        .pagination-btn {
+            padding: 0.5rem 1rem;
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 0.5rem;
+            color: var(--color-text);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pagination-btn:hover {
+            border-color: #4c5ef7;
+            color: #4c5ef7;
+        }
+
+        .pagination-btn.active {
+            background: #4c5ef7;
+            color: white;
+            border-color: #4c5ef7;
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 1024px) {
+            .filters-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: relative;
+                top: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 1.75rem;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-bar {
+                flex-direction: column;
+            }
+
+            .filters-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-[var(--color-bg)]/80 backdrop-blur border-b border-[var(--color-border)]">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="/" class="flex items-center gap-2">
+                <i class="fas fa-graduation-cap text-2xl text-[#4c5ef7]"></i>
+                <span class="font-bold text-xl">IVS Learning</span>
+            </a>
+            
+            <nav class="hidden md:flex gap-8 items-center">
+                <a href="index-new.html" class="hover:text-[#4c5ef7] transition">Trang Chủ</a>
+                <a href="courses.html" class="text-[#4c5ef7] font-semibold transition">Khóa Học</a>
+                <a href="learning-paths.html" class="hover:text-[#4c5ef7] transition">Lộ Trình</a>
+                <a href="applications.html" class="hover:text-[#4c5ef7] transition">Ứng Dụng</a>
+            </nav>
+
+            <div id="header-auth-container" class="flex gap-3 items-center">
+                <a href="auth.html" class="px-4 py-2 rounded-lg hover:bg-[var(--color-bg-secondary)] transition">Đăng nhập</a>
+                <a href="auth.html" class="px-4 py-2 bg-[#4c5ef7] text-white rounded-lg hover:bg-[#3b4fd6] transition">Đăng ký</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="courses-page">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Tất Cả Khóa Học</h1>
+            <p class="page-subtitle">Khám phá hàng trăm khóa học từ các chuyên gia hàng đầu</p>
+        </div>
+
+        <!-- Search & Sort -->
+        <div class="search-bar">
+            <input 
+                type="text" 
+                class="search-input" 
+                placeholder="Tìm kiếm khóa học..." 
+                id="searchInput"
+            />
+            <select class="sort-select" id="sortSelect">
+                <option value="trending">Xu Hướng</option>
+                <option value="newest">Mới Nhất</option>
+                <option value="rating">Đánh Giá Cao</option>
+                <option value="popular">Phổ Biến</option>
+            </select>
+        </div>
+
+        <!-- Main Content -->
+        <div class="filters-container">
+            <!-- Sidebar Filters -->
+            <aside class="sidebar">
+                <!-- Category Filter -->
+                <div class="filter-group">
+                    <div class="filter-title">
+                        <i class="fas fa-folder"></i> Danh Mục
+                    </div>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox" value="programming" class="category-filter">
+                            <label>Lập Trình</label>
+                            <span class="filter-count">(45)</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" value="design" class="category-filter">
+                            <label>Thiết Kế</label>
+                            <span class="filter-count">(32)</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" value="data" class="category-filter">
+                            <label>Dữ Liệu</label>
+                            <span class="filter-count">(28)</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" value="ai" class="category-filter">
+                            <label>AI & ML</label>
+                            <span class="filter-count">(35)</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" value="mobile" class="category-filter">
+                            <label>Mobile</label>
+                            <span class="filter-count">(24)</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" value="business" class="category-filter">
+                            <label>Business</label>
+                            <span class="filter-count">(38)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Level Filter -->
+                <div class="filter-group">
+                    <div class="filter-title">
+                        <i class="fas fa-graduation-cap"></i> Cấp Độ
+                    </div>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox" value="beginner" class="level-filter">
+                            <label>Cơ Bản</label>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" value="intermediate" class="level-filter">
+                            <label>Trung Cấp</label>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" value="advanced" class="level-filter">
+                            <label>Nâng Cao</label>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Rating Filter -->
+                <div class="filter-group">
+                    <div class="filter-title">
+                        <i class="fas fa-star"></i> Đánh Giá
+                    </div>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox" value="5" class="rating-filter">
+                            <label>5 ⭐</label>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" value="4" class="rating-filter">
+                            <label>4+ ⭐</label>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" value="3" class="rating-filter">
+                            <label>3+ ⭐</label>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Price Filter -->
+                <div class="filter-group">
+                    <div class="filter-title">
+                        <i class="fas fa-tag"></i> Giá
+                    </div>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox" value="free" class="price-filter">
+                            <label>Miễn Phí</label>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" value="paid" class="price-filter">
+                            <label>Có Phí</label>
+                        </label>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Courses Content -->
+            <div class="courses-content">
+                <div class="results-header">
+                    <span class="results-count">
+                        Hiển thị <span id="resultCount">24</span> khóa học
+                    </span>
+                </div>
+
+                <div class="courses-grid" id="coursesGrid">
+                    <!-- Courses will be populated here -->
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination" id="pagination">
+                    <button class="pagination-btn active" onclick="goToPage(1)">1</button>
+                    <button class="pagination-btn" onclick="goToPage(2)">2</button>
+                    <button class="pagination-btn" onclick="goToPage(3)">3</button>
+                    <button class="pagination-btn" onclick="goToPage(4)">4</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[var(--color-bg-secondary)] border-t border-[var(--color-border)] py-12 mt-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h4 class="font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-graduation-cap text-[#4c5ef7]"></i> IVS Learning
+                    </h4>
+                    <p class="text-[var(--color-text-secondary)] text-sm">Nền tảng học tập trực tuyến hàng đầu</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Khám Phá</h4>
+                    <ul class="space-y-2 text-sm text-[var(--color-text-secondary)]">
+                        <li><a href="#" class="hover:text-[#4c5ef7] transition">Khóa Học</a></li>
+                        <li><a href="#" class="hover:text-[#4c5ef7] transition">Lộ Trình</a></li>
+                        <li><a href="#" class="hover:text-[#4c5ef7] transition">Ứng Dụng</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Công Ty</h4>
+                    <ul class="space-y-2 text-sm text-[var(--color-text-secondary)]">
+                        <li><a href="#" class="hover:text-[#4c5ef7] transition">Về Chúng Tôi</a></li>
+                        <li><a href="#" class="hover:text-[#4c5ef7] transition">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Hỗ Trợ</h4>
+                    <ul class="space-y-2 text-sm text-[var(--color-text-secondary)]">
+                        <li><a href="#" class="hover:text-[#4c5ef7] transition">Liên Hệ</a></li>
+                        <li><a href="#" class="hover:text-[#4c5ef7] transition">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-[var(--color-border)] pt-8 text-center text-[var(--color-text-secondary)] text-sm">
+                <p>&copy; 2024 IVS Learning Hub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+        import { firebaseConfig } from "/js/firebase-config.js";
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, (user) => {
+            const headerAuthContainer = document.getElementById('header-auth-container');
+            if (user) {
+                const emailPart = user.email.split('@')[0];
+                headerAuthContainer.innerHTML = `
+                    <a href="my-learning.html" class="px-4 py-2 rounded-lg hover:bg-[var(--color-bg-secondary)] transition">
+                        <i class="fas fa-book-open"></i> Khóa Học Của Tôi
+                    </a>
+                    <a href="dashboard.html" class="px-4 py-2 rounded-lg hover:bg-[var(--color-bg-secondary)] transition">
+                        ${emailPart}
+                    </a>
+                    <button class="px-4 py-2 bg-[#ef4444] text-white rounded-lg hover:bg-[#dc2626] transition logout-btn">
+                        Đăng Xuất
+                    </button>
+                `;
+                document.querySelectorAll('.logout-btn').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        await signOut(auth);
+                        window.location.reload();
+                    });
+                });
+            }
+        });
+
+        // Sample courses data
+        const coursesData = [
+            { id: 1, title: "React.js Từ Cơ Bản Đến Nâng Cao", category: "programming", level: "beginner", rating: 4.8, students: 2500, price: "Miễn Phí", icon: "📱" },
+            { id: 2, title: "UI/UX Design Masterclass", category: "design", level: "intermediate", rating: 4.9, students: 1800, price: "Miễn Phí", icon: "🎨" },
+            { id: 3, title: "Machine Learning Basics", category: "ai", level: "advanced", rating: 4.7, students: 1200, price: "Miễn Phí", icon: "🤖" },
+            { id: 4, title: "Data Analytics với Python & SQL", category: "data", level: "intermediate", rating: 4.6, students: 2000, price: "Miễn Phí", icon: "📊" },
+            { id: 5, title: "Docker & Kubernetes Essentials", category: "programming", level: "advanced", rating: 4.8, students: 1500, price: "Miễn Phí", icon: "🚀" },
+            { id: 6, title: "Product Management Essentials", category: "business", level: "beginner", rating: 4.9, students: 1900, price: "Miễn Phí", icon: "💼" },
+            { id: 7, title: "Advanced JavaScript", category: "programming", level: "advanced", rating: 4.7, students: 2200, price: "Miễn Phí", icon: "📝" },
+            { id: 8, title: "Flutter Mobile Development", category: "mobile", level: "intermediate", rating: 4.6, students: 1400, price: "Miễn Phí", icon: "📱" },
+            { id: 9, title: "Web Design Principles", category: "design", level: "beginner", rating: 4.8, students: 3000, price: "Miễn Phí", icon: "🎨" },
+            { id: 10, title: "Cloud Architecture with AWS", category: "programming", level: "advanced", rating: 4.5, students: 800, price: "Miễn Phí", icon: "☁️" },
+            { id: 11, title: "Deep Learning Advanced", category: "ai", level: "advanced", rating: 4.7, students: 600, price: "Miễn Phí", icon: "🧠" },
+            { id: 12, title: "Business Strategy 101", category: "business", level: "beginner", rating: 4.6, students: 2100, price: "Miễn Phí", icon: "📈" },
+        ];
+
+        function renderCourses(courses) {
+            const grid = document.getElementById('coursesGrid');
+            grid.innerHTML = courses.map(course => `
+                <div class="course-card">
+                    <div class="course-image">${course.icon}</div>
+                    <div class="course-content">
+                        <span class="course-category">${course.category}</span>
+                        <h3 class="course-title">${course.title}</h3>
+                        <div class="course-meta">
+                            <div class="course-stats">
+                                <i class="fas fa-users"></i> ${course.students.toLocaleString()}
+                            </div>
+                            <div class="course-rating">
+                                <i class="fas fa-star"></i> ${course.rating}
+                            </div>
+                        </div>
+                        <div class="course-footer">
+                            <span class="course-price">${course.price}</span>
+                            <button class="px-3 py-1 bg-[#4c5ef7] text-white text-sm rounded hover:bg-[#3b4fd6] transition">
+                                Chi Tiết
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize
+        renderCourses(coursesData);
+
+        window.goToPage = (page) => {
+            console.log('Go to page:', page);
+            renderCourses(coursesData);
+        };
+    </script>
+</body>
+</html>

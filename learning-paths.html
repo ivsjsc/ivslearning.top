@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html class="dark scroll-smooth" lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Lộ Trình Học - IVS Learning Hub</title>
+    <link href="/images/logo/logo.svg" rel="icon" type="image/svg+xml"/>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="css/tailwind.css" rel="stylesheet"/>
+    <link href="css/modern-ui.css" rel="stylesheet"/>
+    <link href="css/design-system.css" rel="stylesheet"/>
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
+    
+    <style>
+        .learning-paths-page {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #4c5ef7 0%, #22d3ee 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--color-text-secondary);
+        }
+
+        .paths-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .path-card {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .path-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4c5ef7, #22d3ee);
+        }
+
+        .path-card:hover {
+            transform: translateY(-8px);
+            border-color: #4c5ef7;
+            box-shadow: 0 12px 24px rgba(76, 94, 247, 0.2);
+        }
+
+        .path-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .path-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+        }
+
+        .path-description {
+            color: var(--color-text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        .path-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: 1.5rem;
+        }
+
+        .path-meta-item {
+            text-align: center;
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .path-meta-value {
+            display: block;
+            font-weight: 700;
+            color: #4c5ef7;
+            font-size: 1rem;
+        }
+
+        .path-difficulty {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            width: fit-content;
+        }
+
+        .difficulty-beginner {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .difficulty-intermediate {
+            background: rgba(249, 115, 22, 0.2);
+            color: #f97316;
+        }
+
+        .difficulty-advanced {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .path-btn {
+            background: #4c5ef7;
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .path-btn:hover {
+            background: #3b4fd6;
+            transform: translateY(-2px);
+        }
+
+        /* Detailed Paths */
+        .detailed-paths {
+            margin-top: 4rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--color-text);
+        }
+
+        .path-detail {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .path-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .path-detail-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-text);
+        }
+
+        .path-progress {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 8px;
+            background: var(--color-bg);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4c5ef7, #22d3ee);
+            width: 60%;
+        }
+
+        .progress-text {
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .courses-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .course-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 1rem;
+            background: var(--color-bg);
+            border-radius: 0.75rem;
+            border: 1px solid var(--color-border);
+            transition: all 0.2s ease;
+        }
+
+        .course-item:hover {
+            border-color: #4c5ef7;
+            background: rgba(76, 94, 247, 0.05);
+        }
+
+        .course-index {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #4c5ef7, #22d3ee);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .course-info h4 {
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 0.25rem;
+        }
+
+        .course-info p {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+        }
+
+        .course-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .course-status.pending {
+            background: rgba(249, 115, 22, 0.2);
+            color: #f97316;
+        }
+
+        .course-status.completed {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 1.75rem;
+            }
+
+            .paths-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .path-detail-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .path-progress {
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .progress-bar {
+                flex: 1;
+            }
+
+            .course-item {
+                grid-template-columns: auto 1fr;
+            }
+
+            .course-status {
+                grid-column: 2;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-[var(--color-bg)]/80 backdrop-blur border-b border-[var(--color-border)]">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="/" class="flex items-center gap-2">
+                <i class="fas fa-graduation-cap text-2xl text-[#4c5ef7]"></i>
+                <span class="font-bold text-xl">IVS Learning</span>
+            </a>
+            
+            <nav class="hidden md:flex gap-8 items-center">
+                <a href="index-new.html" class="hover:text-[#4c5ef7] transition">Trang Chủ</a>
+                <a href="courses.html" class="hover:text-[#4c5ef7] transition">Khóa Học</a>
+                <a href="learning-paths.html" class="text-[#4c5ef7] font-semibold transition">Lộ Trình</a>
+                <a href="applications.html" class="hover:text-[#4c5ef7] transition">Ứng Dụng</a>
+            </nav>
+
+            <div id="header-auth-container" class="flex gap-3 items-center">
+                <a href="auth.html" class="px-4 py-2 rounded-lg hover:bg-[var(--color-bg-secondary)] transition">Đăng nhập</a>
+                <a href="auth.html" class="px-4 py-2 bg-[#4c5ef7] text-white rounded-lg hover:bg-[#3b4fd6] transition">Đăng ký</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="learning-paths-page">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Lộ Trình Học Tập</h1>
+            <p class="page-subtitle">Các lộ trình học được thiết kế chuyên biệt để giúp bạn đạt được mục tiêu</p>
+        </div>
+
+        <!-- Paths Grid -->
+        <div class="paths-grid">
+            <!-- Full Stack Developer -->
+            <div class="path-card">
+                <div class="path-icon">🚀</div>
+                <h3 class="path-title">Full Stack Developer</h3>
+                <p class="path-description">Trở thành Full Stack Developer. Học frontend, backend, database và deployment.</p>
+                <div class="path-difficulty difficulty-advanced">Nâng Cao</div>
+                <div class="path-meta">
+                    <div class="path-meta-item">
+                        <span class="path-meta-value">8 Khóa</span>
+                        Courses
+                    </div>
+                    <div class="path-meta-item">
+                        <span class="path-meta-value">120h</span>
+                        Duration
+                    </div>
+                </div>
+                <button class="path-btn">Bắt Đầu Lộ Trình</button>
+            </div>
+
+            <!-- Web Developer -->
+            <div class="path-card">
+                <div class="path-icon">🌐</div>
+                <h3 class="path-title">Web Developer</h3>
+                <p class="path-description">Học HTML, CSS, JavaScript, React và xây dựng website hiện đại.</p>
+                <div class="path-difficulty difficulty-intermediate">Trung Cấp</div>
+                <div class="path-meta">
+                    <div class="path-meta-item">
+                        <span class="path-meta-value">5 Khóa</span>
+                        Courses
+                    </div>
+                    <div class="path-meta-item">
+                        <span class="path-meta-value">80h</span>
+                        Duration
+                    </div>
+                </div>
+                <button class="path-btn">Bắt Đầu Lộ Trình</button>
+            </div>
+
+            <!-- Data Scientist -->
+            <div class="path-card">
+                <div class="path-icon">📊</div>
+                <h3 class="path-title">Data Scientist</h3>
+                <p class="path-description">Python, Machine Learning, Deep Learning, Big Data Analytics.</p>
+                <div class="path-difficulty difficulty-advanced">Nâng Cao</div>
+                <div class="path-meta">
+                    <div class="path-meta-item">
+                        <span class="path-meta-value">7 Khóa</span>
+                        Courses
+                    </div>
+                    <div class="path-meta-item">
+                        <span class="path-meta-value">100h</span>
+                        Duration
+                    </div>
+                </div>
+                <button class="path-btn">Bắt Đầu Lộ Trình</button>
+            </div>
+
+            <!-- Mobile Developer -->
+            <div class="path-card">
+                <div class="path-icon">📱</div>
+                <h3 class="path-title">Mobile Developer</h3>
+                <p class="path-description">React Native, Flutter, iOS, Android development.</p>
+                <div class="path-difficulty difficulty-intermediate">Trung Cấp</div>
+                <div class="path-meta">
+                    <div class="path-meta-item">
+                        <span class="path-meta-value">6 Khóa</span>
+                        Courses
+                    </div>
+                    <div class="path-meta-item">
+                        <span class="path-meta-value">90h</span>
+                        Duration
+                    </div>
+                </div>
+                <button class="path-btn">Bắt Đầu Lộ Trình</button>
+            </div>
+
+            <!-- UI/UX Designer -->
+            <div class="path-card">
+                <div class="path-icon">🎨</div>
+                <h3 class="path-title">UI/UX Designer</h3>
+                <p class="path-description">Design thinking, Figma, Prototyping, User Research.</p>
+                <div class="path-difficulty difficulty-beginner">Cơ Bản</div>
+                <div class="path-meta">
+                    <div class="path-meta-item">
+                        <span class="path-meta-value">4 Khóa</span>
+                        Courses
+                    </div>
+                    <div class="path-meta-item">
+                        <span class="path-meta-value">60h</span>
+                        Duration
+                    </div>
+                </div>
+                <button class="path-btn">Bắt Đầu Lộ Trình</button>
+            </div>
+
+            <!-- DevOps Engineer -->
+            <div class="path-card">
+                <div class="path-icon">🚀</div>
+                <h3 class="path-title">DevOps Engineer</h3>
+                <p class="path-description">Docker, Kubernetes, CI/CD, Cloud, Infrastructure as Code.</p>
+                <div class="path-difficulty difficulty-advanced">Nâng Cao</div>
+                <div class="path-meta">
+                    <div class="path-meta-item">
+                        <span class="path-meta-value">6 Khóa</span>
+                        Courses
+                    </div>
+                    <div class="path-meta-item">
+                        <span class="path-meta-value">85h</span>
+                        Duration
+                    </div>
+                </div>
+                <button class="path-btn">Bắt Đầu Lộ Trình</button>
+            </div>
+        </div>
+
+        <!-- Detailed Paths -->
+        <div class="detailed-paths">
+            <h2 class="section-title">Chi Tiết Lộ Trình</h2>
+
+            <!-- Full Stack Path -->
+            <div class="path-detail">
+                <div class="path-detail-header">
+                    <h3 class="path-detail-title">🚀 Full Stack Developer Bootcamp</h3>
+                    <div class="path-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">60% hoàn thành</span>
+                    </div>
+                </div>
+
+                <div class="courses-list">
+                    <div class="course-item">
+                        <div class="course-index">1</div>
+                        <div class="course-info">
+                            <h4>JavaScript Fundamentals</h4>
+                            <p>JavaScript cơ bản - 20 giờ</p>
+                        </div>
+                        <div class="course-status completed">
+                            <i class="fas fa-check-circle"></i> Hoàn Thành
+                        </div>
+                    </div>
+
+                    <div class="course-item">
+                        <div class="course-index">2</div>
+                        <div class="course-info">
+                            <h4>React & Frontend</h4>
+                            <p>React.js từ cơ bản đến nâng cao - 40 giờ</p>
+                        </div>
+                        <div class="course-status completed">
+                            <i class="fas fa-check-circle"></i> Hoàn Thành
+                        </div>
+                    </div>
+
+                    <div class="course-item">
+                        <div class="course-index">3</div>
+                        <div class="course-info">
+                            <h4>Node.js & Backend</h4>
+                            <p>Node.js, Express, REST API - 30 giờ</p>
+                        </div>
+                        <div class="course-status pending">
+                            <i class="fas fa-clock"></i> Đang Học
+                        </div>
+                    </div>
+
+                    <div class="course-item">
+                        <div class="course-index">4</div>
+                        <div class="course-info">
+                            <h4>Database Design</h4>
+                            <p>SQL, MongoDB, Database Design - 20 giờ</p>
+                        </div>
+                        <div class="course-status pending">
+                            <i class="fas fa-circle"></i> Chưa Bắt Đầu
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Science Path -->
+            <div class="path-detail">
+                <div class="path-detail-header">
+                    <h3 class="path-detail-title">📊 Data Science Mastery</h3>
+                    <div class="path-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 30%;"></div>
+                        </div>
+                        <span class="progress-text">30% hoàn thành</span>
+                    </div>
+                </div>
+
+                <div class="courses-list">
+                    <div class="course-item">
+                        <div class="course-index">1</div>
+                        <div class="course-info">
+                            <h4>Python for Data Science</h4>
+                            <p>Python, Pandas, NumPy - 30 giờ</p>
+                        </div>
+                        <div class="course-status completed">
+                            <i class="fas fa-check-circle"></i> Hoàn Thành
+                        </div>
+                    </div>
+
+                    <div class="course-item">
+                        <div class="course-index">2</div>
+                        <div class="course-info">
+                            <h4>Data Analysis & Visualization</h4>
+                            <p>Matplotlib, Seaborn, Power BI - 25 giờ</p>
+                        </div>
+                        <div class="course-status pending">
+                            <i class="fas fa-clock"></i> Đang Học
+                        </div>
+                    </div>
+
+                    <div class="course-item">
+                        <div class="course-index">3</div>
+                        <div class="course-info">
+                            <h4>Machine Learning Basics</h4>
+                            <p>Scikit-learn, Algorithms - 35 giờ</p>
+                        </div>
+                        <div class="course-status pending">
+                            <i class="fas fa-circle"></i> Chưa Bắt Đầu
+                        </div>
+                    </div>
+
+                    <div class="course-item">
+                        <div class="course-index">4</div>
+                        <div class="course-info">
+                            <h4>Deep Learning Advanced</h4>
+                            <p>TensorFlow, PyTorch - 40 giờ</p>
+                        </div>
+                        <div class="course-status pending">
+                            <i class="fas fa-circle"></i> Chưa Bắt Đầu
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[var(--color-bg-secondary)] border-t border-[var(--color-border)] py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center text-[var(--color-text-secondary)] text-sm">
+                <p>&copy; 2024 IVS Learning Hub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+        import { firebaseConfig } from "/js/firebase-config.js";
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, (user) => {
+            const headerAuthContainer = document.getElementById('header-auth-container');
+            if (user) {
+                const emailPart = user.email.split('@')[0];
+                headerAuthContainer.innerHTML = `
+                    <a href="my-learning.html" class="px-4 py-2 rounded-lg hover:bg-[var(--color-bg-secondary)] transition">
+                        <i class="fas fa-book-open"></i> Khóa Học Của Tôi
+                    </a>
+                    <a href="dashboard.html" class="px-4 py-2 rounded-lg hover:bg-[var(--color-bg-secondary)] transition">
+                        ${emailPart}
+                    </a>
+                    <button class="px-4 py-2 bg-[#ef4444] text-white rounded-lg hover:bg-[#dc2626] transition logout-btn">
+                        Đăng Xuất
+                    </button>
+                `;
+                document.querySelectorAll('.logout-btn').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        await signOut(auth);
+                        window.location.reload();
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
