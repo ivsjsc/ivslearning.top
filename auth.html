@@ -253,6 +253,121 @@
             border: 1px solid rgba(239, 68, 68, 0.3);
             display: block;
         }
+
+        /* Social Auth Buttons */
+        .social-auth-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .social-auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-auth-divider::before,
+        .social-auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--color-border);
+        }
+
+        .social-auth-divider span {
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .social-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .btn-social {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            background: transparent;
+            color: var(--color-text);
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .btn-social:hover {
+            border-color: var(--color-secondary);
+            background: rgba(34, 211, 238, 0.05);
+            transform: translateY(-1px);
+        }
+
+        .btn-social i {
+            font-size: 1.125rem;
+        }
+
+        .btn-google {
+            border-color: #4285f4;
+            color: #4285f4;
+        }
+
+        .btn-google:hover {
+            background: rgba(66, 133, 244, 0.05);
+            border-color: #4285f4;
+            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.2);
+        }
+
+        .btn-facebook {
+            border-color: #1877f2;
+            color: #1877f2;
+        }
+
+        .btn-facebook:hover {
+            background: rgba(24, 119, 242, 0.05);
+            border-color: #1877f2;
+            box-shadow: 0 4px 12px rgba(24, 119, 242, 0.2);
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .auth-footer-text {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+        }
+
+        .auth-footer-link {
+            color: var(--color-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .auth-footer-link:hover {
+            color: var(--color-secondary-light);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 
@@ -277,6 +392,24 @@
 
                 <!-- Message -->
                 <div id="auth-message" class="auth-message"></div>
+
+                <!-- Social Auth Section -->
+                <div class="social-auth-section">
+                    <div class="social-buttons">
+                        <button type="button" id="google-signin" class="btn-social btn-google" title="Đăng nhập bằng Google">
+                            <i class="fab fa-google"></i>
+                            <span>Google</span>
+                        </button>
+                        <button type="button" id="facebook-signin" class="btn-social btn-facebook" title="Đăng nhập bằng Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                            <span>Facebook</span>
+                        </button>
+                    </div>
+
+                    <div class="social-auth-divider">
+                        <span>Hoặc</span>
+                    </div>
+                </div>
 
                 <!-- Login Form -->
                 <form id="auth-form">
@@ -312,6 +445,14 @@
                         </button>
                     </div>
                 </form>
+
+                <!-- Footer Section -->
+                <div class="auth-footer">
+                    <p class="auth-footer-text">
+                        Bạn chưa có tài khoản?
+                        <a href="#" class="auth-footer-link" id="go-to-signup">Đăng ký ngay</a>
+                    </p>
+                </div>
             </div>
         </div>
     </main>
@@ -340,7 +481,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
         import { firebaseConfig } from "/js/firebase-config.js";
 
         const app = initializeApp(firebaseConfig);
@@ -348,6 +489,7 @@
         const auth = getAuth(app);
         window.firebaseAuth = auth;
 
+        // ========== INITIALIZATION ==========
         // Password Toggle
         const passwordToggle = document.getElementById('password-toggle');
         const passwordInput = document.getElementById('password');
@@ -360,7 +502,7 @@
             });
         }
 
-        // Message Display
+        // ========== MESSAGE DISPLAY ==========
         function showMessage(message, type = 'error') {
             const authMessage = document.getElementById('auth-message');
             if (authMessage) {
@@ -372,7 +514,83 @@
             }
         }
 
-        // Login Form Handler
+        // ========== GOOGLE SIGN-IN ==========
+        const googleSigninBtn = document.getElementById('google-signin');
+        if (googleSigninBtn) {
+            googleSigninBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                googleSigninBtn.disabled = true;
+                googleSigninBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Đang kết nối...</span>';
+
+                try {
+                    const provider = new GoogleAuthProvider();
+                    provider.addScope('profile');
+                    provider.addScope('email');
+                    
+                    const result = await signInWithPopup(auth, provider);
+                    const user = result.user;
+                    
+                    showMessage(`Chào mừng ${user.displayName || user.email}!`, 'success');
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                } catch (error) {
+                    console.error('Google Sign-In Error:', error.code, error.message);
+                    
+                    if (error.code === 'auth/popup-blocked') {
+                        showMessage('Vui lòng cho phép popup để đăng nhập bằng Google');
+                    } else if (error.code === 'auth/popup-closed-by-user') {
+                        showMessage('Đã đóng cửa sổ đăng nhập');
+                    } else if (error.code === 'auth/unauthorized-domain') {
+                        showMessage('Tên miền này chưa được ủy quyền. Vui lòng liên hệ admin.');
+                    } else {
+                        showMessage('Lỗi đăng nhập với Google: ' + error.message);
+                    }
+                    
+                    googleSigninBtn.disabled = false;
+                    googleSigninBtn.innerHTML = '<i class="fab fa-google"></i> <span>Google</span>';
+                }
+            });
+        }
+
+        // ========== FACEBOOK SIGN-IN ==========
+        const facebookSigninBtn = document.getElementById('facebook-signin');
+        if (facebookSigninBtn) {
+            facebookSigninBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                facebookSigninBtn.disabled = true;
+                facebookSigninBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Đang kết nối...</span>';
+
+                try {
+                    const provider = new FacebookAuthProvider();
+                    provider.addScope('public_profile');
+                    provider.addScope('email');
+                    
+                    const result = await signInWithPopup(auth, provider);
+                    const user = result.user;
+                    
+                    showMessage(`Chào mừng ${user.displayName || user.email}!`, 'success');
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                } catch (error) {
+                    console.error('Facebook Sign-In Error:', error.code, error.message);
+                    
+                    if (error.code === 'auth/popup-blocked') {
+                        showMessage('Vui lòng cho phép popup để đăng nhập bằng Facebook');
+                    } else if (error.code === 'auth/popup-closed-by-user') {
+                        showMessage('Đã đóng cửa sổ đăng nhập');
+                    } else {
+                        showMessage('Lỗi đăng nhập với Facebook: ' + error.message);
+                    }
+                    
+                    facebookSigninBtn.disabled = false;
+                    facebookSigninBtn.innerHTML = '<i class="fab fa-facebook-f"></i> <span>Facebook</span>';
+                }
+            });
+        }
+
+        // ========== EMAIL/PASSWORD LOGIN ==========
         const authForm = document.getElementById('auth-form');
         const authSubmit = document.getElementById('auth-submit');
 
