@@ -1,226 +1,449 @@
-<!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html><!DOCTYPE html><!DOCTYPE html>
 
-<html class="dark scroll-smooth" lang="vi"><html class="dark scroll-smooth" lang="vi">
+<html class="dark scroll-smooth" lang="vi">
 
-<head><head>
+<head><html class="dark scroll-smooth" lang="vi"><html class="dark scroll-smooth" lang="vi">
 
-    <link crossorigin="" href="https://fonts.googleapis.com" rel="preconnect"/>    <link crossorigin="" href="https://fonts.googleapis.com" rel="preconnect"/>
+    <meta charset="utf-8"/>
 
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/><head><head>
 
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <title>Đăng Nhập - IVS Learning Hub</title>
 
-    <link href="//cdnjs.cloudflare.com" rel="dns-prefetch"/>    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <meta name="description" content="Đăng nhập vào IVS Learning Hub - Nền tảng học tập hiện đại của IVS JSC"/>    <link crossorigin="" href="https://fonts.googleapis.com" rel="preconnect"/>    <link crossorigin="" href="https://fonts.googleapis.com" rel="preconnect"/>
 
-    <link href="//fonts.gstatic.com" rel="dns-prefetch"/>    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="/images/logo/logo.svg" rel="icon" type="image/svg+xml"/>
 
-    <link href="//unpkg.com" rel="dns-prefetch"/>    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+        <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 
-    <meta charset="utf-8"/>    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <!-- Fonts -->
 
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 
-    <title>IVS Auth - Dang nhap Dang ky</title>    <link href="//cdnjs.cloudflare.com" rel="dns-prefetch"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <meta content="Dang nhap hoac dang ky tai khoan IVS JSC de trai nghiem toan bo he sinh thai giao duc, cong nghe va nhan su." name="description"/>    <link href="//fonts.gstatic.com" rel="dns-prefetch"/>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">    <link href="//cdnjs.cloudflare.com" rel="dns-prefetch"/>    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 
-    <meta content="IVS Auth, dang nhap IVS, dang ky IVS, tai khoan IVS" name="keywords"/>    <link href="//unpkg.com" rel="dns-prefetch"/>
+    
 
-    <link href="/images/logo/logo.svg" rel="icon" type="image/svg+xml"/>    <link as="style" href="css/style.css" rel="preload"/>
+    <!-- Styles -->    <link href="//fonts.gstatic.com" rel="dns-prefetch"/>    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 
-    <link href="css/tailwind.css" rel="stylesheet"/>    <meta charset="utf-8"/>
+    <link href="css/tailwind.css" rel="stylesheet"/>
 
-    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <link href="css/modern-ui.css" rel="stylesheet"/>    <link href="//unpkg.com" rel="dns-prefetch"/>    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>    <title>IVS Auth - ĐÄƒng nhập / ĐÄƒng kà½</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
-        <meta content="ĐÄƒng nhập hoáº·c đÄƒng kà½ tà i khoản IVS JSC đá»ƒ trải nghiá»‡m toà n bá»™ há»‡ sinh thái giáo dục, công nghá»‡ và  nhân sự. IVS JSC cung cạp dỉch vụ giáo dục chạt lưá»£ng cao, đ" data-lang-key="auth_meta_description" name="description"/>
+        <meta charset="utf-8"/>    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 
-    <!-- Firebase CDN v12.5.0 -->    <meta content="IVS Auth, đÄƒng nhập IVS, đÄƒng kà½ IVS, tà i khoản IVS, giáo dục, công nghá»‡, nhân sự" data-lang-key="auth_meta_keywords" name="keywords"/>
+    <style>
 
-    <script type="module">    <meta content="IVS Auth - ĐÄƒng nhập / ĐÄƒng kà½" data-lang-key="auth_og_title" property="og:title"/>
+        .auth-container {    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";    <meta content="Truy cập há»‡ sinh thái IVS JSC với tà i khoản cá nhân của bãn." data-lang-key="auth_og_description" property="og:description"/>
+            min-height: 100vh;
 
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";    <meta content="https://ivsacademy.edu.vn/images/banners/ivs_og_main.jpg" property="og:image"/>
+            display: flex;    <title>IVS Auth - Dang nhap Dang ky</title>    <link href="//cdnjs.cloudflare.com" rel="dns-prefetch"/>
 
-        import { getAuth } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";    <meta content="https://ivsacademy.edu.vn/auth.html" property="og:url"/>
+            align-items: center;
 
-    <meta content="website" property="og:type"/>
+            justify-content: center;    <meta content="Dang nhap hoac dang ky tai khoan IVS JSC de trai nghiem toan bo he sinh thai giao duc, cong nghe va nhan su." name="description"/>    <link href="//fonts.gstatic.com" rel="dns-prefetch"/>
 
-        const firebaseConfig = {    <link href="/images/logo/logo.svg" rel="icon" type="image/svg+xml"/>
+            padding: 16px;
 
-            apiKey: "AIzaSyAOxCF0PhA6s3DtvETux-kXGTXRTlpL4vs",    <link href="css/tailwind.css" rel="stylesheet"/>
+        }    <meta content="IVS Auth, dang nhap IVS, dang ky IVS, tai khoan IVS" name="keywords"/>    <link href="//unpkg.com" rel="dns-prefetch"/>
 
-            authDomain: "ivs-159a7.firebaseapp.com",    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
+        
 
-            projectId: "ivs-159a7",    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+        .auth-bg {    <link href="/images/logo/logo.svg" rel="icon" type="image/svg+xml"/>    <link as="style" href="css/style.css" rel="preload"/>
 
-            storageBucket: "ivs-159a7.firebasestorage.app",    <link href="css/styles.css" rel="stylesheet"/>
+            position: fixed;
 
-            messagingSenderId: "452959273724",    <!-- Firebase CDN v12.5.0 -->
+            inset: 0;    <link href="css/tailwind.css" rel="stylesheet"/>    <meta charset="utf-8"/>
 
-            appId: "1:452959273724:web:17a23e383fb1807c040d79",    <script type="module">
+            background: linear-gradient(135deg, rgba(76, 94, 247, 0.08), rgba(34, 211, 238, 0.08));
 
-            measurementId: "G-L4KG7BCTJE"        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+            z-index: -1;    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 
-        };        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
+        }
 
-        import { getAuth } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+            <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>    <title>IVS Auth - ĐÄƒng nhập / ĐÄƒng kà½</title>
 
-        const app = initializeApp(firebaseConfig);
+        .auth-card {
 
-        const analytics = getAnalytics(app);        const firebaseConfig = {
+            background: rgba(26, 26, 26, 0.95);        <meta content="ĐÄƒng nhập hoáº·c đÄƒng kà½ tà i khoản IVS JSC đá»ƒ trải nghiá»‡m toà n bá»™ há»‡ sinh thái giáo dục, công nghá»‡ và  nhân sự. IVS JSC cung cạp dỉch vụ giáo dục chạt lưá»£ng cao, đ" data-lang-key="auth_meta_description" name="description"/>
 
-        const auth = getAuth(app);            apiKey: "AIzaSyAOxCF0PhA6s3DtvETux-kXGTXRTlpL4vs",
+            border: 1px solid rgba(255, 255, 255, 0.1);
+
+            border-radius: 16px;    <!-- Firebase CDN v12.5.0 -->    <meta content="IVS Auth, đÄƒng nhập IVS, đÄƒng kà½ IVS, tà i khoản IVS, giáo dục, công nghá»‡, nhân sự" data-lang-key="auth_meta_keywords" name="keywords"/>
+
+            padding: 32px 24px;
+
+            width: 100%;    <script type="module">    <meta content="IVS Auth - ĐÄƒng nhập / ĐÄƒng kà½" data-lang-key="auth_og_title" property="og:title"/>
+
+            max-width: 420px;
+
+            backdrop-filter: blur(10px);        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";    <meta content="Truy cập há»‡ sinh thái IVS JSC với tà i khoản cá nhân của bãn." data-lang-key="auth_og_description" property="og:description"/>
+
+        }
+
+                import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";    <meta content="https://ivsacademy.edu.vn/images/banners/ivs_og_main.jpg" property="og:image"/>
+
+        @media (min-width: 640px) {
+
+            .auth-card {        import { getAuth } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";    <meta content="https://ivsacademy.edu.vn/auth.html" property="og:url"/>
+
+                padding: 40px 32px;
+
+                max-width: 480px;    <meta content="website" property="og:type"/>
+
+            }
+
+        }        const firebaseConfig = {    <link href="/images/logo/logo.svg" rel="icon" type="image/svg+xml"/>
+
+    </style>
+
+</head>            apiKey: "AIzaSyAOxCF0PhA6s3DtvETux-kXGTXRTlpL4vs",    <link href="css/tailwind.css" rel="stylesheet"/>
+
+<body>
+
+    <div class="auth-bg"></div>            authDomain: "ivs-159a7.firebaseapp.com",    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
+
+    
+
+    <!-- Header -->            projectId: "ivs-159a7",    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+
+    <header class="fixed top-0 left-0 right-0 z-50 bg-transparent">
+
+        <div class="max-w-6xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">            storageBucket: "ivs-159a7.firebasestorage.app",    <link href="css/styles.css" rel="stylesheet"/>
+
+            <a href="/" class="flex items-center gap-2 text-xl font-bold">
+
+                <i class="fas fa-graduation-cap text-cyan-400"></i>            messagingSenderId: "452959273724",    <!-- Firebase CDN v12.5.0 -->
+
+                <span>IVS Learning</span>
+
+            </a>            appId: "1:452959273724:web:17a23e383fb1807c040d79",    <script type="module">
+
+            <a href="/" class="text-sm text-cyan-400 hover:text-cyan-300 transition">
+
+                <i class="fas fa-arrow-left mr-2"></i>Quay lại            measurementId: "G-L4KG7BCTJE"        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+
+            </a>
+
+        </div>        };        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
+
+    </header>
+
+            import { getAuth } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+
+    <div class="auth-container">
+
+        <div class="auth-card">        const app = initializeApp(firebaseConfig);
+
+            <div class="text-center mb-8">
+
+                <h1 class="text-3xl font-bold mb-2">Đăng Nhập</h1>        const analytics = getAnalytics(app);        const firebaseConfig = {
+
+                <p class="text-gray-400">Truy cập IVS Learning Hub của bạn</p>
+
+            </div>        const auth = getAuth(app);            apiKey: "AIzaSyAOxCF0PhA6s3DtvETux-kXGTXRTlpL4vs",
+
+            
+
+            <!-- Auth Form -->            authDomain: "ivs-159a7.firebaseapp.com",
+
+            <form id="auth-form" class="space-y-4">
+
+                <div class="form-group">        window.firebaseApp = app;            projectId: "ivs-159a7",
+
+                    <label class="form-label" for="email">Email</label>
+
+                    <input         window.firebaseAuth = auth;            storageBucket: "ivs-159a7.firebasestorage.app",
+
+                        type="email" 
+
+                        id="email"         window.firebaseAnalytics = analytics;            messagingSenderId: "452959273724",
+
+                        class="form-input" 
+
+                        placeholder="your@email.com"    </script>            appId: "1:452959273724:web:17a23e383fb1807c040d79",
+
+                        required
+
+                    />            measurementId: "G-L4KG7BCTJE"
+
+                    <span class="form-error" id="email-error"></span>
+
+                </div>    <style>        };
+
+                
+
+                <div class="form-group">        :root {
+
+                    <label class="form-label" for="password">Mật khẩu</label>
+
+                    <div class="relative">            --ivs-bg: #1a1a1a;        const app = initializeApp(firebaseConfig);
+
+                        <input 
+
+                            type="password"             --ivs-card: #111111;        const analytics = getAnalytics(app);
+
+                            id="password" 
+
+                            class="form-input pr-10"             --ivs-border: #27272A;        const auth = getAuth(app);
+
+                            placeholder="••••••••"
+
+                            required            --ivs-blue: #4c5ef7;
+
+                        />
+
+                        <button             --ivs-cyan: #22d3ee;        window.firebaseApp = app;
+
+                            type="button" 
+
+                            id="toggle-password"            --ivs-text-primary: #f4f4f5;        window.firebaseAuth = auth;
+
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-200"
+
+                        >            --ivs-text-secondary: #a1a1aa;        window.firebaseAnalytics = analytics;
+
+                            <i class="fas fa-eye"></i>
+
+                        </button>        }    </script>
+
+                    </div>
+
+                    <span class="form-error" id="password-error"></span><style>
+
+                </div>
+
+                        * { box-sizing: border-box; }        body { font-family: 'Inter', sans-serif; }
+
+                <button type="submit" class="btn btn-primary btn-md w-full">
+
+                    <i class="fas fa-sign-in-alt"></i> Đăng Nhập        /* Auth Background video styles */
+
+                </button>
+
+            </form>        body {         .video-background {
+
+            
+
+            <div class="relative my-6">            background-color: var(--ivs-bg);            position: fixed;
+
+                <div class="absolute inset-0 flex items-center">
+
+                    <div class="w-full border-t border-gray-700"></div>            color: var(--ivs-text-primary);            top: 0;
+
+                </div>
+
+                <div class="relative flex justify-center text-sm">            font-family: 'Be Vietnam Pro', sans-serif;            left: 0;
+
+                    <span class="px-2 bg-gray-900 text-gray-400">hoặc</span>
+
+                </div>            min-height: 100vh;            width: 100%;
+
+            </div>
+
+                        margin: 0;            height: 100%;
+
+            <button id="signup-toggle" class="btn btn-outline btn-md w-full">
+
+                <i class="fas fa-user-plus"></i> Tạo Tài Khoản            padding: 0;            overflow: hidden;
+
+            </button>
+
+                    }            z-index: -1; /* Đáº·t video phía sau ná»™i dung */
+
+            <!-- Status Messages -->
+
+            <div id="auth-message" class="mt-4 p-3 rounded-lg hidden"></div>        }
+
+            
+
+            <!-- Footer Links -->        /* Video background */        .video-background video {
+
+            <div class="mt-6 text-center">
+
+                <a href="#" class="text-sm text-cyan-400 hover:text-cyan-300">Quên mật khẩu?</a>        .video-background {            min-width: 100%;
+
+            </div>
+
+        </div>            position: fixed;            min-height: 100%;
+
+    </div>
+
+                top: 0;            width: auto;
+
+    <!-- Footer -->
+
+    <footer class="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-800 py-3 px-4">            left: 0;            height: auto;
+
+        <p class="text-xs text-gray-500 text-center">
+
+            &copy; 2025 IVS JSC. Tất cả quyền được bảo lưu.            width: 100%;            position: absolute;
+
+        </p>
+
+    </footer>            height: 100%;            top: 50%;
+
+    
+
+    <!-- Firebase -->            overflow: hidden;            left: 50%;
+
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";            z-index: -1;            transform: translate(-50%, -50%);
+
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+
+                }            object-fit: cover; /* Đảm bảo video bao phủ toà n bá»™ */
+
+        const firebaseConfig = {
+
+            apiKey: "AIzaSyAOxCF0PhA6s3DtvETux-kXGTXRTlpL4vs",            filter: brightness(0.4) grayscale(0.5); /* Tồi và  là m xám nhẹ video */
 
             authDomain: "ivs-159a7.firebaseapp.com",
 
-        window.firebaseApp = app;            projectId: "ivs-159a7",
+            projectId: "ivs-159a7",        .video-background video {        }
 
-        window.firebaseAuth = auth;            storageBucket: "ivs-159a7.firebasestorage.app",
+            storageBucket: "ivs-159a7.appspot.com",
 
-        window.firebaseAnalytics = analytics;            messagingSenderId: "452959273724",
+            messagingSenderId: "452959273724",            width: 100%;        .video-overlay {
 
-    </script>            appId: "1:452959273724:web:17a23e383fb1807c040d79",
+            appId: "1:452959273724:web:17a23e383fb1807c040d79"
 
-            measurementId: "G-L4KG7BCTJE"
+        };            height: 100%;            position: fixed;
 
-    <style>        };
+        
 
-        :root {
+        const app = initializeApp(firebaseConfig);            object-fit: cover;            top: 0;
 
-            --ivs-bg: #1a1a1a;        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
 
-            --ivs-card: #111111;        const analytics = getAnalytics(app);
+                    filter: brightness(0.3) blur(4px);            left: 0;
 
-            --ivs-border: #27272A;        const auth = getAuth(app);
+        const form = document.getElementById('auth-form');
 
-            --ivs-blue: #4c5ef7;
+        const emailInput = document.getElementById('email');        }            width: 100%;
 
-            --ivs-cyan: #22d3ee;        window.firebaseApp = app;
+        const passwordInput = document.getElementById('password');
 
-            --ivs-text-primary: #f4f4f5;        window.firebaseAuth = auth;
+        const toggleBtn = document.getElementById('toggle-password');            height: 100%;
 
-            --ivs-text-secondary: #a1a1aa;        window.firebaseAnalytics = analytics;
+        const signupToggle = document.getElementById('signup-toggle');
 
-        }    </script>
+        const messageDiv = document.getElementById('auth-message');        .video-overlay {            background-color: rgba(13, 17, 23, 0.7); /* Lá»›p phủ mà u tồi */
 
-<style>
+        
 
-        * { box-sizing: border-box; }        body { font-family: 'Inter', sans-serif; }
+        let isSignup = false;            position: fixed;            z-index: -1; /* Đảm bảo náº±m tràªn video nhưng dưá»›i ná»™i dung */
 
-        /* Auth Background video styles */
+        
 
-        body {         .video-background {
+        // Toggle password visibility            top: 0;        }
 
-            background-color: var(--ivs-bg);            position: fixed;
+        toggleBtn.addEventListener('click', () => {
 
-            color: var(--ivs-text-primary);            top: 0;
+            const type = passwordInput.type === 'password' ? 'text' : 'password';            left: 0;
 
-            font-family: 'Be Vietnam Pro', sans-serif;            left: 0;
+            passwordInput.type = type;
 
-            min-height: 100vh;            width: 100%;
+            toggleBtn.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';            width: 100%;        .auth-card {
 
-            margin: 0;            height: 100%;
+        });
 
-            padding: 0;            overflow: hidden;
+                    height: 100%;            background-color: var(--ivs-card); /* Mà u nền thẻ đÄƒng nhập */
 
-        }            z-index: -1; /* Đáº·t video phía sau ná»™i dung */
+        // Toggle signup mode
+
+        signupToggle.addEventListener('click', (e) => {            background-color: rgba(26, 26, 26, 0.6);            border: 1px solid var(--ivs-border);
+
+            e.preventDefault();
+
+            isSignup = !isSignup;            z-index: -1;            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.4);
+
+            form.querySelector('button[type="submit"]').innerHTML = isSignup 
+
+                ? '<i class="fas fa-user-plus"></i> Tạo Tài Khoản'         }            backdrop-filter: blur(8px); /* Hiá»‡u á»©ng má» nền */
+
+                : '<i class="fas fa-sign-in-alt"></i> Đăng Nhập';
+
+            signupToggle.innerHTML = isSignup         }
+
+                ? '<i class="fas fa-sign-in-alt"></i> Quay về Đăng Nhập' 
+
+                : '<i class="fas fa-user-plus"></i> Tạo Tài Khoản';        .auth-container {        .form-input {
+
+        });
+
+                    min-height: 100vh;            background-color: var(--ivs-bg);
+
+        // Handle form submission
+
+        form.addEventListener('submit', async (e) => {            display: flex;            border-color: var(--ivs-border);
+
+            e.preventDefault();
+
+                        align-items: center;            color: var(--ivs-text-primary);
+
+            const email = emailInput.value;
+
+            const password = passwordInput.value;            justify-content: center;        }
+
+            
+
+            messageDiv.classList.add('hidden');            padding: 1rem;        .form-input:focus {
+
+            
+
+            try {            position: relative;            border-color: var(--ivs-blue);
+
+                if (isSignup) {
+
+                    await createUserWithEmailAndPassword(auth, email, password);            z-index: 10;            box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.5);
+
+                    showMessage('Tạo tài khoản thành công! Đang chuyển hướng...', 'success');
+
+                    setTimeout(() => window.location.href = 'dashboard.html', 1500);            padding-top: 5rem;        }
+
+                } else {
+
+                    await signInWithEmailAndPassword(auth, email, password);        }        .loading-spinner {
+
+                    showMessage('Đăng nhập thành công! Đang chuyển hướng...', 'success');
+
+                    setTimeout(() => window.location.href = 'dashboard.html', 1500);            border: 2px solid rgba(255, 255, 255, 0.3);
+
+                }
+
+            } catch (error) {        .auth-card {            border-top: 2px solid #fff;
+
+                showMessage(error.message, 'error');
+
+            }            background-color: rgba(17, 17, 17, 0.95);            border-radius: 50%;
+
+        });
+
+                    border: 2px solid rgba(76, 94, 247, 0.3);            width: 1rem;
+
+        function showMessage(text, type) {
+
+            messageDiv.textContent = text;            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.6);            height: 1rem;
+
+            messageDiv.className = `p-3 rounded-lg ${type === 'success' ? 'bg-green-900 text-green-200' : 'bg-red-900 text-red-200'}`;
+
+            messageDiv.classList.remove('hidden');            backdrop-filter: blur(10px);            animation: spin 1s linear infinite;
 
         }
 
-        /* Video background */        .video-background video {
+    </script>            border-radius: 12px;            display: inline-block;
 
-        .video-background {            min-width: 100%;
+</body>
 
-            position: fixed;            min-height: 100%;
+</html>            padding: 2rem;            margin-left: 0.5rem;
 
-            top: 0;            width: auto;
-
-            left: 0;            height: auto;
-
-            width: 100%;            position: absolute;
-
-            height: 100%;            top: 50%;
-
-            overflow: hidden;            left: 50%;
-
-            z-index: -1;            transform: translate(-50%, -50%);
-
-        }            object-fit: cover; /* Đảm bảo video bao phủ toà n bá»™ */
-
-            filter: brightness(0.4) grayscale(0.5); /* Tồi và  là m xám nhẹ video */
-
-        .video-background video {        }
-
-            width: 100%;        .video-overlay {
-
-            height: 100%;            position: fixed;
-
-            object-fit: cover;            top: 0;
-
-            filter: brightness(0.3) blur(4px);            left: 0;
-
-        }            width: 100%;
-
-            height: 100%;
-
-        .video-overlay {            background-color: rgba(13, 17, 23, 0.7); /* Lá»›p phủ mà u tồi */
-
-            position: fixed;            z-index: -1; /* Đảm bảo náº±m tràªn video nhưng dưá»›i ná»™i dung */
-
-            top: 0;        }
-
-            left: 0;
-
-            width: 100%;        .auth-card {
-
-            height: 100%;            background-color: var(--ivs-card); /* Mà u nền thẻ đÄƒng nhập */
-
-            background-color: rgba(26, 26, 26, 0.6);            border: 1px solid var(--ivs-border);
-
-            z-index: -1;            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.4);
-
-        }            backdrop-filter: blur(8px); /* Hiá»‡u á»©ng má» nền */
-
-        }
-
-        .auth-container {        .form-input {
-
-            min-height: 100vh;            background-color: var(--ivs-bg);
-
-            display: flex;            border-color: var(--ivs-border);
-
-            align-items: center;            color: var(--ivs-text-primary);
-
-            justify-content: center;        }
-
-            padding: 1rem;        .form-input:focus {
-
-            position: relative;            border-color: var(--ivs-blue);
-
-            z-index: 10;            box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.5);
-
-            padding-top: 5rem;        }
-
-        }        .loading-spinner {
-
-            border: 2px solid rgba(255, 255, 255, 0.3);
-
-        .auth-card {            border-top: 2px solid #fff;
-
-            background-color: rgba(17, 17, 17, 0.95);            border-radius: 50%;
-
-            border: 2px solid rgba(76, 94, 247, 0.3);            width: 1rem;
-
-            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.6);            height: 1rem;
-
-            backdrop-filter: blur(10px);            animation: spin 1s linear infinite;
-
-            border-radius: 12px;            display: inline-block;
-
-            padding: 2rem;            margin-left: 0.5rem;
 
             width: 100%;        }
 
