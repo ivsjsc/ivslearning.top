@@ -368,19 +368,6 @@
             once: true
         });
     </script>
-    <!-- Component Loader v2 - Load header, footer, bottom nav -->
-    <script defer src="/js/component-loader-v2.js"></script>
-
-    <!-- Load Footer Component -->
-    <script>
-        fetch('/components/footer.html')
-            .then(r => r.text())
-            .then(html => {
-                const container = document.getElementById('app-footer-container');
-                if (container) container.innerHTML = html;
-            })
-            .catch(e => console.error('Footer load error:', e));
-    </script>
 
     <!-- API Service Initialization -->
     <script>
