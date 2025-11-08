@@ -30,7 +30,12 @@
         #header-placeholder { position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); z-index: 1000; background-color: rgba(10, 10, 10, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid #1f2937; }
         section { scroll-margin-top: calc(var(--header-height) + 1rem); padding: 4rem 1rem; }
         @media (min-width: 768px) { section { padding: 6rem 2rem; } }
-        .text-gradient { background: linear-gradient(90deg, #4c5ef7, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .text-gradient { 
+            background: linear-gradient(90deg, #4c5ef7, #22d3ee); 
+            background-clip: text;
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
         .interactive-card { background: #111111; border: 1px solid #27272A; transition: all 0.3s ease; }
         .interactive-card:hover { transform: translateY(-8px); box-shadow: 0 10px 20px -5px rgba(76, 94, 247, 0.2); border-color: #4c5ef7; }
         .pricing-card-premium { border: 2px solid #22d3ee; transform: scale(1.05); box-shadow: 0 0 40px rgba(34, 211, 238, 0.3); }
