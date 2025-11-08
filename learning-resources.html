@@ -16,9 +16,8 @@
     <!-- Firebase CDN v12.5.0 -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
-        // Cấu hình Firebase (Lấy từ ivslearning.top/js/firebase.js)
         const firebaseConfig = {
             apiKey: "AIzaSyAOxCF0PhA6s3DtvETux-kXGTXRTlpL4vs",
             authDomain: "ivs-159a7.firebaseapp.com",
@@ -30,49 +29,7 @@
         };
 
         const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        window.firebaseAuth = auth;
-
-        onAuthStateChanged(auth, (user) => {
-            const authContainer = document.getElementById('auth-status-container');
-            if (authContainer) {
-                if (user) {
-                    const email = user.email.split('@')[0];
-                    authContainer.innerHTML = `
-                        <div class="dropdown relative">
-                            <button id="user-menu-btn" class="flex items-center text-white bg-ivs-blue px-3 py-1.5 rounded-full hover:bg-blue-600 transition-colors">
-                                <i class="fas fa-user-circle mr-2"></i> ${email}
-                                <i class="fas fa-chevron-down ml-2 text-xs"></i>
-                            </button>
-                            <div id="user-dropdown-menu" class="hidden absolute right-0 top-10 w-48 bg-ivs-card border ivs-border rounded-lg shadow-xl z-10">
-                                <a href="dashboard.html" class="block px-4 py-2 hover:bg-gray-800 text-sm"><i class="fas fa-tachometer-alt mr-2"></i> Dashboard</a>
-                                <a href="profile.html" class="block px-4 py-2 hover:bg-gray-800 text-sm"><i class="fas fa-cog mr-2"></i> Hồ sơ cá nhân</a>
-                                <hr class="border-ivs-border">
-                                <button id="logout-btn-dropdown" class="w-full text-left block px-4 py-2 hover:bg-red-600/20 text-sm text-ivs-red transition-colors"><i class="fas fa-sign-out-alt mr-2"></i> Đăng xuất</button>
-                            </div>
-                        </div>
-                    `;
-
-                    document.getElementById('user-menu-btn').addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        document.getElementById('user-dropdown-menu').classList.toggle('hidden');
-                    });
-                    document.getElementById('logout-btn-dropdown').addEventListener('click', async () => {
-                        await signOut(auth);
-                        window.location.href = 'index.html';
-                    });
-                    document.addEventListener('click', () => {
-                        document.getElementById('user-dropdown-menu')?.classList.add('hidden');
-                    });
-                } else {
-                    authContainer.innerHTML = `
-                        <a href="auth.html" class="bg-ivs-blue text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-600 transition-colors">
-                            <i class="fas fa-sign-in-alt mr-2"></i> Đăng nhập
-                        </a>
-                    `;
-                }
-            }
-        });
+        window.firebaseAuth = getAuth(app);
     </script>
     <style>
         body { background-color: var(--ivs-bg); color: var(--ivs-text-primary); font-family: 'Be Vietnam Pro', sans-serif; }
@@ -391,6 +348,7 @@
     
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script defer src="/js/component-loader.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             AOS.init({

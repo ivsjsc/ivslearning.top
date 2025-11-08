@@ -21,13 +21,31 @@
     <meta content="IVS JSC" name="author"/>
     <link href="/images/logo/logo.svg" rel="icon" type="image/svg+xml"/>
     <link href="/css/tailwind.css" rel="stylesheet"/>
+    <link href="/css/modern-ui.css" rel="stylesheet"/>
     <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
     <script defer src="/js/language-init.js"></script>
+    <!-- Firebase Init -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAOxCF0PhA6s3DtvETux-kXGTXRTlpL4vs",
+            authDomain: "ivs-159a7.firebaseapp.com",
+            projectId: "ivs-159a7",
+            storageBucket: "ivs-159a7.firebasestorage.app",
+            messagingSenderId: "452959273724",
+            appId: "1:452959273724:web:17a23e383fb1807c040d79",
+            measurementId: "G-L4KG7BCTJE"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        window.firebaseAuth = getAuth(app);
+    </script>
 <style>
         :root { --header-height: 4rem; }
-        body { background-color: #1a1a1a; color: #f4f4f5; font-family: 'Be Vietnam Pro', sans-serif; overflow-x: hidden; padding-top: var(--header-height); }
-        #header-placeholder { position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); z-index: 1000; background-color: rgba(10, 10, 10, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid #1f2937; }
+        body { background-color: #1a1a1a; color: #f4f4f5; font-family: 'Be Vietnam Pro', sans-serif; overflow-x: hidden; }
         section { scroll-margin-top: calc(var(--header-height) + 1rem); padding: 4rem 1rem; }
         @media (min-width: 768px) { section { padding: 6rem 2rem; } }
         .interactive-card { background: #111111; border: 1px solid #27272A; transition: all 0.3s ease; }
@@ -38,9 +56,7 @@
 </head>
 <body class="bg-ivs-bg text-ivs-text-primary font-inter">
 
-<header id="header-placeholder"></header>
-
-<main>
+<main class="pt-20">
     <!-- Full Screen Hero Video Section -->
     <section class="relative h-screen flex items-center justify-center text-center p-0 overflow-hidden">
         <video autoplay loop muted playsinline class="absolute z-0 w-auto min-w-full min-h-full max-w-none">
@@ -141,15 +157,17 @@
                 <span data-lang-key="contact_us">Liên Hệ Ngay</span> <i class="fas fa-arrow-right ml-2"></i>
             </a>
         </div>
-    </section>
-
 </main>
-
-<footer id="footer-placeholder"></footer>
-<div id="fab-container-placeholder"></div>
 
 <!-- Scripts -->
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<script defer src="/js/component-loader.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        AOS.init({ duration: 1000, once: true });
+    });
+</script>
 <script defer src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="/js/utils.js"></script>
 <script src="/js/language.js"></script>
