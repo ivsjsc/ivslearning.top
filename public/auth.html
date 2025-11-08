@@ -1,0 +1,500 @@
+<!DOCTYPE html><!DOCTYPE html>
+
+<html class="dark scroll-smooth" lang="vi"><html class="dark scroll-smooth" lang="vi">
+
+<head><head>
+
+    <link crossorigin="" href="https://fonts.googleapis.com" rel="preconnect"/>    <link crossorigin="" href="https://fonts.googleapis.com" rel="preconnect"/>
+
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+
+    <link href="//cdnjs.cloudflare.com" rel="dns-prefetch"/>    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+
+    <link href="//fonts.gstatic.com" rel="dns-prefetch"/>    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+
+    <link href="//unpkg.com" rel="dns-prefetch"/>    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+
+    <meta charset="utf-8"/>    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+
+    <title>IVS Auth - Dang nhap Dang ky</title>    <link href="//cdnjs.cloudflare.com" rel="dns-prefetch"/>
+
+    <meta content="Dang nhap hoac dang ky tai khoan IVS JSC de trai nghiem toan bo he sinh thai giao duc, cong nghe va nhan su." name="description"/>    <link href="//fonts.gstatic.com" rel="dns-prefetch"/>
+
+    <meta content="IVS Auth, dang nhap IVS, dang ky IVS, tai khoan IVS" name="keywords"/>    <link href="//unpkg.com" rel="dns-prefetch"/>
+
+    <link href="/images/logo/logo.svg" rel="icon" type="image/svg+xml"/>    <link as="style" href="css/style.css" rel="preload"/>
+
+    <link href="css/tailwind.css" rel="stylesheet"/>    <meta charset="utf-8"/>
+
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>    <title>IVS Auth - ĐÄƒng nhập / ĐÄƒng kà½</title>
+
+        <meta content="ĐÄƒng nhập hoáº·c đÄƒng kà½ tà i khoản IVS JSC đá»ƒ trải nghiá»‡m toà n bá»™ há»‡ sinh thái giáo dục, công nghá»‡ và  nhân sự. IVS JSC cung cạp dỉch vụ giáo dục chạt lưá»£ng cao, đ" data-lang-key="auth_meta_description" name="description"/>
+
+    <!-- Firebase CDN v12.5.0 -->    <meta content="IVS Auth, đÄƒng nhập IVS, đÄƒng kà½ IVS, tà i khoản IVS, giáo dục, công nghá»‡, nhân sự" data-lang-key="auth_meta_keywords" name="keywords"/>
+
+    <script type="module">    <meta content="IVS Auth - ĐÄƒng nhập / ĐÄƒng kà½" data-lang-key="auth_og_title" property="og:title"/>
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";    <meta content="Truy cập há»‡ sinh thái IVS JSC với tà i khoản cá nhân của bãn." data-lang-key="auth_og_description" property="og:description"/>
+
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";    <meta content="https://ivsacademy.edu.vn/images/banners/ivs_og_main.jpg" property="og:image"/>
+
+        import { getAuth } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";    <meta content="https://ivsacademy.edu.vn/auth.html" property="og:url"/>
+
+    <meta content="website" property="og:type"/>
+
+        const firebaseConfig = {    <link href="/images/logo/logo.svg" rel="icon" type="image/svg+xml"/>
+
+            apiKey: "AIzaSyAOxCF0PhA6s3DtvETux-kXGTXRTlpL4vs",    <link href="css/tailwind.css" rel="stylesheet"/>
+
+            authDomain: "ivs-159a7.firebaseapp.com",    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
+
+            projectId: "ivs-159a7",    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+
+            storageBucket: "ivs-159a7.firebasestorage.app",    <link href="css/styles.css" rel="stylesheet"/>
+
+            messagingSenderId: "452959273724",    <!-- Firebase CDN v12.5.0 -->
+
+            appId: "1:452959273724:web:17a23e383fb1807c040d79",    <script type="module">
+
+            measurementId: "G-L4KG7BCTJE"        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+
+        };        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
+
+        import { getAuth } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+
+        const app = initializeApp(firebaseConfig);
+
+        const analytics = getAnalytics(app);        const firebaseConfig = {
+
+        const auth = getAuth(app);            apiKey: "AIzaSyAOxCF0PhA6s3DtvETux-kXGTXRTlpL4vs",
+
+            authDomain: "ivs-159a7.firebaseapp.com",
+
+        window.firebaseApp = app;            projectId: "ivs-159a7",
+
+        window.firebaseAuth = auth;            storageBucket: "ivs-159a7.firebasestorage.app",
+
+        window.firebaseAnalytics = analytics;            messagingSenderId: "452959273724",
+
+    </script>            appId: "1:452959273724:web:17a23e383fb1807c040d79",
+
+            measurementId: "G-L4KG7BCTJE"
+
+    <style>        };
+
+        :root {
+
+            --ivs-bg: #1a1a1a;        const app = initializeApp(firebaseConfig);
+
+            --ivs-card: #111111;        const analytics = getAnalytics(app);
+
+            --ivs-border: #27272A;        const auth = getAuth(app);
+
+            --ivs-blue: #4c5ef7;
+
+            --ivs-cyan: #22d3ee;        window.firebaseApp = app;
+
+            --ivs-text-primary: #f4f4f5;        window.firebaseAuth = auth;
+
+            --ivs-text-secondary: #a1a1aa;        window.firebaseAnalytics = analytics;
+
+        }    </script>
+
+<style>
+
+        * { box-sizing: border-box; }        body { font-family: 'Inter', sans-serif; }
+
+        /* Auth Background video styles */
+
+        body {         .video-background {
+
+            background-color: var(--ivs-bg);            position: fixed;
+
+            color: var(--ivs-text-primary);            top: 0;
+
+            font-family: 'Be Vietnam Pro', sans-serif;            left: 0;
+
+            min-height: 100vh;            width: 100%;
+
+            margin: 0;            height: 100%;
+
+            padding: 0;            overflow: hidden;
+
+        }            z-index: -1; /* Đáº·t video phía sau ná»™i dung */
+
+        }
+
+        /* Video background */        .video-background video {
+
+        .video-background {            min-width: 100%;
+
+            position: fixed;            min-height: 100%;
+
+            top: 0;            width: auto;
+
+            left: 0;            height: auto;
+
+            width: 100%;            position: absolute;
+
+            height: 100%;            top: 50%;
+
+            overflow: hidden;            left: 50%;
+
+            z-index: -1;            transform: translate(-50%, -50%);
+
+        }            object-fit: cover; /* Đảm bảo video bao phủ toà n bá»™ */
+
+            filter: brightness(0.4) grayscale(0.5); /* Tồi và  là m xám nhẹ video */
+
+        .video-background video {        }
+
+            width: 100%;        .video-overlay {
+
+            height: 100%;            position: fixed;
+
+            object-fit: cover;            top: 0;
+
+            filter: brightness(0.3) blur(4px);            left: 0;
+
+        }            width: 100%;
+
+            height: 100%;
+
+        .video-overlay {            background-color: rgba(13, 17, 23, 0.7); /* Lá»›p phủ mà u tồi */
+
+            position: fixed;            z-index: -1; /* Đảm bảo náº±m tràªn video nhưng dưá»›i ná»™i dung */
+
+            top: 0;        }
+
+            left: 0;
+
+            width: 100%;        .auth-card {
+
+            height: 100%;            background-color: var(--ivs-card); /* Mà u nền thẻ đÄƒng nhập */
+
+            background-color: rgba(26, 26, 26, 0.6);            border: 1px solid var(--ivs-border);
+
+            z-index: -1;            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.4);
+
+        }            backdrop-filter: blur(8px); /* Hiá»‡u á»©ng má» nền */
+
+        }
+
+        .auth-container {        .form-input {
+
+            min-height: 100vh;            background-color: var(--ivs-bg);
+
+            display: flex;            border-color: var(--ivs-border);
+
+            align-items: center;            color: var(--ivs-text-primary);
+
+            justify-content: center;        }
+
+            padding: 1rem;        .form-input:focus {
+
+            position: relative;            border-color: var(--ivs-blue);
+
+            z-index: 10;            box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.5);
+
+            padding-top: 5rem;        }
+
+        }        .loading-spinner {
+
+            border: 2px solid rgba(255, 255, 255, 0.3);
+
+        .auth-card {            border-top: 2px solid #fff;
+
+            background-color: rgba(17, 17, 17, 0.95);            border-radius: 50%;
+
+            border: 2px solid rgba(76, 94, 247, 0.3);            width: 1rem;
+
+            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.6);            height: 1rem;
+
+            backdrop-filter: blur(10px);            animation: spin 1s linear infinite;
+
+            border-radius: 12px;            display: inline-block;
+
+            padding: 2rem;            margin-left: 0.5rem;
+
+            width: 100%;        }
+
+            max-width: 480px;        @keyframes spin {
+
+        }            0% { transform: rotate(0deg); }
+
+            100% { transform: rotate(360deg); }
+
+        .form-group { margin-bottom: 1.25rem; }        }
+
+    </style>
+
+        .form-label {<link href="css/style.css" rel="stylesheet"/>
+
+            display: block;<link href="css/animations.css" rel="stylesheet"/>
+
+            font-size: 0.875rem;<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+
+            font-weight: 500;</head>
+
+            color: var(--ivs-text-secondary);<body class="bg-ivs-bg text-ivs-text-primary antialiased">
+
+            margin-bottom: 0.5rem;<header id="header-placeholder"></header>
+
+        }<div class="video-background">
+
+<video autoplay="" loop="" muted="" playsinline="">
+
+        .form-input {<source src="videos/ivsblue.mp4" type="video/mp4"/>
+
+            width: 100%;            Trà¬nh duyá»‡t của bãn không hộ trá»£ thẻ video.
+
+            padding: 0.75rem 1rem;        </video>
+
+            background-color: var(--ivs-bg);</div>
+
+            border: 1px solid var(--ivs-border);<div class="video-overlay"></div>
+
+            border-radius: 0.5rem;<main class="min-h-screen flex items-center justify-center p-4">
+
+            color: var(--ivs-text-primary);<div class="auth-card p-8 rounded-xl w-full max-w-md relative z-10"> 
+
+            font-size: 1rem;<h2 class="text-3xl font-bold font-display text-center text-ivs-text-primary mb-6" id="auth-title">ĐÄƒng nhập</h2>
+
+            transition: all 0.2s;<form class="space-y-5" id="auth-form">
+
+        }<div>
+
+<label class="block text-sm font-medium text-ivs-text-secondary mb-1" for="email">Email</label>
+
+        .form-input:focus {<input class="form-input mt-1 block w-full px-4 py-2 rounded-md shadow-sm focus:outline-none sm:text-sm" id="email" name="email" required="" type="email"/>
+
+            outline: none;</div>
+
+            border-color: var(--ivs-blue);<div>
+
+            box-shadow: 0 0 0 3px rgba(76, 94, 247, 0.1);<label class="block text-sm font-medium text-ivs-text-secondary mb-1" for="password">Mật khẩu</label>
+
+        }<input class="form-input mt-1 block w-full px-4 py-2 rounded-md shadow-sm focus:outline-none sm:text-sm" id="password" name="password" required="" type="password"/>
+
+</div>
+
+        .btn-submit {<div class="text-right text-sm" id="forgot-password-area">
+
+            width: 100%;<button class="font-medium text-ivs-blue hover:text-ivs-blue-darker focus:outline-none" id="forgot-password-btn" type="button">
+
+            padding: 0.75rem 1rem;                        Quàªn mật khẩu?
+
+            background-color: var(--ivs-blue);                    </button>
+
+            color: white;</div>
+
+            font-weight: 600;<button class="w-full flex items-center justify-center py-3 px-4 border border-transparent rounded-md shadow-lg text-base font-medium text-white bg-ivs-blue hover:bg-ivs-blue-darker focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ivs-blue transition-colors duration-200" id="submit-btn" type="submit">
+
+            border-radius: 0.5rem;<span class="button-text">ĐÄƒng nhập</span>
+
+            border: none;<span class="loading-spinner hidden" id="loading-spinner"></span>
+
+            cursor: pointer;</button>
+
+            transition: all 0.3s;<p class="text-center text-sm text-ivs-text-secondary mt-4">
+
+            display: flex;                    Bãn chưa có tà i khoản? 
+
+            align-items: center;                    <button class="font-medium text-ivs-green hover:text-ivs-green focus:outline-none" id="toggle-auth-mode" type="button">
+
+            justify-content: center;                        ĐÄƒng kà½ ngay
+
+            gap: 0.5rem;                    </button>
+
+        }</p>
+
+<div class="mt-4 p-3 text-center text-sm rounded-md hidden" id="auth-message" role="alert"></div>
+
+        .btn-submit:hover {</form>
+
+            background-color: #3d4ed6;</div>
+
+            transform: translateY(-2px);</main>
+
+            box-shadow: 0 8px 16px rgba(76, 94, 247, 0.3);<footer id="footer-placeholder"></footer>
+
+        }<div id="fab-container-placeholder"></div>
+
+<script defer="" src="/ai/js/loadComponents.js"></script>
+
+        .btn-secondary {</body>
+
+            color: var(--ivs-cyan);</html>
+
+            font-weight: 600;<script defer="" src="js/utils.js"></script>
+
+            background: none;<script defer="" src="js/language.js"></script>
+
+            border: none;<script type="module" src="js/auth.js"></script>
+
+            cursor: pointer;<script defer="">
+
+            transition: color 0.2s;    document.addEventListener('DOMContentLoaded', function() {
+
+            font-size: inherit;        if (typeof window.loadCommonComponents === 'function') {
+
+        }            window.loadCommonComponents().then(() => {
+
+                console.log('Page components loaded successfully');
+
+        .btn-secondary:hover { color: #06b6d4; }                
+
+                // Initialize AOS if available
+
+        .loading-spinner {                if (typeof AOS !== 'undefined') {
+
+            width: 1rem;                    AOS.init({
+
+            height: 1rem;                        duration: 700,
+
+            border: 2px solid rgba(255, 255, 255, 0.3);                        once: true,
+
+            border-top-color: white;                        offset: 50,
+
+            border-radius: 50%;                        easing: 'ease-out-cubic'
+
+            animation: spin 1s linear infinite;                    });
+
+        }                }
+
+                
+
+        @keyframes spin {                // Call page callback if exists
+
+            to { transform: rotate(360deg); }                if (typeof window.onPageComponentsLoadedCallback === 'function') {
+
+        }                    window.onPageComponentsLoadedCallback();
+
+                }
+
+        .hidden { display: none !important; }            }).catch(error => {
+
+                console.error('Failed to load components:', error);
+
+        .message {            });
+
+            margin-top: 1rem;        }
+
+            padding: 0.75rem 1rem;    });
+
+            border-radius: 0.5rem;</script>
+            font-size: 0.875rem;
+            text-align: center;
+        }
+
+        .message.error {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .message.success {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #86efac;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .toggle-link {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: var(--ivs-text-secondary);
+        }
+
+        .header-placeholder {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            background-color: rgba(17, 17, 17, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--ivs-border);
+            padding: 1rem;
+        }
+
+        @media (max-width: 640px) {
+            .auth-card { padding: 1.5rem; }
+            .auth-container { padding-top: 5.5rem; }
+        }
+    </style>
+</head>
+<body class="bg-ivs-bg text-ivs-text-primary">
+
+    <!-- Header -->
+    <header class="header-placeholder">
+        <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
+            <a href="/" class="flex items-center space-x-2">
+                <img alt="IVS Logo" class="h-8 w-auto" src="/images/logo/logo.svg"/>
+                <span class="font-bold text-lg">IVS Auth</span>
+            </a>
+            <a href="/" class="text-ivs-text-secondary hover:text-ivs-cyan transition-colors text-sm">
+                <i class="fas fa-arrow-left mr-1"></i> Trang chu
+            </a>
+        </div>
+    </header>
+
+    <!-- Video Background -->
+    <div class="video-background">
+        <video autoplay muted loop playsinline>
+            <source src="/videos/ivsblue.mp4" type="video/mp4"/>
+        </video>
+    </div>
+    <div class="video-overlay"></div>
+
+    <!-- Auth Form -->
+    <main class="auth-container">
+        <div class="auth-card">
+            <h2 class="text-3xl font-bold text-center mb-6" id="auth-title">Dang nhap</h2>
+
+            <form class="space-y-4" id="auth-form">
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input class="form-input" id="email" name="email" type="email" placeholder="your@email.com" required/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Mat khau</label>
+                    <input class="form-input" id="password" name="password" type="password" placeholder="••••••••" required/>
+                </div>
+
+                <div class="text-right text-sm">
+                    <button type="button" class="btn-secondary" id="forgot-password-btn">Quen mat khau?</button>
+                </div>
+
+                <button type="submit" class="btn-submit" id="submit-btn">
+                    <span class="button-text">Dang nhap</span>
+                    <span class="loading-spinner hidden" id="loading-spinner"></span>
+                </button>
+            </form>
+
+            <div class="toggle-link">
+                Ban chua co tai khoan? <button type="button" class="btn-secondary" id="toggle-auth-mode">Dang ky ngay</button>
+            </div>
+
+            <div class="message hidden" id="auth-message" role="alert"></div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-ivs-card border-t" style="border-color: var(--ivs-border);">
+        <div class="max-w-7xl mx-auto px-4 py-8 text-center text-sm text-ivs-text-secondary">
+            <p>&copy; 2025 IVS JSC. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script defer src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script defer src="/js/auth.js"></script>
+</body>
+</html>

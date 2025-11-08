@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html class="dark scroll-smooth" lang="vi">
+<head>
+    <link crossorigin="" href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="//cdnjs.cloudflare.com" rel="dns-prefetch"/>
+    <link href="//fonts.gstatic.com" rel="dns-prefetch"/>
+    <link href="//unpkg.com" rel="dns-prefetch"/>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Hồ sơ cá nhân - IVS Learning Hub</title>
+    <link href="/images/logo/logo.svg" rel="icon" type="image/svg+xml"/>
+    <link href="css/tailwind.css" rel="stylesheet"/>
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
+    <link href="css/styles.css" rel="stylesheet"/>
+    <!-- Firebase CDN v12.5.0 -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAOxCF0PhA6s3DtvETux-kXGTXRTlpL4vs",
+            authDomain: "ivs-159a7.firebaseapp.com",
+            projectId: "ivs-159a7",
+            storageBucket: "ivs-159a7.firebasestorage.app",
+            messagingSenderId: "452959273724",
+            appId: "1:452959273724:web:17a23e383fb1807c040d79",
+            measurementId: "G-L4KG7BCTJE"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth(app);
+
+        window.firebaseApp = app;
+        window.firebaseAuth = auth;
+        window.firebaseAnalytics = analytics;
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .profile-container {
+            background: linear-gradient(135deg, #0d1117 0%, #1a1a2e 100%);
+        }
+        .profile-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 24px;
+        }
+        .form-input {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #f4f4f5;
+            padding: 10px 12px;
+            border-radius: 6px;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        .form-input:focus {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: #58a6ff;
+            outline: none;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #58a6ff 0%, #79c0ff 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(88, 166, 255, 0.4);
+        }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #f4f4f5;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #58a6ff 0%, #79c0ff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+        }
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 24px;
+            gap: 24px;
+        }
+        .tab {
+            padding: 12px 0;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .tab.active {
+            color: #58a6ff;
+            border-bottom-color: #58a6ff;
+        }
+        .message {
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+        }
+        .message.success {
+            background-color: rgba(34, 197, 94, 0.1);
+            color: #86efac;
+            border-left: 4px solid #22c55e;
+        }
+        .message.error {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #fca5a5;
+            border-left: 4px solid #ef4444;
+        }
+    </style>
+</head>
+<body class="bg-ivs-bg text-ivs-text-primary antialiased">
+<header id="header-placeholder"></header>
+
+<main class="min-h-screen profile-container py-12 px-4">
+    <div class="max-w-4xl mx-auto">
+        <!-- Back Button -->
+        <a href="dashboard.html" class="inline-flex items-center text-blue-400 hover:text-blue-300 mb-8 transition">
+            <i class="fas fa-arrow-left mr-2"></i> Quay lại Dashboard
+        </a>
+
+        <!-- Header -->
+        <div class="mb-12">
+            <h1 class="text-4xl font-bold mb-2">Hồ sơ cá nhân</h1>
+            <p class="text-gray-400">Quản lý thông tin tài khoản và cài đặt bảo mật</p>
+        </div>
+
+        <!-- Profile Card -->
+        <div class="profile-section mb-8">
+            <div class="flex items-center gap-8 mb-8 pb-8 border-b border-gray-700">
+                <div class="avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold mb-2" id="user-name-display">Tên người dùng</h2>
+                    <p class="text-gray-400 mb-4" id="user-email-display">email@example.com</p>
+                    <div class="flex gap-3">
+                        <button class="btn-primary" id="edit-profile-btn">
+                            <i class="fas fa-edit mr-2"></i> Chỉnh sửa
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tab active" data-tab="info">
+                    <i class="fas fa-user-circle mr-2"></i> Thông tin cá nhân
+                </div>
+                <div class="tab" data-tab="security">
+                    <i class="fas fa-lock mr-2"></i> Bảo mật
+                </div>
+                <div class="tab" data-tab="preferences">
+                    <i class="fas fa-cog mr-2"></i> Tùy chọn
+                </div>
+            </div>
+
+            <!-- Messages -->
+            <div id="message-container"></div>
+
+            <!-- Tab Content: Info -->
+            <div class="tab-content" id="info-tab">
+                <div class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Họ tên</label>
+                            <input type="text" class="form-input" id="fullname-input" placeholder="Nhập họ tên" disabled>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Email</label>
+                            <input type="email" class="form-input" id="email-input" placeholder="email@example.com" disabled>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Số điện thoại</label>
+                            <input type="tel" class="form-input" id="phone-input" placeholder="+84 xxx xxx xxx" disabled>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Ngày sinh</label>
+                            <input type="date" class="form-input" id="dob-input" disabled>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Địa chỉ</label>
+                        <input type="text" class="form-input" id="address-input" placeholder="Địa chỉ của bạn" disabled>
+                    </div>
+                    <div class="flex gap-3">
+                        <button class="btn-primary" id="save-profile-btn" style="display: none;">
+                            <i class="fas fa-save mr-2"></i> Lưu thay đổi
+                        </button>
+                        <button class="btn-secondary" id="cancel-profile-btn" style="display: none;">
+                            Hủy
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Security -->
+            <div class="tab-content" id="security-tab" style="display: none;">
+                <div class="space-y-6">
+                    <h3 class="text-xl font-semibold mb-4">Thay đổi mật khẩu</h3>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Mật khẩu hiện tại</label>
+                        <input type="password" class="form-input" id="current-password" placeholder="Nhập mật khẩu hiện tại">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Mật khẩu mới</label>
+                        <input type="password" class="form-input" id="new-password" placeholder="Nhập mật khẩu mới">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Xác nhận mật khẩu</label>
+                        <input type="password" class="form-input" id="confirm-password" placeholder="Xác nhận mật khẩu mới">
+                    </div>
+                    <button class="btn-primary" id="change-password-btn">
+                        <i class="fas fa-key mr-2"></i> Thay đổi mật khẩu
+                    </button>
+
+                    <hr class="border-gray-700 my-8">
+
+                    <h3 class="text-xl font-semibold mb-4">Xóa tài khoản</h3>
+                    <p class="text-gray-400 mb-4">Cảnh báo: Hành động này không thể hoàn tác. Tất cả dữ liệu của bạn sẽ bị xóa vĩnh viễn.</p>
+                    <button class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-semibold transition">
+                        <i class="fas fa-trash mr-2"></i> Xóa tài khoản
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab Content: Preferences -->
+            <div class="tab-content" id="preferences-tab" style="display: none;">
+                <div class="space-y-6">
+                    <div class="flex items-center justify-between p-4 bg-gray-800 rounded-lg">
+                        <div>
+                            <h3 class="font-semibold mb-1">Thông báo qua Email</h3>
+                            <p class="text-sm text-gray-400">Nhận thông báo về các khóa học mới và cập nhật</p>
+                        </div>
+                        <input type="checkbox" id="email-notifications" checked class="w-6 h-6 cursor-pointer">
+                    </div>
+
+                    <div class="flex items-center justify-between p-4 bg-gray-800 rounded-lg">
+                        <div>
+                            <h3 class="font-semibold mb-1">Chế độ tối</h3>
+                            <p class="text-sm text-gray-400">Sử dụng chế độ tối cho giao diện</p>
+                        </div>
+                        <input type="checkbox" id="dark-mode" checked class="w-6 h-6 cursor-pointer">
+                    </div>
+
+                    <div class="flex items-center justify-between p-4 bg-gray-800 rounded-lg">
+                        <div>
+                            <h3 class="font-semibold mb-1">Chia sẻ dữ liệu</h3>
+                            <p class="text-sm text-gray-400">Cho phép chia sẻ dữ liệu học tập ẩn danh để cải tiến dịch vụ</p>
+                        </div>
+                        <input type="checkbox" id="data-sharing" class="w-6 h-6 cursor-pointer">
+                    </div>
+
+                    <button class="btn-primary" id="save-preferences-btn">
+                        <i class="fas fa-save mr-2"></i> Lưu tùy chọn
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer id="footer-placeholder"></footer>
+<div id="fab-container-placeholder"></div>
+
+<script defer src="js/utils.js"></script>
+<script defer src="js/language.js"></script>
+<script type="module" src="js/profile.js"></script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+/* Canonical FAB stylesheet (merged from several sources)
+   - Contains all shared FAB rules used by components and pages.
+   - Loaded via absolute path: /css/fab.css
+*/
+
+/* Fallback variables (can be overridden in page :root) */
+:root {
+    --fab-spacing: 1rem;
+    --fab-size: 3rem;
+    --fab-size-large: 3.5rem;
+    --fab-border-radius: 9999px; /* fully rounded by default */
+    --fab-shadow: 0 4px 15px rgba(0,0,0,0.12);
+    --fab-shadow-hover: 0 10px 25px rgba(0,0,0,0.14);
+    --fab-transition: all 0.28s cubic-bezier(0.4,0,0.2,1);
+}
+
+body.ivs-assistant-modal-open {
+    overflow: hidden;
+}
+
+/* Container positioning helper */
+#fab-container {
+    /* Raised z-index to sit above many site overlays (mobile menus, modals).
+       Some pages set very high inline z-index on mobile menus; this value
+       keeps the FAB clickable across pages while assistant window uses
+       .fab-topmost for absolute top priority. */
+    position: fixed;
+    bottom: var(--fab-spacing);
+    right: var(--fab-spacing);
+    z-index: 12050; /* intentionally high but below .fab-topmost (2147483647) */
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+/* FAB base button */
+.fab-item {
+    background: linear-gradient(145deg, var(--ivs-accent), #ea580c);
+    color: #fff;
+    border-radius: var(--fab-border-radius);
+    box-shadow: var(--fab-shadow);
+    transition: var(--fab-transition);
+    position: relative;
+    overflow: hidden;
+    width: var(--fab-size);
+    height: var(--fab-size);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+}
+
+/* Ensure FABs and submenu panels overlay other page content */
+.fab-item { z-index: 1050; }
+.fab-submenu-panel { z-index: 1045; }
+
+/* Top-most utility for assistant window */
+.fab-topmost { z-index: 2147483647 !important; }
+
+/* Safety overrides: ensure FAB and assistant always receive pointer events */
+#fab-container, #fab-container * { pointer-events: auto !important; }
+#ai-assistant-window, #ai-assistant-window * { pointer-events: auto !important; }
+
+/* Ensure hidden overlays don't block clicks */
+.modal-backdrop:not(.show), .loading-overlay:not(.show), #lightbox-modal.hidden, .hidden[aria-hidden="true"] { pointer-events: none !important; }
+
+/* Specific common overlay IDs/classes used in the project */
+#mobileMenu:not(.show){ pointer-events: none !important; }
+#lightbox-modal.hidden { pointer-events: none !important; }
+#messageModal.hidden { pointer-events: none !important; }
+#loading-spinner.hidden { pointer-events: none !important; }
+
+.fab-item:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: var(--fab-shadow-hover);
+}
+
+.fab-item:active {
+    transform: translateY(0) scale(0.96);
+}
+
+/* Ripple (radial) */
+.fab-item::after,
+.fab-item::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.fab-item::after {
+    background-image: radial-gradient(circle, rgba(255,255,255,0.3) 10%, transparent 70%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10);
+    opacity: 0;
+    transition: transform 0.45s, opacity 0.6s;
+}
+
+.fab-item:active::after {
+    transform: scale(0);
+    opacity: 0.28;
+    transition: 0s;
+}
+
+/* Alternative shimmer used in some themes */
+.fab-item::before {
+    left: -100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+    transition: left 0.45s ease;
+}
+.fab-item:hover::before { left: 100%; }
+
+/* Specific sized/variant helpers (can be overridden) */
+.fab-item.w-lg { width: var(--fab-size-large); height: var(--fab-size-large); }
+
+/* Submenu panel */
+.fab-submenu-panel {
+    background: rgba(255,255,255,0.95);
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(229,231,235,0.5);
+    padding: 0.6rem;
+    min-width: 220px;
+    max-width: calc(100vw - 2rem);
+    transform-origin: bottom right;
+    transition: var(--fab-transition);
+}
+
+.dark .fab-submenu-panel { background: rgba(17,24,39,0.95); border-color: rgba(75,85,99,0.5); }
+
+/* Submenu items */
+.fab-submenu-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.9rem;
+    border-radius: 0.75rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #374151;
+    background: transparent;
+    text-decoration: none;
+    min-width: 120px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.22s ease;
+}
+
+.fab-submenu-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(59,130,246,0.08), transparent);
+    transition: left 0.3s ease;
+}
+.fab-submenu-item:hover::before { left: 100%; }
+
+.fab-submenu-item:hover { transform: translateX(4px); background: rgba(59,130,246,0.08); color: #1f2937; }
+.dark .fab-submenu-item { color: #d1d5db; }
+
+/* Entry/Exit animations */
+@keyframes fab-panel-in { 0%{opacity:0;transform:translateY(10px) scale(.95)}100%{opacity:1;transform:translateY(0) scale(1)} }
+@keyframes fab-panel-out { 0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(10px) scale(.95)} }
+.fab-submenu-panel.show { animation: fab-panel-in 0.28s ease forwards; }
+.fab-submenu-panel:not(.show) { animation: fab-panel-out 0.28s ease forwards; }
+
+/* Loading & success animations */
+@keyframes fabPulse { 0%,100%{transform:scale(1)}50%{transform:scale(1.05)} }
+.fab-item.loading { animation: fabPulse 1.5s ease-in-out infinite; }
+@keyframes fabSuccess { 0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)} }
+.fab-item.success { animation: fabSuccess 0.6s ease-out; }
+
+/* Attention shake */
+@keyframes shake { 0%{transform:rotate(0)}15%{transform:rotate(5deg)}30%{transform:rotate(-5deg)}45%{transform:rotate(4deg)}60%{transform:rotate(-4deg)}75%{transform:rotate(2deg)}85%{transform:rotate(-2deg)}92%{transform:rotate(1deg)}100%{transform:rotate(0)} }
+.fab-shake { animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both; }
+
+/* Utility: ensure focus-visible accessibility */
+.fab-item:focus-visible { outline: 2px solid var(--ivs-accent); outline-offset: 2px; }
+
+/* Small helper utilities used by pages when loading placeholder FABs */
+.fab-hidden { display: none !important; }
+#contact-options:not(.fab-hidden),
+#share-options:not(.fab-hidden) { display: flex; flex-direction: column; align-items: flex-end; }
+#contact-options, #share-options { z-index: 1000; }
+
+/* Responsive tweaks */
+@media (max-width:768px) { #fab-container{ right:1rem; bottom:7rem } .fab-submenu-panel{ min-width:200px } }
+@media (max-width:480px) { #fab-container{ right:.5rem; bottom:6rem } .fab-item{ width:2.5rem; height:2.5rem } }
+
+/* Default accent used by FABs when not overridden by page */
+:root { --ivs-accent: #06b6d4; /* cyan-400 */ }
+
+/* Assistant-specific visual tweaks */
+.fab-item.bg-cyan-500, .fab-item.bg-cyan-500:hover { background-color: #06b6d4 !important; }
+.fab-item:focus-visible { outline-color: #0891b2; }
+
+/* Scroll-to-top hover contrast */
+#scroll-to-top-btn:hover { background-color: #111827 !important; transform: translateY(-3px) scale(1.02); }
+
+/* Contact modal styles and animations for FAB contact modal */
+.fab-contact-modal-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0);
+    z-index: 99998;
+    opacity: 0;
+    pointer-events: none;
+    transition: background 220ms ease, opacity 220ms ease;
+}
+.fab-contact-modal-overlay .fab-contact-panel {
+    width: 360px;
+    max-width: calc(100% - 32px);
+    border-radius: 12px;
+    padding: 16px;
+    background: var(--fab-panel-bg, #fff);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transform: translateY(8px) scale(0.98);
+    opacity: 0;
+    transition: transform 260ms cubic-bezier(.22,.9,.2,1), opacity 200ms ease;
+}
+.fab-contact-modal-overlay.show {
+    background: rgba(0,0,0,0.35);
+    opacity: 1;
+    pointer-events: auto;
+}
+.fab-contact-modal-overlay.show .fab-contact-panel {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+.fab-contact-title { margin: 0 0 8px 0; font-size: 1.05rem; }
+.fab-contact-list a { display:block; margin:8px 0; color:inherit; text-decoration:none }
+.fab-contact-close { margin-top:12px; display:inline-block; padding:8px 14px; border-radius:8px; background:#111827; color:#fff; border:none; cursor:pointer }
+
+
+
