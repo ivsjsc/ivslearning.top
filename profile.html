@@ -17,16 +17,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
         import { getAuth } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyAOxCF0PhA6s3DtvETux-kXGTXRTlpL4vs",
-            authDomain: "ivs-159a7.firebaseapp.com",
-            projectId: "ivs-159a7",
-            storageBucket: "ivs-159a7.firebasestorage.app",
-            messagingSenderId: "452959273724",
-            appId: "1:452959273724:web:17a23e383fb1807c040d79",
-            measurementId: "G-L4KG7BCTJE"
-        };
+        import { firebaseConfig } from "/js/firebase-config.js";
 
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
