@@ -330,6 +330,38 @@ header {
   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
+/* Language Toggle */
+.language-toggle-container {
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+}
+
+.language-toggle-btn {
+    background-color: var(--color-background-offset);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+}
+
+.language-toggle-btn:hover {
+    background-color: var(--color-primary-light);
+    color: white;
+    border-color: var(--color-primary);
+}
+
+.language-toggle-btn .fi {
+    font-size: 1.2rem;
+    border-radius: 3px;
+}
+
 /* Mobile Menu Toggle */
 .header-menu-toggle {
   display: flex;
