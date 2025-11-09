@@ -313,38 +313,36 @@
 </head>
 <body class="bg-ivs-bg text-ivs-text-primary antialiased">
 
-    <!-- Header (Simple Fixed Header) -->
-    <!-- PROFESSIONAL HEADER -->
-    <header>
-        <div class="header-inner">
-            <!-- Logo Section -->
-            <a href="/" class="header-logo">
-                <img alt="IVS Logo" class="header-logo-img" src="/images/logo/logo.svg" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4c5ef7/ffffff?text=IVS';"/>
-                <div class="header-logo-text">
-                    <span class="header-logo-text-main">IVS Learning Hub</span>
-                    <span class="header-logo-text-sub">Cổng học tập & ứng dụng</span>
-                </div>
-            </a>
-            
-            <!-- Desktop Navigation -->
-            <nav class="header-nav">
-                <a href="live_index.html" class="header-nav-item">Giới Thiệu IVS JSC</a>
-                <a href="#applications" class="header-nav-item">Ứng Dụng Học Tập</a>
-                <a href="learning-resources.html" class="header-nav-item">Tài Nguyên EdTech</a>
-                <a href="analytics.html" class="header-nav-item">Thống Kê (Admin)</a>
-            </nav>
-            
-            <!-- Auth Section (Desktop & Mobile) -->
-            <div class="header-auth" id="header-auth-container">
-                <div style="width: 24px; height: 24px; border: 2px solid var(--color-secondary); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
-            </div>
-            
-            <!-- Mobile Menu Toggle -->
-            <button class="header-menu-toggle" id="mobile-menu-toggle" aria-label="Mở menu">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-    </header>
+    <!-- HEADER COMPONENT - Unified & Responsive -->
+<header id="app-header" class="app-header">
+    <div class="header-wrapper">
+        <!-- Logo -->
+        <a href="/" class="header-logo-link" title="IVS Learning Hub">
+            <img alt="IVS Logo" class="header-logo-img" src="/images/logo/logo.svg" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4c5ef7/ffffff?text=IVS';"/>
+            <span class="header-logo-text">IVS</span>
+        </a>
+
+        <nav class="header-nav desktop-nav">
+            <a href="/" class="nav-link">Trang chủ</a>
+            <a href="/dashboard.html" class="nav-link">Dashboard</a>
+            <a href="/learning-materials.html" class="nav-link">Tài liệu</a>
+            <a href="/auth.html" class="nav-link nav-cta">Đăng nhập</a>
+        </nav>
+
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menu">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <!-- Mobile Menu Dropdown -->
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="/" class="mobile-nav-link"><i class="fas fa-home"></i> Trang chủ</a>
+        <a href="/dashboard.html" class="mobile-nav-link"><i class="fas fa-chart-line"></i> Dashboard</a>
+        <a href="/learning-materials.html" class="mobile-nav-link"><i class="fas fa-book"></i> Tài liệu</a>
+        <a href="/auth.html" class="mobile-nav-link mobile-nav-cta"><i class="fas fa-sign-in-alt"></i> Đăng nhập</a>
+    </div>
+</header>
 
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobile-menu-overlay" role="navigation" aria-label="Mobile Menu">
@@ -610,7 +608,8 @@
     <script src="js/modern-ui-components.js"></script>
     
     <!-- Universal Loader - Load header, footer, and AIVY chatbot in one go -->
-    <script defer src="js/universal-loader.js"></script>
+    <script defer src="/js/universal-loader.js"></script>
+    <script defer src="/js/header.js"></script>
     
     <!-- AOS Animations -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
