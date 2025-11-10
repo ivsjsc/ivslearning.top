@@ -48,106 +48,161 @@
 <body class="bg-ivs-bg text-ivs-text-primary font-inter">
 
 <main class="pt-20">
-    <!-- Full Screen Hero Video Section -->
-    <section class="relative h-screen flex items-center justify-center text-center p-0 overflow-hidden">
-        <video autoplay loop muted playsinline class="absolute z-0 w-auto min-w-full min-h-full max-w-none">
-            <source src="/videos/ivs_background_video1.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-        </video>
-        <div class="absolute inset-0 bg-black/60 z-10"></div>
-        <div class="relative z-20 container mx-auto px-6" data-aos="fade-up">
-            <h1 class="text-4xl lg:text-6xl font-extrabold text-white mb-4" data-lang-key="about_hero_title">Về IVS JSC</h1>
-            <p class="text-lg lg:text-2xl text-white/90 max-w-3xl mx-auto" data-lang-key="about_hero_subtitle">Kiến tạo một hệ sinh thái giáo dục toàn diện, bền vững và sáng tạo.</p>
-        </div>
-    </section>
+        <!-- SECTION 1: HERO - TRUNG TÂM HỌC TẬP -->
+        <section class="hero-banner relative min-h-[85vh] flex items-center justify-center text-center p-8 border-b ivs-border">
+            <div class="relative max-w-5xl mx-auto z-10" data-aos="fade-up">
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-4">
+                    <span class="block text-ivs-green text-3xl md:text-4xl font-semibold mb-3 tracking-widest uppercase">CHÀO MỪNG ĐẾN VỚI</span>
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-ivs-blue to-ivs-cyan text-6xl md:text-8xl">IVS Learning Hub</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-ivs-text-secondary mb-10 leading-relaxed max-w-3xl mx-auto">
+                    Cổng thống nhất truy cập toàn bộ hệ sinh thái giáo dục, công nghệ và các ứng dụng học tập tương tác của IVS JSC.
+                </p>
+                <div id="hero-auth-cta" class="flex justify-center">
+                    <!-- Nút Auth/Dashboard sẽ được chèn ở đây qua JS -->
+                </div>
+            </div>
+        </section>
 
-    <!-- Intro Section -->
-    <section class="py-16 md:py-24 bg-ivs-bg">
-        <div class="container mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                <div data-aos="fade-right">
-                    <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-4" data-lang-key="about_intro_title">Câu Chuyện Về IVS</h2>
-                    <p class="text-ivs-text-secondary mb-8 leading-relaxed text-lg" data-lang-key="about_intro_desc"></p>
-                    <a class="inline-block bg-ivs-blue hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all transform hover:scale-105 shadow-lg shadow-blue-500/30" href="profile-company-ivsjsc.html">
-                        <i class="fas fa-arrow-right mr-2"></i>
-                        <span data-lang-key="about_cta_view_profile">Xem Hồ Sơ Năng Lực</span>
+        <!-- SECTION 2: GIỚI THIỆU HỆ SINH THÁI -->
+        <section class="py-20 bg-ivs-card" id="about-ecosystem">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-4xl mx-auto mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-5xl font-bold text-ivs-orange mb-4">HỆ SINH THÁI IVS JSC: TẦM NHÌN HỘI TỤ</h2>
+                    <p class="text-xl text-ivs-text-secondary max-w-3xl mx-auto">
+                        IVS là sự kết hợp chiến lược giữa **Giáo dục (Academy)**, **Công nghệ (Celestech)** và **Tư vấn Chiến lược (Consulting)** để tạo ra giải pháp toàn diện.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <!-- Card 1: Education -->
+                    <div class="p-8 ivs-card rounded-2xl app-card-hover flex flex-col items-center justify-center border-l-4 border-ivs-green shadow-xl" data-aos="fade-right" data-aos-delay="100">
+                        <i class="fas fa-book-open text-6xl text-ivs-green mb-4"></i>
+                        <h3 class="text-2xl font-bold text-white mb-2">Giáo Dục (Academy)</h3>
+                        <p class="text-ivs-text-secondary text-base">Cung cấp chương trình liên kết ngoại ngữ, STEM và kỹ năng sống chất lượng cao.</p>
+                    </div>
+                    <!-- Card 2: Technology -->
+                    <div class="p-8 ivs-card rounded-2xl app-card-hover flex flex-col items-center justify-center border-l-4 border-ivs-cyan shadow-xl" data-aos="fade-up" data-aos-delay="200">
+                        <i class="fas fa-robot text-6xl text-ivs-cyan mb-4"></i>
+                        <h3 class="text-2xl font-bold text-white mb-2">Công Nghệ (Celestech)</h3>
+                        <p class="text-ivs-text-secondary text-base">Thiết kế Web/App, giải pháp chuyển đổi số và cung cấp thiết bị công nghệ hiện đại.</p>
+                    </div>
+                    <!-- Card 3: Consulting -->
+                    <div class="p-8 ivs-card rounded-2xl app-card-hover flex flex-col items-center justify-center border-l-4 border-ivs-blue shadow-xl" data-aos="fade-left" data-aos-delay="300">
+                        <i class="fas fa-chart-line text-6xl text-ivs-blue mb-4"></i>
+                        <h3 class="text-2xl font-bold text-white mb-2">Tư Vấn (Consulting)</h3>
+                        <p class="text-ivs-text-secondary text-base">Tư vấn chiến lược nhân sự, tài chính, pháp lý và tối ưu hóa vận hành doanh nghiệp.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: CỔNG ỨNG DỤNG HỌC TẬP (Learning Applications Portal) -->
+        <section class="py-20 bg-ivs-bg" id="applications">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-4xl mx-auto mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                        <i class="fas fa-cubes text-ivs-purple mr-2"></i> KHÁM PHÁ ỨNG DỤNG CHUYÊN MÔN
+                    </h2>
+                    <p class="text-xl text-ivs-text-secondary">
+                        Các nền tảng được thiết kế riêng, hỗ trợ giáo dục đào tạo ở mọi cấp độ.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- App Card 1: IVS English Learners -->
+                    <div class="ivs-card p-6 rounded-xl app-card-hover flex flex-col justify-between border-b-4 border-ivs-green shadow-2xl" data-aos="fade-up" data-aos-delay="100">
+                        <div>
+                            <i class="fas fa-book-reader text-5xl text-ivs-green mb-3"></i>
+                            <h3 class="text-2xl font-bold text-white mb-2">IVS English Learners</h3>
+                            <p class="text-ivs-text-secondary mb-4 flex-grow">Nền tảng học Tiếng Anh tích hợp Sách điện tử, Luyện tập AI và hệ thống gamification.</p>
+                        </div>
+                        <a href="https://ivseng.web.app" target="_blank" rel="noopener noreferrer" class="bg-ivs-green text-white px-5 py-3 rounded-lg font-semibold text-center hover:bg-green-600 transition-colors mt-4 shadow-md">
+                            Truy Cập Ứng Dụng <i class="fas fa-external-link-alt ml-2"></i>
+                        </a>
+                    </div>
+
+                    <!-- App Card 2: IVS Testing & Placement -->
+                    <div class="ivs-card p-6 rounded-xl app-card-hover flex flex-col justify-between border-b-4 border-ivs-blue shadow-2xl" data-aos="fade-up" data-aos-delay="200">
+                        <div>
+                            <i class="fas fa-clipboard-check text-5xl text-ivs-blue mb-3"></i>
+                            <h3 class="text-2xl font-bold text-white mb-2">IVS Testing & Placement</h3>
+                            <p class="text-ivs-text-secondary mb-4 flex-grow">Hệ thống kiểm tra, đánh giá và xếp lớp trình độ ngoại ngữ chính xác cho học viên.</p>
+                        </div>
+                        <a href="https://testplacement.web.app/" target="_blank" rel="noopener noreferrer" class="bg-ivs-blue text-white px-5 py-3 rounded-lg font-semibold text-center hover:bg-blue-600 transition-colors mt-4 shadow-md">
+                            Truy Cập Ứng Dụng <i class="fas fa-external-link-alt ml-2"></i>
+                        </a>
+                    </div>
+
+                    <!-- App Card 3: IVS Kinderlink -->
+                    <div class="ivs-card p-6 rounded-xl app-card-hover flex flex-col justify-between border-b-4 border-ivs-purple shadow-2xl" data-aos="fade-up" data-aos-delay="300">
+                        <div>
+                            <i class="fas fa-child text-5xl text-ivs-purple mb-3"></i>
+                            <h3 class="text-2xl font-bold text-white mb-2">IVS Kinderlink</h3>
+                            <p class="text-ivs-text-secondary mb-4 flex-grow">Ứng dụng quản lý trường mầm non, kết nối nhà trường và phụ huynh hiệu quả.</p>
+                        </div>
+                        <a href="https://ivs-7221b.web.app/" target="_blank" rel="noopener noreferrer" class="bg-ivs-purple text-white px-5 py-3 rounded-lg font-semibold text-center hover:bg-purple-600 transition-colors mt-4 shadow-md">
+                            Truy Cập Ứng Dụng <i class="fas fa-external-link-alt ml-2"></i>
+                        </a>
+                    </div>
+
+                    <!-- App Card 4: StriveStreak (Mới) -->
+                    <div class="ivs-card p-6 rounded-xl app-card-hover flex flex-col justify-between border-b-4 border-ivs-orange shadow-2xl" data-aos="fade-up" data-aos-delay="400">
+                        <div>
+                            <i class="fas fa-fire text-5xl text-ivs-orange mb-3"></i>
+                            <h3 class="text-2xl font-bold text-white mb-2">StriveStreak (Habit Tracker)</h3>
+                            <p class="text-ivs-text-secondary mb-4 flex-grow">Xây dựng thói quen và duy trì động lực học tập qua gamification và AI. (App bên ngoài)</p>
+                        </div>
+                        <a href="https://strivestreak.netlify.app/" target="_blank" rel="noopener noreferrer" class="bg-ivs-orange text-white px-5 py-3 rounded-lg font-semibold text-center hover:bg-orange-600 transition-colors mt-4 shadow-md">
+                            Truy Cập Ứng Dụng <i class="fas fa-external-link-alt ml-2"></i>
+                        </a>
+                    </div>
+
+                    <!-- App Card 5: QLGX (Mới) -->
+                    <div class="ivs-card p-6 rounded-xl app-card-hover flex flex-col justify-between border-b-4 border-ivs-cyan shadow-2xl" data-aos="fade-up" data-aos-delay="500">
+                        <div>
+                            <i class="fas fa-people-group text-5xl text-ivs-cyan mb-3"></i>
+                            <h3 class="text-2xl font-bold text-white mb-2">QLGX - Quản Lý Cộng Đồng</h3>
+                            <p class="text-ivs-text-secondary mb-4 flex-grow">Ứng dụng quản lý thông tin hộ gia đình, hỗ trợ công tác quản lý giáo xứ và cộng đồng.</p>
+                        </div>
+                        <a href="https://qlgx.netlify.app/" target="_blank" rel="noopener noreferrer" class="bg-ivs-cyan text-white px-5 py-3 rounded-lg font-semibold text-center hover:bg-cyan-600 transition-colors mt-4 shadow-md">
+                            Truy Cập Ứng Dụng <i class="fas fa-external-link-alt ml-2"></i>
+                        </a>
+                    </div>
+
+                    <!-- App Card 6: CTA Xem thêm -->
+                    <a href="learning-materials.html" class="ivs-card p-6 rounded-xl flex flex-col items-center justify-center text-center border-2 border-dashed border-ivs-text-secondary/50 hover:border-ivs-red transition-colors" data-aos="fade-up" data-aos-delay="600">
+                        <i class="fas fa-shapes text-5xl text-ivs-red mb-4 animate-pulse"></i>
+                        <h3 class="text-xl font-bold text-white mb-2">XEM TẤT CẢ ỨNG DỤNG</h3>
+                        <p class="text-ivs-text-secondary mb-4">Games, App Quản lý nội bộ và các nền tảng tùy chỉnh khác.</p>
+                        <button class="bg-ivs-red text-white px-5 py-3 rounded-full font-semibold hover:bg-red-600 transition-colors mt-4 shadow-md">
+                            Khám phá thêm <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
                     </a>
                 </div>
-                <div class="video-container shadow-2xl border border-ivs-border" data-aos="fade-left">
-                    <iframe loading="lazy" src="https://www.youtube.com/embed/WSFdBq4vprY?si=X1lIscHb06k3eJK_" title="YouTube video player: IVS JSC Company Profile" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Philosophy Section -->
-    <section class="py-16 md:py-24 bg-ivs-neutral-800 border-y border-ivs-border">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12 md:mb-16" data-aos="fade-up">
-                <h2 class="font-display text-3xl md:text-4xl font-bold text-white" data-lang-key="about_philosophy_title">Triết lý hoạt động</h2>
-                <p class="text-lg text-ivs-text-secondary max-w-3xl mx-auto mt-4" data-lang-key="about_philosophy_ivs"></p>
-            </div>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="interactive-card p-8 rounded-xl text-center" data-aos="fade-up" data-aos-delay="100">
-                    <i class="fas fa-project-diagram text-5xl text-ivs-green mb-4"></i>
-                    <h3 class="text-2xl font-display font-semibold text-white mb-3" data-lang-key="about_philosophy_integrate">Integrate</h3>
-                    <p class="text-ivs-text-secondary leading-relaxed" data-lang-key="about_philosophy_integrate_desc"></p>
-                </div>
-                <div class="interactive-card p-8 rounded-xl text-center" data-aos="fade-up" data-aos-delay="200">
-                    <i class="fas fa-eye text-5xl text-ivs-blue mb-4"></i>
-                    <h3 class="text-2xl font-display font-semibold text-white mb-3" data-lang-key="about_philosophy_vision">Vision</h3>
-                    <p class="text-ivs-text-secondary leading-relaxed" data-lang-key="about_philosophy_vision_desc"></p>
-                </div>
-                <div class="interactive-card p-8 rounded-xl text-center" data-aos="fade-up" data-aos-delay="300">
-                    <i class="fas fa-hands-helping text-5xl text-ivs-amber mb-4"></i>
-                    <h3 class="text-2xl font-display font-semibold text-white mb-3" data-lang-key="about_philosophy_synergy">Synergy</h3>
-                    <p class="text-ivs-text-secondary leading-relaxed" data-lang-key="about_philosophy_synergy_desc"></p>
+                <div class="text-center mt-16 pt-8 border-t ivs-border max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="700">
+                    <p class="text-xl text-ivs-text-secondary italic font-medium">
+                        <i class="fas fa-info-circle text-ivs-cyan mr-2"></i> Đồng bộ tài khoản (SSO) được kích hoạt cho tất cả các ứng dụng chính thức của IVS.
+                    </p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Leadership Team Section -->
-    <section class="py-16 md:py-24 bg-ivs-bg">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12 md:mb-16" data-aos="fade-up">
-                <h2 class="font-display text-3xl md:text-4xl font-bold text-white" data-lang-key="about_team_title">Đội Ngũ Lãnh Đạo</h2>
-                <p class="text-lg text-ivs-text-secondary max-w-3xl mx-auto mt-4" data-lang-key="about_team_subtitle"></p>
+        <!-- SECTION 4: CALL TO ACTION - Dịch vụ Tùy chỉnh (Optimized) -->
+        <section class="py-20 bg-ivs-card border-t ivs-border">
+            <div class="container mx-auto px-6 lg:px-8 text-center" data-aos="zoom-in">
+                <h2 class="text-4xl lg:text-5xl font-bold text-white mb-4">
+                    Cần Ứng Dụng Chuyên Biệt?
+                </h2>
+                <p class="text-xl text-ivs-text-secondary max-w-4xl mx-auto mb-8">
+                    Đội ngũ **IVS Celestech** sẵn sàng phát triển các giải pháp Web/App Quản lý, Giáo dục theo yêu cầu riêng của bạn.
+                </p>
+                <a href="/Pages/webdesign.html" class="inline-block bg-ivs-cyan hover:bg-cyan-600 text-white font-bold py-4 px-10 rounded-full text-xl transition-all transform hover:scale-105 shadow-xl shadow-cyan-500/40 btn-glow">
+                    <i class="fas fa-code mr-2"></i> Yêu Cầu Phát Triển Tùy Chỉnh
+                </a>
             </div>
-            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="text-center" data-aos="fade-up" data-aos-delay="100">
-                    <img alt="Ông Nguyễn Minh Triết" class="h-32 w-32 rounded-full object-cover mx-auto mb-4 border-4 border-ivs-border hover:border-ivs-blue transition-colors" src="/images/team/nguyen-minh-triet.jpg">
-                    <h4 class="font-semibold text-xl text-white" data-lang-key="about_team_member1_name"></h4>
-                    <p class="text-ivs-blue font-medium" data-lang-key="about_team_member1_title"></p>
-                </div>
-                <div class="text-center" data-aos="fade-up" data-aos-delay="200">
-                    <img alt="Ông Rachid Belferar" class="h-32 w-32 rounded-full object-cover mx-auto mb-4 border-4 border-ivs-border hover:border-ivs-blue transition-colors" src="/images/team/rachid-belferar.jpg">
-                    <h4 class="font-semibold text-xl text-white" data-lang-key="about_team_member2_name"></h4>
-                    <p class="text-ivs-blue font-medium" data-lang-key="about_team_member2_title"></p>
-                </div>
-                <div class="text-center" data-aos="fade-up" data-aos-delay="300">
-                    <img alt="Bà Salma Mahzoum" class="h-32 w-32 rounded-full object-cover mx-auto mb-4 border-4 border-ivs-border hover:border-ivs-blue transition-colors" src="/images/team/salma-mahzoum.jpg">
-                    <h4 class="font-semibold text-xl text-white" data-lang-key="about_team_member3_name"></h4>
-                    <p class="text-ivs-blue font-medium" data-lang-key="about_team_member3_title"></p>
-                </div>
-                <div class="text-center" data-aos="fade-up" data-aos-delay="400">
-                    <img alt="Ông Kimball Allen Thomson" class="h-32 w-32 rounded-full object-cover mx-auto mb-4 border-4 border-ivs-border hover:border-ivs-blue transition-colors" src="/images/team/kimball-allen-thomson.jpg">
-                    <h4 class="font-semibold text-xl text-white" data-lang-key="about_team_member4_name"></h4>
-                    <p class="text-ivs-blue font-medium" data-lang-key="about_team_member4_title"></p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Final CTA Section -->
-    <section class="py-16 md:py-24 bg-ivs-neutral-800">
-        <div class="container mx-auto px-6 text-center" data-aos="zoom-in">
-            <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-4" data-lang-key="about_cta_final_title">Trở thành đối tác của IVS</h2>
-            <p class="text-ivs-text-secondary text-lg max-w-2xl mx-auto mb-8" data-lang-key="about_cta_final_desc"></p>
-            <a class="inline-block bg-ivs-blue hover:bg-ivs-cyan text-white font-bold py-4 px-10 rounded-full text-lg transition-all transform hover:scale-105 shadow-lg shadow-blue-500/30" href="contact.html">
-                <span data-lang-key="contact_us">Liên Hệ Ngay</span> <i class="fas fa-arrow-right ml-2"></i>
-            </a>
-        </div>
+        </section>
 </main>
 
 <!-- Scripts -->
@@ -171,7 +226,7 @@
     });
 </script>
 <!-- Universal Loader - Load header, footer, and AIVY chatbot in one go -->
-<script defer src="js/universal-loader.js"></script>
+<script defer src="/js/universal-loader.js"></script>
 
-</body>
+<script defer src="/js/universal-loader.js"></script></body>
 </html>
