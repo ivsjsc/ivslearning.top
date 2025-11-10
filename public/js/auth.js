@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             if (isLoginMode) {
                 // Login
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                await signInWithEmailAndPassword(auth, email, password);
                 showMessage('Đăng nhập thành công!', 'success');
                 // Redirect to dashboard
                 setTimeout(() => {
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 1000);
             } else {
                 // Register
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                await createUserWithEmailAndPassword(auth, email, password);
                 showMessage('Đăng ký thành công!', 'success');
                 // Switch to login mode
                 isLoginMode = true;
