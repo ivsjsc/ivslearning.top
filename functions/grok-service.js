@@ -12,9 +12,14 @@
 
 require('dotenv').config();
 const https = require('https');
+const Bottleneck = require('bottleneck');
 
 class GrokAiService {
   constructor() {
+    // Add rate limiting
+    this.limiter = new Bottleneck({
+      minTime: 200 // 5 requests per second
+    });
     // Load API key from environment
     this.apiKey = process.env.GROK_API_KEY;
     if (!this.apiKey) {
