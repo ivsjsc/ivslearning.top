@@ -1,9 +1,0 @@
-/* DEPRECATED: This file previously contained FAB styles.
-   The canonical FAB stylesheet is now /css/fab.css.
-   Keep this shim for backward compatibility: it simply imports the canonical file.
-   Once all templates/pages reference /css/fab.css directly, it's safe to remove this file.
-*/
-
-@import url('/css/fab.css');
-
-/* NOTE: Do not add FAB styles here; update /css/fab.css instead. */

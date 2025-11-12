@@ -461,13 +461,6 @@
 </head>
 
 <body>
-    <!-- MINIMAL HEADER -->
-    <header class="auth-header">
-        <div class="auth-header-logo">
-            <img alt="IVS Logo" src="/images/logo/logo.svg" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4c5ef7/ffffff?text=IVS';"/>
-            <span class="auth-header-title">IVS Learning</span>
-        </div>
-    </header>
 
     <!-- AUTH CONTAINER -->
     <main>
@@ -666,25 +659,6 @@
         </div>
     </div>
 
-    <!-- BOTTOM NAVIGATION -->
-    <nav class="bottom-nav">
-        <a href="index.html" class="bottom-nav-item" title="Home">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </a>
-        <a href="learning-materials.html" class="bottom-nav-item" title="Learning">
-            <i class="fas fa-book"></i>
-            <span>Learning</span>
-        </a>
-        <a href="index.html#applications" class="bottom-nav-item" title="Apps">
-            <i class="fas fa-th"></i>
-            <span>Apps</span>
-        </a>
-        <a href="profile.html" class="bottom-nav-item" title="Profile">
-            <i class="fas fa-user"></i>
-            <span>Profile</span>
-        </a>
-    </nav>
 
     <!-- Firebase CDN v12.5.0 -->
     <script type="module">
@@ -762,7 +736,7 @@
 
                 try {
                     console.log('[Auth] Calling backend OAuth endpoint');
-                    const response = await fetch(`${BACKEND_URL}/auth/google`, {
+                    const response = await fetch(`${BACKEND_URL}/api/auth/google`, {
                         credentials: 'include',
                         headers: { 'Accept': 'application/json' }
                     });
@@ -845,7 +819,7 @@
 
                 try {
                     // Call backend to send OTP
-                    const response = await fetch(`${BACKEND_URL}/auth/phone/send-otp`, {
+                    const response = await fetch(`${BACKEND_URL}/api/auth/phone/send-otp`, {
                         method: 'POST',
                         credentials: 'include',
                         headers: {
@@ -901,7 +875,7 @@
                 return;
             }
 
-            fetch(`${BACKEND_URL}/auth/phone/resend-otp`, {
+            fetch(`${BACKEND_URL}/api/auth/phone/resend-otp`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
@@ -928,7 +902,7 @@
                 }
 
                 try {
-                    const response = await fetch(`${BACKEND_URL}/auth/phone/verify-otp`, {
+                    const response = await fetch(`${BACKEND_URL}/api/auth/phone/verify-otp`, {
                         method: 'POST',
                         credentials: 'include',
                         headers: { 'Content-Type': 'application/json' },
@@ -977,7 +951,7 @@
                         showMessage('Link khôi phục mật khẩu đã được gửi đến email của bạn', 'success');
                     } else {
                         // Phone-based reset via backend
-                        const response = await fetch(`${BACKEND_URL}/auth/password-reset`, {
+                        const response = await fetch(`${BACKEND_URL}/api/auth/password-reset`, {
                             method: 'POST',
                             credentials: 'include',
                             headers: { 'Content-Type': 'application/json' },
@@ -1116,5 +1090,5 @@
 
     <!-- Universal Loader - Load header, footer, and AIVY chatbot in one go -->
     <script defer src="/js/universal-loader.js"></script>
-</body>
+<script defer src="/js/universal-loader.js"></script></body>
 </html>

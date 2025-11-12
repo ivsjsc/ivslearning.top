@@ -4,623 +4,617 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>IVS Learning Hub - Trung Tâm Học Tập & Ứng Dụng IVS JSC</title>
-    <!-- SEO Meta Tags -->
-    <meta content="Truy cập IVS Learning Hub - Cổng vào hệ sinh thái giáo dục, công nghệ và các ứng dụng học tập tương tác của IVS JSC. Đồng bộ tài khoản Firebase." name="description"/>
-    <meta content="IVS Learning Hub, IVS JSC, EdTech, Ứng dụng Giáo dục, Hệ sinh thái IVS, Firebase Auth" name="keywords"/>
+    <meta content="Nền tảng học tập trực tuyến của IVS JSC. Khóa học chuyên sâu, công nghệ hiện đại, cộng đồng học viên sôi động." name="description"/>
+    <meta content="IVS Learning, Online Learning, Khóa Học, EdTech" name="keywords"/>
     <link href="/images/logo/logo.svg" rel="icon" type="image/svg+xml"/>
     
-    <!-- Fonts, Tailwind CSS & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link href="css/tailwind.css" rel="stylesheet"/>
     <link href="css/modern-ui.css" rel="stylesheet"/>
+    <link href="css/design-system.css" rel="stylesheet"/>
     <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    <!-- Firebase CDN Initialization for Global Access (v12.5.0) -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
-        import { firebaseConfig } from "/js/firebase-config.js";
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const analytics = getAnalytics(app);
-
-        window.firebaseApp = app;
-        window.firebaseAuth = auth;
-        window.firebaseDB = db;
-        window.firebaseAnalytics = analytics;
-        
-        // Theo dõi trạng thái đăng nhập và cập nhật UI (Cần thiết cho Trang chủ)
-        onAuthStateChanged(auth, (user) => {
-            const headerAuthContainer = document.getElementById('header-auth-container');
-            const mobileAuthContainer = document.getElementById('mobile-auth-container');
-            const heroAuthCta = document.getElementById('hero-auth-cta');
-            
-            // Hàm tạo nút cho Logged-in User
-            function createUserAuthUI(user) {
-                const emailPart = user.email.split('@')[0];
-                return {
-                    header: `
-                        <a href="dashboard.html" class="header-auth-button header-auth-user">
-                            <i class="fas fa-user-circle"></i> ${emailPart}
-                        </a>
-                        <button class="header-auth-button header-auth-logout logout-btn" style="gap: 8px;">
-                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
-                        </button>
-                    `,
-                    mobile: `
-                        <a href="dashboard.html" class="mobile-auth-button" style="background: linear-gradient(135deg, var(--color-success), #059669); color: white;">
-                            <i class="fas fa-user-circle"></i> Xem Dashboard
-                        </a>
-                        <button class="mobile-auth-button logout-btn" style="background: linear-gradient(135deg, var(--color-error), #dc2626); color: white;">
-                            <i class="fas fa-sign-out-alt"></i> Đăng Xuất
-                        </button>
-                    `
-                };
-            }
-
-            // Hàm tạo nút Đăng nhập/Đăng ký
-            function createLoginAuthUI() {
-                return {
-                    header: `
-                        <a href="auth.html" class="header-auth-button header-auth-login">
-                            <i class="fas fa-sign-in-alt"></i> Đăng nhập
-                        </a>
-                        <a href="auth.html" class="header-auth-button header-auth-signup">
-                            <i class="fas fa-user-plus"></i> Đăng ký
-                        </a>
-                    `,
-                    mobile: `
-                        <a href="auth.html" class="mobile-auth-button" style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); color: white;">
-                            <i class="fas fa-sign-in-alt"></i> Đăng nhập / Đăng ký
-                        </a>
-                    `
-                };
-            }
-
-            // Update Header & Mobile Auth UI
-            if (headerAuthContainer && mobileAuthContainer) {
-                if (user) {
-                    const authUI = createUserAuthUI(user);
-                    headerAuthContainer.innerHTML = authUI.header;
-                    mobileAuthContainer.innerHTML = authUI.mobile;
-                    
-                    // Logout listeners
-                    headerAuthContainer.querySelectorAll('.logout-btn').forEach(btn => {
-                        btn.addEventListener('click', async (e) => {
-                            e.preventDefault();
-                            try {
-                                await signOut(auth);
-                                window.location.reload();
-                            } catch (error) {
-                                console.error("Lỗi đăng xuất:", error);
-                            }
-                        });
-                    });
-                    mobileAuthContainer.querySelectorAll('.logout-btn').forEach(btn => {
-                        btn.addEventListener('click', async (e) => {
-                            e.preventDefault();
-                            try {
-                                await signOut(auth);
-                                window.location.reload();
-                            } catch (error) {
-                                console.error("Lỗi đăng xuất:", error);
-                            }
-                        });
-                    });
-                    
-                    // Update Hero CTA
-                    if (heroAuthCta) {
-                        heroAuthCta.innerHTML = `
-                            <a href="dashboard.html" class="btn btn-lg btn-success">
-                                <i class="fas fa-rocket"></i> Đi đến Dashboard
-                            </a>
-                        `;
-                    }
-                } else {
-                    const authUI = createLoginAuthUI();
-                    headerAuthContainer.innerHTML = authUI.header;
-                    mobileAuthContainer.innerHTML = authUI.mobile;
-                    
-                    // Update Hero CTA
-                    if (heroAuthCta) {
-                        heroAuthCta.innerHTML = `
-                            <a href="auth.html" class="btn btn-lg btn-primary">
-                                <i class="fas fa-sign-in-alt"></i> Bắt đầu học tập ngay
-                            </a>
-                        `;
-                    }
-                }
-            }
-
-            // Đồng bộ trạng thái Auth cho Mobile
-            const authContainerMobile = document.getElementById('auth-status-container-mobile');
-            if (authContainerMobile) {
-                authContainerMobile.innerHTML = user ? createHeaderAuth(user) : createHeaderLogin();
-                
-                // Re-attach logout listeners for mobile
-                const logoutBtnsMobile = authContainerMobile.querySelectorAll('.logout-btn-header-btn');
-                logoutBtnsMobile.forEach(btn => {
-                    btn.addEventListener('click', async () => {
-                        try {
-                            await signOut(auth);
-                            window.location.reload(); 
-                        } catch (error) {
-                            console.error("Lỗi đăng xuất:", error);
-                        }
-                    });
-                });
-            }
-        });
-
-        // Hằng số màu sắc (Dựa trên live_index.html)
-        const IVS_COLORS = {
-            'ivs-bg': '#1a1a1a',
-            'ivs-card': '#111111',
-            'ivs-border': '#27272A',
-            'ivs-blue': '#4c5ef7',
-            'ivs-green': '#10b981', 
-            'ivs-cyan': '#22d3ee',
-            'ivs-orange': '#f97316',
-            'ivs-purple': '#8b5cf6',
-            'ivs-red': '#ef4444',
-            'ivs-text-primary': '#f4f4f5',
-            'ivs-text-secondary': '#a1a1aa'
-        };
-
-        // Thiết lập biến CSS cho Tailwind JIT/Custom Styles
-        document.documentElement.style.setProperty('--ivs-bg', IVS_COLORS['ivs-bg']);
-        document.documentElement.style.setProperty('--ivs-card', IVS_COLORS['ivs-card']);
-        document.documentElement.style.setProperty('--ivs-border', IVS_COLORS['ivs-border']);
-        document.documentElement.style.setProperty('--ivs-blue', IVS_COLORS['ivs-blue']);
-        document.documentElement.style.setProperty('--ivs-green', IVS_COLORS['ivs-green']);
-        document.documentElement.style.setProperty('--ivs-cyan', IVS_COLORS['ivs-cyan']);
-        document.documentElement.style.setProperty('--ivs-orange', IVS_COLORS['ivs-orange']);
-        document.documentElement.style.setProperty('--ivs-purple', IVS_COLORS['ivs-purple']);
-        document.documentElement.style.setProperty('--ivs-text-secondary', IVS_COLORS['ivs-text-secondary']);
-
-        // Mobile Menu Toggle Handler
-        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
-        
-        if (mobileMenuToggle && mobileMenuOverlay) {
-            // Open menu
-            mobileMenuToggle.addEventListener('click', () => {
-                mobileMenuOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-            
-            // Close menu on link click
-            mobileMenuOverlay.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenuOverlay.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                });
-            });
-            
-            // Close menu on Escape key
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && mobileMenuOverlay.classList.contains('active')) {
-                    mobileMenuOverlay.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                }
-            });
-        }
-    </script>
-
     <style>
-        /* BASE STYLES & COLORS */
-        body { 
-            background-color: var(--ivs-bg); 
-            color: var(--ivs-text-primary); 
-            font-family: 'Be Vietnam Pro', sans-serif;
-        }
-        .ivs-card { 
-            background: var(--ivs-card); 
-            border: 1px solid var(--ivs-border); 
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-        }
-        .ivs-border { border-color: var(--ivs-border); }
-
-        /* HERO SECTION */
-        .hero-banner {
-            background: linear-gradient(135deg, rgba(76, 94, 247, 0.15) 0%, rgba(22, 163, 74, 0.1) 50%, rgba(34, 211, 238, 0.15) 100%), linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
-        .hero-banner::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 10% 90%, rgba(76, 94, 247, 0.15) 0%, transparent 40%),
-                        radial-gradient(circle at 90% 10%, rgba(16, 185, 129, 0.15) 0%, transparent 40%);
-            z-index: 0;
-        }
-
-        /* CARD STYLING */
-        .app-card-hover {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            background: #151515; /* Nền tối hơn một chút */
-        }
-        .app-card-hover:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px -5px rgba(0,0,0,0.5);
-            border-color: var(--ivs-cyan); 
-        }
-
-        /* BUTTON GLOW EFFECT (Hero CTA) */
-        .btn-glow {
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, rgba(76, 94, 247, 0.15) 0%, rgba(34, 211, 238, 0.1) 100%),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="1200" height="600" fill="url(%23grid)"/></svg>');
+            background-size: cover, 40px 40px;
             position: relative;
             overflow: hidden;
-            z-index: 1;
-        }
-        .btn-glow::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300%;
-            height: 300%;
-            background: rgba(255, 255, 255, 0.1);
-            transition: all 0.7s ease-out;
-            border-radius: 50%;
-            z-index: -1;
-            transform: translate(-50%, -50%) scale(0);
-        }
-        .btn-glow:hover::before {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 0;
-        }
-        .btn-glow:hover {
-            box-shadow: 0 0 20px rgba(76, 94, 247, 0.7);
+            min-height: 600px;
+            display: flex;
+            align-items: center;
         }
 
-        /* GLOBAL UTILITIES */
-        .text-ivs-blue { color: var(--ivs-blue); }
-        .text-ivs-green { color: var(--ivs-green); }
-        .bg-ivs-blue { background-color: var(--ivs-blue); }
-        .bg-ivs-green { background-color: var(--ivs-green); }
-        .bg-ivs-red { background-color: var(--ivs-red); }
-        .text-ivs-text-secondary { color: var(--ivs-text-secondary); }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
 
-        /* Responsive adjustments */
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #4c5ef7 0%, #22d3ee 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, #4c5ef7 0%, #3b4fd6 100%);
+            color: white;
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(76, 94, 247, 0.4);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: #22d3ee;
+            border: 2px solid #22d3ee;
+        }
+
+        .cta-secondary:hover {
+            background: rgba(34, 211, 238, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Featured Courses Section */
+        .featured-section {
+            padding: 4rem 2rem;
+            background: var(--color-bg);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-card {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .course-card:hover {
+            border-color: #4c5ef7;
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(76, 94, 247, 0.2);
+        }
+
+        .course-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(76, 94, 247, 0.3), rgba(34, 211, 238, 0.3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .course-body {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-category {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(76, 94, 247, 0.2);
+            color: #5d6eff;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            width: fit-content;
+        }
+
+        .course-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+
+        .course-description {
+            font-size: 0.95rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 1rem;
+            flex: 1;
+            line-height: 1.5;
+        }
+
+        .course-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .course-instructor {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .course-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: #f97316;
+        }
+
+        /* Categories Carousel */
+        .categories-section {
+            padding: 4rem 2rem;
+            background: var(--color-bg-secondary);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .category-card {
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            border-color: #22d3ee;
+            transform: scale(1.05);
+            background: rgba(34, 211, 238, 0.05);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .category-name {
+            font-weight: 600;
+            color: var(--color-text);
+            font-size: 1rem;
+        }
+
+        .category-count {
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 4rem 2rem;
+            background: var(--color-bg);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-card {
+            padding: 2rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4c5ef7 0%, #22d3ee 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--color-text-secondary);
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .hero-banner {
-                min-height: 60vh;
+            .hero-title {
+                font-size: 2rem;
             }
-            .hero-banner h1 {
-                font-size: 2.5rem;
+
+            .hero-subtitle {
+                font-size: 1rem;
             }
-            .hero-banner p {
-                font-size: 1.125rem;
+
+            .hero-cta-group {
+                flex-direction: column;
             }
-            .lg\:hidden {
-                display: block;
+
+            .cta-button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+
+            .stats-section {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
-<body class="bg-ivs-bg text-ivs-text-primary antialiased">
+<body>
 
-    <!-- Header (Simple Fixed Header) -->
-    <!-- PROFESSIONAL HEADER -->
-    <header>
-        <div class="header-inner">
-            <!-- Logo Section -->
-            <a href="/" class="header-logo">
-                <img alt="IVS Logo" class="header-logo-img" src="/images/logo/logo.svg" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4c5ef7/ffffff?text=IVS';"/>
-                <div class="header-logo-text">
-                    <span class="header-logo-text-main">IVS Learning Hub</span>
-                    <span class="header-logo-text-sub">Cổng học tập & ứng dụng</span>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="max-w-7xl mx-auto px-4 w-full">
+            <div class="hero-content" data-aos="fade-up">
+                <h1 class="hero-title">Khám Phá Kiến Thức, Phát Triển Sự Nghiệp</h1>
+                <p class="hero-subtitle">Nền tảng học tập trực tuyến với hàng trăm khóa học từ các chuyên gia hàng đầu</p>
+                <div class="hero-cta-group">
+                    <button class="cta-button cta-primary" onclick="document.querySelector('.courses-grid').scrollIntoView({behavior: 'smooth'})">
+                        <i class="fas fa-play-circle"></i> Bắt Đầu Học
+                    </button>
+                    <button class="cta-button cta-secondary" onclick="document.querySelector('.categories-section').scrollIntoView({behavior: 'smooth'})">
+                        <i class="fas fa-compass"></i> Khám Phá Khóa Học
+                    </button>
                 </div>
-            </a>
-            
-            <!-- Desktop Navigation -->
-            <nav class="header-nav">
-                <a href="live_index.html" class="header-nav-item">Giới Thiệu IVS JSC</a>
-                <a href="#applications" class="header-nav-item">Ứng Dụng Học Tập</a>
-                <a href="learning-resources.html" class="header-nav-item">Tài Nguyên EdTech</a>
-                <a href="analytics.html" class="header-nav-item">Thống Kê (Admin)</a>
-            </nav>
-            
-            <!-- Auth Section (Desktop & Mobile) -->
-            <div class="header-auth" id="header-auth-container">
-                <div style="width: 24px; height: 24px; border: 2px solid var(--color-secondary); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
             </div>
-            
-            <!-- Mobile Menu Toggle -->
-            <button class="header-menu-toggle" id="mobile-menu-toggle" aria-label="Mở menu">
-                <i class="fas fa-bars"></i>
-            </button>
         </div>
-    </header>
+    </section>
 
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu-overlay" id="mobile-menu-overlay" role="navigation" aria-label="Mobile Menu">
-        <nav class="mobile-nav">
-            <a href="live_index.html" class="mobile-nav-item">Giới Thiệu IVS JSC</a>
-            <a href="#applications" class="mobile-nav-item">Ứng Dụng Học Tập</a>
-            <a href="learning-resources.html" class="mobile-nav-item">Tài Nguyên EdTech</a>
-            <a href="analytics.html" class="mobile-nav-item">Thống Kê (Admin)</a>
-            <div class="mobile-auth" id="mobile-auth-container">
-                <!-- Auth buttons injected here -->
-            </div>
-        </nav>
-    </div>
+    <!-- Featured Courses -->
+    <section class="featured-section">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="section-title">Khóa Học Nổi Bật</h2>
+            <p class="section-subtitle">Những khóa học phổ biến nhất trong tuần</p>
 
-    <main class="pt-20">
-        <!-- SECTION 1: HERO - TRUNG TÂM HỌC TẬP -->
-        <section class="hero-banner relative min-h-[85vh] flex items-center justify-center text-center p-8 border-b ivs-border">
-            <div class="relative max-w-5xl mx-auto z-10" data-aos="fade-up">
-                <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-4">
-                    <span class="block text-ivs-green text-3xl md:text-4xl font-semibold mb-3 tracking-widest uppercase">CHÀO MỪNG ĐẾN VỚI</span> 
-                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-ivs-blue to-ivs-cyan text-6xl md:text-8xl">IVS Learning Hub</span>
-                </h1>
-                <p class="text-xl md:text-2xl text-ivs-text-secondary mb-10 leading-relaxed max-w-3xl mx-auto">
-                    Cổng thống nhất truy cập toàn bộ hệ sinh thái giáo dục, công nghệ và các ứng dụng học tập tương tác của IVS JSC.
-                </p>
-                <div id="hero-auth-cta" class="flex justify-center">
-                    <!-- Nút Auth/Dashboard sẽ được chèn ở đây qua JS -->
+            <div class="courses-grid">
+                <!-- Course 1 -->
+                <div class="course-card" data-aos="fade-up">
+                    <div class="course-image">📱</div>
+                    <div class="course-body">
+                        <span class="course-category">Lập Trình</span>
+                        <h3 class="course-title">React.js Từ Cơ Bản Đến Nâng Cao</h3>
+                        <p class="course-description">Học React từ đầu với các dự án thực tế. Nắm vững hooks, state management, và best practices.</p>
+                        <div class="course-footer">
+                            <div class="course-instructor">
+                                <i class="fas fa-user-circle"></i>
+                                <span>Nguyễn Dev</span>
+                            </div>
+                            <div class="course-rating">
+                                <i class="fas fa-star"></i> 4.8
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 2 -->
+                <div class="course-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="course-image">🎨</div>
+                    <div class="course-body">
+                        <span class="course-category">Thiết Kế</span>
+                        <h3 class="course-title">UI/UX Design Masterclass</h3>
+                        <p class="course-description">Thiết kế giao diện người dùng tuyệt vời. Học Figma, design thinking, và user research.</p>
+                        <div class="course-footer">
+                            <div class="course-instructor">
+                                <i class="fas fa-user-circle"></i>
+                                <span>Trang Designer</span>
+                            </div>
+                            <div class="course-rating">
+                                <i class="fas fa-star"></i> 4.9
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 3 -->
+                <div class="course-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="course-image">🤖</div>
+                    <div class="course-body">
+                        <span class="course-category">AI & ML</span>
+                        <h3 class="course-title">Machine Learning Basics</h3>
+                        <p class="course-description">Bắt đầu với machine learning. Học Python, scikit-learn, và các algorithms cơ bản.</p>
+                        <div class="course-footer">
+                            <div class="course-instructor">
+                                <i class="fas fa-user-circle"></i>
+                                <span>Hải ML Expert</span>
+                            </div>
+                            <div class="course-rating">
+                                <i class="fas fa-star"></i> 4.7
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 4 -->
+                <div class="course-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="course-image">📊</div>
+                    <div class="course-body">
+                        <span class="course-category">Data Science</span>
+                        <h3 class="course-title">Data Analytics với Python & SQL</h3>
+                        <p class="course-description">Phân tích dữ liệu chuyên nghiệp. Pandas, SQL, data visualization, và insights.</p>
+                        <div class="course-footer">
+                            <div class="course-instructor">
+                                <i class="fas fa-user-circle"></i>
+                                <span>Data Pro</span>
+                            </div>
+                            <div class="course-rating">
+                                <i class="fas fa-star"></i> 4.6
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 5 -->
+                <div class="course-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="course-image">🚀</div>
+                    <div class="course-body">
+                        <span class="course-category">DevOps</span>
+                        <h3 class="course-title">Docker & Kubernetes Essentials</h3>
+                        <p class="course-description">Containerization và orchestration. Docker, Kubernetes, CI/CD pipelines.</p>
+                        <div class="course-footer">
+                            <div class="course-instructor">
+                                <i class="fas fa-user-circle"></i>
+                                <span>DevOps Master</span>
+                            </div>
+                            <div class="course-rating">
+                                <i class="fas fa-star"></i> 4.8
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 6 -->
+                <div class="course-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="course-image">💼</div>
+                    <div class="course-body">
+                        <span class="course-category">Business</span>
+                        <h3 class="course-title">Product Management Essentials</h3>
+                        <p class="course-description">Trở thành Product Manager giỏi. Strategy, roadmap, user research, analytics.</p>
+                        <div class="course-footer">
+                            <div class="course-instructor">
+                                <i class="fas fa-user-circle"></i>
+                                <span>PM Specialist</span>
+                            </div>
+                            <div class="course-rating">
+                                <i class="fas fa-star"></i> 4.9
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- SECTION 2: GIỚI THIỆU HỆ SINH THÁI -->
-        <section class="py-20 bg-ivs-card" id="about-ecosystem">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center max-w-4xl mx-auto mb-16" data-aos="fade-up">
-                    <h2 class="text-3xl md:text-5xl font-bold text-ivs-orange mb-4">HỆ SINH THÁI IVS JSC: TẦM NHÌN HỘI TỤ</h2>
-                    <p class="text-xl text-ivs-text-secondary max-w-3xl mx-auto">
-                        IVS là sự kết hợp chiến lược giữa **Giáo dục (Academy)**, **Công nghệ (Celestech)** và **Tư vấn Chiến lược (Consulting)** để tạo ra giải pháp toàn diện.
-                    </p>
+    <!-- Categories -->
+    <section class="categories-section">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="section-title">Danh Mục Khóa Học</h2>
+            <p class="section-subtitle">Khám phá các lĩnh vực học tập khác nhau</p>
+
+            <div class="categories-grid">
+                <div class="category-card" data-aos="fade-up">
+                    <div class="category-icon">💻</div>
+                    <div class="category-name">Lập Trình</div>
+                    <div class="category-count">45 khóa học</div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                    <!-- Card 1: Education -->
-                    <div class="p-8 ivs-card rounded-2xl app-card-hover flex flex-col items-center justify-center border-l-4 border-ivs-green shadow-xl" data-aos="fade-right" data-aos-delay="100">
-                        <i class="fas fa-book-open text-6xl text-ivs-green mb-4"></i>
-                        <h3 class="text-2xl font-bold text-white mb-2">Giáo Dục (Academy)</h3>
-                        <p class="text-ivs-text-secondary text-base">Cung cấp chương trình liên kết ngoại ngữ, STEM và kỹ năng sống chất lượng cao.</p>
-                    </div>
-                    <!-- Card 2: Technology -->
-                    <div class="p-8 ivs-card rounded-2xl app-card-hover flex flex-col items-center justify-center border-l-4 border-ivs-cyan shadow-xl" data-aos="fade-up" data-aos-delay="200">
-                        <i class="fas fa-robot text-6xl text-ivs-cyan mb-4"></i>
-                        <h3 class="text-2xl font-bold text-white mb-2">Công Nghệ (Celestech)</h3>
-                        <p class="text-ivs-text-secondary text-base">Thiết kế Web/App, giải pháp chuyển đổi số và cung cấp thiết bị công nghệ hiện đại.</p>
-                    </div>
-                    <!-- Card 3: Consulting -->
-                    <div class="p-8 ivs-card rounded-2xl app-card-hover flex flex-col items-center justify-center border-l-4 border-ivs-blue shadow-xl" data-aos="fade-left" data-aos-delay="300">
-                        <i class="fas fa-chart-line text-6xl text-ivs-blue mb-4"></i>
-                        <h3 class="text-2xl font-bold text-white mb-2">Tư Vấn (Consulting)</h3>
-                        <p class="text-ivs-text-secondary text-base">Tư vấn chiến lược nhân sự, tài chính, pháp lý và tối ưu hóa vận hành doanh nghiệp.</p>
+                <div class="category-card" data-aos="fade-up" data-aos-delay="50">
+                    <div class="category-icon">🎨</div>
+                    <div class="category-name">Thiết Kế</div>
+                    <div class="category-count">32 khóa học</div>
+                </div>
+
+                <div class="category-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="category-icon">📊</div>
+                    <div class="category-name">Dữ Liệu</div>
+                    <div class="category-count">28 khóa học</div>
+                </div>
+
+                <div class="category-card" data-aos="fade-up" data-aos-delay="150">
+                    <div class="category-icon">🤖</div>
+                    <div class="category-name">AI & ML</div>
+                    <div class="category-count">35 khóa học</div>
+                </div>
+
+                <div class="category-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="category-icon">📱</div>
+                    <div class="category-name">Mobile</div>
+                    <div class="category-count">24 khóa học</div>
+                </div>
+
+                <div class="category-card" data-aos="fade-up" data-aos-delay="250">
+                    <div class="category-icon">💼</div>
+                    <div class="category-name">Business</div>
+                    <div class="category-count">38 khóa học</div>
+                </div>
+
+                <div class="category-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="category-icon">🎓</div>
+                    <div class="category-name">Ngôn Ngữ</div>
+                    <div class="category-count">50 khóa học</div>
+                </div>
+
+                <div class="category-card" data-aos="fade-up" data-aos-delay="350">
+                    <div class="category-icon">🚀</div>
+                    <div class="category-name">DevOps</div>
+                    <div class="category-count">20 khóa học</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stat-card">
+            <div class="stat-number">50K+</div>
+            <div class="stat-label">Học Viên Tích Cực</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Khóa Học Chất Lượng</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-number">100+</div>
+            <div class="stat-label">Giảng Viên Chuyên Gia</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-number">95%</div>
+            <div class="stat-label">Tỉ Lệ Hài Lòng</div>
+        </div>
+    </section>
+
+    <!-- ELearners 3.0 Introduction Section -->
+    <section class="featured-section">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="section-title">Giới thiệu ứng dụng ELearners 3.0</h2>
+            <p class="section-subtitle">Một trong những chức năng mới chất lượng.</p>
+            <div class="courses-grid">
+                <div class="course-card" data-aos="fade-up">
+                    <div class="course-image">👩‍🏫</div>
+                    <div class="course-body">
+                        <span class="course-category">Tài khoản Giáo viên</span>
+                        <h3 class="course-title">Dành cho giảng dạy & quản lý lớp học</h3>
+                        <p class="course-description">
+                            <b>Tạo phòng học riêng:</b> Giáo viên có thể tạo phòng và nhận mã phòng để chia sẻ với học sinh. Học sinh chỉ cần nhập mã để tham gia lớp học.
+                            <br><br>
+                            <b>Phát bài, Thu bài và chấm điểm:</b> Giáo viên dễ dàng gửi bài kiểm tra đến học sinh, Học sinh làm bài trực tiếp trên ứng dụng, giáo viên có thể xem và chấm bài ngay trong hệ thống.
+                            <br><br>
+                            <b>Và còn nữa:</b> Nhiều tính năng hỗ trợ khác, được thiết kế để tối ưu hóa trải nghiệm giảng dạy.
+                        </p>
+                        <div class="course-footer">
+                            <div class="course-instructor">
+                                <i class="fas fa-lock"></i>
+                                <span><b>Lưu ý:</b> Tài khoản Giáo viên không thể tự đăng ký. Vui lòng liên hệ trực tiếp với IVS ELearners để được cấp quyền sử dụng MIỄN PHÍ.</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- SECTION 3: CỔNG ỨNG DỤNG HỌC TẬP (Learning Applications Portal) -->
-        <section class="py-20 bg-ivs-bg" id="applications">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center max-w-4xl mx-auto mb-16" data-aos="fade-up">
-                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
-                        <i class="fas fa-cubes text-ivs-purple mr-2"></i> KHÁM PHÁ ỨNG DỤNG CHUYÊN MÔN
-                    </h2>
-                    <p class="text-xl text-ivs-text-secondary">
-                        Các nền tảng được thiết kế riêng, hỗ trợ giáo dục đào tạo ở mọi cấp độ.
-                    </p>
-                </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- App Card 1: IVS English Learners -->
-                    <div class="ivs-card p-6 rounded-xl app-card-hover flex flex-col justify-between border-b-4 border-ivs-green shadow-2xl" data-aos="fade-up" data-aos-delay="100">
-                        <div>
-                            <i class="fas fa-book-reader text-5xl text-ivs-green mb-3"></i>
-                            <h3 class="text-2xl font-bold text-white mb-2">IVS English Learners</h3>
-                            <p class="text-ivs-text-secondary mb-4 flex-grow">Nền tảng học Tiếng Anh tích hợp Sách điện tử, Luyện tập AI và hệ thống gamification.</p>
-                        </div>
-                        <a href="https://ivseng.web.app" target="_blank" rel="noopener noreferrer" class="bg-ivs-green text-white px-5 py-3 rounded-lg font-semibold text-center hover:bg-green-600 transition-colors mt-4 shadow-md">
-                            Truy Cập Ứng Dụng <i class="fas fa-external-link-alt ml-2"></i>
-                        </a>
-                    </div>
+    <!-- Firebase & Auth Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+        import { firebaseConfig } from "/js/firebase-config.js";
 
-                    <!-- App Card 2: IVS Testing & Placement -->
-                    <div class="ivs-card p-6 rounded-xl app-card-hover flex flex-col justify-between border-b-4 border-ivs-blue shadow-2xl" data-aos="fade-up" data-aos-delay="200">
-                        <div>
-                            <i class="fas fa-clipboard-check text-5xl text-ivs-blue mb-3"></i>
-                            <h3 class="text-2xl font-bold text-white mb-2">IVS Testing & Placement</h3>
-                            <p class="text-ivs-text-secondary mb-4 flex-grow">Hệ thống kiểm tra, đánh giá và xếp lớp trình độ ngoại ngữ chính xác cho học viên.</p>
-                        </div>
-                        <a href="https://testplacement.web.app/" target="_blank" rel="noopener noreferrer" class="bg-ivs-blue text-white px-5 py-3 rounded-lg font-semibold text-center hover:bg-blue-600 transition-colors mt-4 shadow-md">
-                            Truy Cập Ứng Dụng <i class="fas fa-external-link-alt ml-2"></i>
-                        </a>
-                    </div>
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
 
-                    <!-- App Card 3: IVS Kinderlink -->
-                    <div class="ivs-card p-6 rounded-xl app-card-hover flex flex-col justify-between border-b-4 border-ivs-purple shadow-2xl" data-aos="fade-up" data-aos-delay="300">
-                        <div>
-                            <i class="fas fa-child text-5xl text-ivs-purple mb-3"></i>
-                            <h3 class="text-2xl font-bold text-white mb-2">IVS Kinderlink</h3>
-                            <p class="text-ivs-text-secondary mb-4 flex-grow">Ứng dụng quản lý trường mầm non, kết nối nhà trường và phụ huynh hiệu quả.</p>
-                        </div>
-                        <a href="https://ivs-7221b.web.app/" target="_blank" rel="noopener noreferrer" class="bg-ivs-purple text-white px-5 py-3 rounded-lg font-semibold text-center hover:bg-purple-600 transition-colors mt-4 shadow-md">
-                            Truy Cập Ứng Dụng <i class="fas fa-external-link-alt ml-2"></i>
-                        </a>
-                    </div>
+        onAuthStateChanged(auth, (user) => {
+            const headerAuthContainer = document.getElementById('header-auth-container');
 
-                    <!-- App Card 4: StriveStreak (Mới) -->
-                    <div class="ivs-card p-6 rounded-xl app-card-hover flex flex-col justify-between border-b-4 border-ivs-orange shadow-2xl" data-aos="fade-up" data-aos-delay="400">
-                        <div>
-                            <i class="fas fa-fire text-5xl text-ivs-orange mb-3"></i>
-                            <h3 class="text-2xl font-bold text-white mb-2">StriveStreak (Habit Tracker)</h3>
-                            <p class="text-ivs-text-secondary mb-4 flex-grow">Xây dựng thói quen và duy trì động lực học tập qua gamification và AI. (App bên ngoài)</p>
-                        </div>
-                        <a href="https://strivestreak.netlify.app/" target="_blank" rel="noopener noreferrer" class="bg-ivs-orange text-white px-5 py-3 rounded-lg font-semibold text-center hover:bg-orange-600 transition-colors mt-4 shadow-md">
-                            Truy Cập Ứng Dụng <i class="fas fa-external-link-alt ml-2"></i>
-                        </a>
-                    </div>
-
-                    <!-- App Card 5: QLGX (Mới) -->
-                    <div class="ivs-card p-6 rounded-xl app-card-hover flex flex-col justify-between border-b-4 border-ivs-cyan shadow-2xl" data-aos="fade-up" data-aos-delay="500">
-                        <div>
-                            <i class="fas fa-people-group text-5xl text-ivs-cyan mb-3"></i>
-                            <h3 class="text-2xl font-bold text-white mb-2">QLGX - Quản Lý Cộng Đồng</h3>
-                            <p class="text-ivs-text-secondary mb-4 flex-grow">Ứng dụng quản lý thông tin hộ gia đình, hỗ trợ công tác quản lý giáo xứ và cộng đồng.</p>
-                        </div>
-                        <a href="https://qlgx.netlify.app/" target="_blank" rel="noopener noreferrer" class="bg-ivs-cyan text-white px-5 py-3 rounded-lg font-semibold text-center hover:bg-cyan-600 transition-colors mt-4 shadow-md">
-                            Truy Cập Ứng Dụng <i class="fas fa-external-link-alt ml-2"></i>
-                        </a>
-                    </div>
-                    
-                    <!-- App Card 6: CTA Xem thêm -->
-                    <a href="learning-materials.html" class="ivs-card p-6 rounded-xl flex flex-col items-center justify-center text-center border-2 border-dashed border-ivs-text-secondary/50 hover:border-ivs-red transition-colors" data-aos="fade-up" data-aos-delay="600">
-                        <i class="fas fa-shapes text-5xl text-ivs-red mb-4 animate-pulse"></i>
-                        <h3 class="text-xl font-bold text-white mb-2">XEM TẤT CẢ ỨNG DỤNG</h3>
-                        <p class="text-ivs-text-secondary mb-4">Games, App Quản lý nội bộ và các nền tảng tùy chỉnh khác.</p>
-                        <button class="bg-ivs-red text-white px-5 py-3 rounded-full font-semibold hover:bg-red-600 transition-colors mt-4 shadow-md">
-                            Khám phá thêm <i class="fas fa-arrow-right ml-2"></i>
-                        </button>
+            if (user) {
+                const emailPart = user.email.split('@')[0];
+                headerAuthContainer.innerHTML = `
+                    <a href="my-learning.html" class="px-4 py-2 rounded-lg hover:bg-[var(--color-bg-secondary)] transition flex items-center gap-2">
+                        <i class="fas fa-book-open"></i> Khóa Học Của Tôi
                     </a>
-                </div>
-                
-                <div class="text-center mt-16 pt-8 border-t ivs-border max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="700">
-                    <p class="text-xl text-ivs-text-secondary italic font-medium">
-                        <i class="fas fa-info-circle text-ivs-cyan mr-2"></i> Đồng bộ tài khoản (SSO) được kích hoạt cho tất cả các ứng dụng chính thức của IVS.
-                    </p>
-                </div>
-            </div>
-        </section>
+                    <a href="dashboard.html" class="px-4 py-2 rounded-lg hover:bg-[var(--color-bg-secondary)] transition flex items-center gap-2">
+                        <i class="fas fa-user-circle"></i> ${emailPart}
+                    </a>
+                    <button class="px-4 py-2 bg-[#ef4444] text-white rounded-lg hover:bg-[#dc2626] transition logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Đăng Xuất
+                    </button>
+                `;
 
-        <!-- SECTION 4: CALL TO ACTION - Dịch vụ Tùy chỉnh (Optimized) -->
-        <section class="py-20 bg-ivs-card border-t ivs-border">
-            <div class="container mx-auto px-6 lg:px-8 text-center" data-aos="zoom-in">
-                <h2 class="text-4xl lg:text-5xl font-bold text-white mb-4">
-                    Cần Ứng Dụng Chuyên Biệt?
-                </h2>
-                <p class="text-xl text-ivs-text-secondary max-w-4xl mx-auto mb-8">
-                    Đội ngũ **IVS Celestech** sẵn sàng phát triển các giải pháp Web/App Quản lý, Giáo dục theo yêu cầu riêng của bạn.
-                </p>
-                <a href="/Pages/webdesign.html" class="inline-block bg-ivs-cyan hover:bg-cyan-600 text-white font-bold py-4 px-10 rounded-full text-xl transition-all transform hover:scale-105 shadow-xl shadow-cyan-500/40 btn-glow">
-                    <i class="fas fa-code mr-2"></i> Yêu Cầu Phát Triển Tùy Chỉnh
-                </a>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Scripts -->
-    <script defer="" src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Khởi tạo AOS
-            if (typeof AOS !== 'undefined') {
-                AOS.init({
-                    duration: 800,
-                    once: true,
-                    offset: 50,
-                    easing: 'ease-out-quad',
-                });
-            }
-            
-            // Logic Smooth Scroll (Lấy từ live_index.html)
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        const headerOffset = 70; 
-                        const elementPosition = target.getBoundingClientRect().top;
-                        const offsetPosition = window.pageYOffset + elementPosition - headerOffset;
-
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-
-            // Tải logic Firebase Auth Controller (Mặc dù logic auth cơ bản đã nằm trong module script phía trên)
-            // Tải các script khác (utils, language, loadComponents)
-            const scriptFiles = [
-                "js/utils.js",
-                "js/language.js",
-                "ai/js/loadComponents.js"
-            ];
-
-            scriptFiles.forEach(src => {
-                const script = document.createElement('script');
-                script.src = src;
-                script.defer = true;
-                document.body.appendChild(script);
-            });
-            
-            // Xử lý Mobile Menu (Fixed Logic with Close Button)
-            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-            const mobileMenuClose = document.getElementById('mobile-menu-close');
-            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
-
-            function openMobileMenu() {
-                mobileMenuOverlay.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-                mobileMenuOverlay.focus(); // Focus trap
-            }
-
-            function closeMobileMenu() {
-                mobileMenuOverlay.classList.add('hidden');
-                document.body.style.overflow = '';
-                mobileMenuToggle?.focus(); // Restore focus
-            }
-
-            if (mobileMenuToggle) {
-                mobileMenuToggle.addEventListener('click', openMobileMenu);
-            }
-
-            if (mobileMenuClose) {
-                mobileMenuClose.addEventListener('click', closeMobileMenu);
-            }
-
-            // Đóng menu khi click vào link
-            if (mobileMenuOverlay) {
-                mobileMenuOverlay.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', closeMobileMenu);
-                });
-                
-                // Đóng khi nhấn Escape
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape' && !mobileMenuOverlay.classList.contains('hidden')) {
-                        closeMobileMenu();
-                    }
+                document.querySelectorAll('.logout-btn').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        await signOut(auth);
+                        window.location.reload();
+                    });
                 });
             }
         });
     </script>
-    
-    <!-- Modern UI Components (Modals, Dropdowns, Accordions, Tabs) -->
-    <script src="js/modern-ui-components.js"></script>
-    
-    <!-- Universal Loader - Load header, footer, and AIVY chatbot in one go -->
-    <script defer src="js/universal-loader.js"></script>
-    
-    <!-- AOS Animations -->
+
+    <!-- AOS Animation -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-      AOS.init({
-        duration: 800,
-        easing: 'ease-in-out',
-        once: true,
-        offset: 100
-      });
+        AOS.init({
+            duration: 1000,
+            easing: 'ease-in-out-cubic',
+            once: true,
+            mirror: false
+        });
     </script>
-</body>
+    <!-- Universal Loader - Load header, footer, and AIVY chatbot in one go -->
+    <script defer src="/js/universal-loader.js"></script>
+<script defer src="/js/universal-loader.js"></script></body>
 </html>
