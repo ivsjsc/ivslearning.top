@@ -1,10 +1,27 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const cors = require('cors')({ origin: true });
+// Configure CORS: allow explicit origins defined in env var or a safe default set
+const cors = require('cors')({
+    origin: function (origin, callback) {
+        const allowed = (process.env.CORS_ORIGINS || 'https://ivslearning.top,https://www.ivslearning.top,http://localhost:3000,http://localhost:5173')
+            .split(',')
+            .map(u => u.trim());
+
+        // Allow requests with no origin (e.g., curl, server-to-server) or from allowed list
+        if (!origin || allowed.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
+});
 const express = require('express');
 
 // Initialize Firebase Admin SDK
-admin.initializeApp();
+// Initialize Firebase Admin SDK (guard if already initialized during testing or emulators)
+if (!admin.apps || !admin.apps.length) {
+    admin.initializeApp();
+}
 
 /**
  * Cloud Function: createCustomToken
@@ -27,6 +44,20 @@ admin.initializeApp();
  *   "expires": 3600
  * }
  */
+// Helper: Extract token from Authorization header (supports case-insensitive Bearer)
+function extractAuthToken(req) {
+    const header = req.headers?.authorization || req.headers?.Authorization || '';
+    return header.replace(/Bearer\s+/i, '').trim();
+}
+
+// Helper: Verify ID token and return decoded token or throw
+async function verifyIdTokenOrThrow(idToken) {
+    if (!idToken) throw new Error('No ID token provided');
+    return await admin.auth().verifyIdToken(idToken);
+}
+
+// Create Custom Token - allows a user (or an admin creating for others) to generate
+// a Firebase custom token which can be exchanged on the client for an ID token.
 exports.createCustomToken = functions.https.onRequest((req, res) => {
     cors(req, res, async () => {
         try {
@@ -35,28 +66,32 @@ exports.createCustomToken = functions.https.onRequest((req, res) => {
                 return res.status(405).json({ error: 'Method not allowed' });
             }
 
-            // Validate the calling user (optional but recommended for security)
-            const token = req.headers.authorization?.split('Bearer ')[1];
+            // Validate the calling user (required)
+            const token = extractAuthToken(req);
             if (!token) {
                 return res.status(401).json({ error: 'Unauthorized: No token provided' });
             }
 
-            // Verify the ID token
-            const decodedToken = await admin.auth().verifyIdToken(token);
-            const uid = decodedToken.uid;
+            // Verify the ID token (this is the requester's ID token)
+            const decodedToken = await verifyIdTokenOrThrow(token);
+            let targetUid = decodedToken.uid; // default: create custom token for the calling user
 
             // Get request body
-            const { email, customClaims = {} } = req.body;
+            const { email, customClaims = {}, uid: requestedUid } = req.body;
 
             if (!email) {
                 return res.status(400).json({ error: 'Email is required' });
             }
 
+            // If the requester is admin and provided a requestedUid, allow creating token for that user
+            if (requestedUid && (decodedToken.admin || decodedToken.claims?.admin)) {
+                targetUid = requestedUid;
+            }
+
             // Create custom token with additional claims
-            const customToken = await admin.auth().createCustomToken(uid, {
+            const customToken = await admin.auth().createCustomToken(targetUid, {
                 ...customClaims,
-                email: email,
-                issuedAt: new Date().getTime()
+                email: email
             });
 
             return res.json({
@@ -66,10 +101,9 @@ exports.createCustomToken = functions.https.onRequest((req, res) => {
             });
 
         } catch (error) {
-            console.error('Error creating custom token:', error);
+            console.error('Error creating custom token:', error?.message || error);
             return res.status(500).json({ 
-                error: 'Failed to create custom token',
-                message: error.message 
+                error: 'Failed to create custom token'
             });
         }
     });
@@ -93,20 +127,23 @@ exports.createCustomToken = functions.https.onRequest((req, res) => {
  *   "claims": { ... }
  * }
  */
-exports.validateCustomToken = functions.https.onRequest((req, res) => {
+// Validate ID Token (server-side verification of ID token issued after signInWithCustomToken)
+// NOTE: Custom tokens are intended to be exchanged by the client for ID tokens. The server
+// should validate ID tokens (not custom tokens) using verifyIdToken.
+exports.validateIdToken = functions.https.onRequest((req, res) => {
     cors(req, res, async () => {
         try {
             if (req.method !== 'POST') {
                 return res.status(405).json({ error: 'Method not allowed' });
             }
 
-            const { customToken } = req.body;
-            if (!customToken) {
-                return res.status(400).json({ error: 'Custom token is required' });
+            const { idToken } = req.body;
+            if (!idToken) {
+                return res.status(400).json({ error: 'idToken is required (an ID token issued by Firebase Auth)' });
             }
 
-            // Verify the custom token using Firebase Auth
-            const decodedToken = await admin.auth().verifyIdToken(customToken);
+            // Verify the ID token using Firebase Auth
+            const decodedToken = await verifyIdTokenOrThrow(idToken);
 
             return res.json({
                 success: true,
@@ -116,12 +153,26 @@ exports.validateCustomToken = functions.https.onRequest((req, res) => {
             });
 
         } catch (error) {
-            console.error('Error validating custom token:', error);
+            console.error('Error validating ID token:', error?.message || error);
             return res.status(401).json({ 
-                error: 'Invalid or expired token',
-                message: error.message 
+                error: 'Invalid or expired token'
             });
         }
+    });
+});
+
+// Backwards compatibility: export a validateCustomToken wrapper (deprecated)
+exports.validateCustomToken = functions.https.onRequest((req, res) => {
+    cors(req, res, async () => {
+        console.warn('Deprecated endpoint validateCustomToken called: please use validateIdToken (ID token) instead.');
+        // If client passes customToken mistakenly, return helpful guidance
+        if (req.body?.customToken && !req.body?.idToken) {
+            return res.status(400).json({
+                error: 'customToken is not a valid ID token on the server. Exchange the custom token for an ID token on the client using signInWithCustomToken and then call validateIdToken with the idToken.'
+            });
+        }
+        // Delegate to validateIdToken
+        return exports.validateIdToken(req, res);
     });
 });
 
@@ -148,12 +199,12 @@ exports.getUserProfile = functions.https.onRequest((req, res) => {
             }
 
             // Verify the calling user
-            const token = req.headers.authorization?.split('Bearer ')[1];
+            const token = extractAuthToken(req);
             if (!token) {
                 return res.status(401).json({ error: 'Unauthorized' });
             }
 
-            await admin.auth().verifyIdToken(token);
+            await verifyIdTokenOrThrow(token);
 
             // Get user record
             const userRecord = await admin.auth().getUser(uid);
@@ -167,10 +218,9 @@ exports.getUserProfile = functions.https.onRequest((req, res) => {
             });
 
         } catch (error) {
-            console.error('Error getting user profile:', error);
+            console.error('Error getting user profile:', error?.message || error);
             return res.status(500).json({ 
-                error: 'Failed to get user profile',
-                message: error.message 
+                error: 'Failed to get user profile'
             });
         }
     });
@@ -197,13 +247,13 @@ exports.updateUserClaims = functions.https.onRequest((req, res) => {
             }
 
             // Verify the calling user is admin
-            const token = req.headers.authorization?.split('Bearer ')[1];
+            const token = extractAuthToken(req);
             if (!token) {
                 return res.status(401).json({ error: 'Unauthorized' });
             }
 
-            const decodedToken = await admin.auth().verifyIdToken(token);
-            if (!decodedToken.admin) {
+            const decodedToken = await verifyIdTokenOrThrow(token);
+            if (!(decodedToken.admin || decodedToken.claims?.admin)) {
                 return res.status(403).json({ error: 'Only admins can update user claims' });
             }
 
@@ -221,10 +271,9 @@ exports.updateUserClaims = functions.https.onRequest((req, res) => {
             });
 
         } catch (error) {
-            console.error('Error updating user claims:', error);
+            console.error('Error updating user claims:', error?.message || error);
             return res.status(500).json({ 
-                error: 'Failed to update user claims',
-                message: error.message 
+                error: 'Failed to update user claims'
             });
         }
     });
