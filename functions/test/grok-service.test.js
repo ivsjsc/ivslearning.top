@@ -22,9 +22,12 @@ describe('GrokAiService', () => {
   });
 
   describe('Constructor', () => {
-    it('should throw an error if GROK_API_KEY is not set', () => {
+    it('should not throw but warn if GROK_API_KEY is not set', () => {
       delete process.env.GROK_API_KEY;
-      expect(() => new GrokAiService()).to.throw('GROK_API_KEY environment variable is required');
+      const warnStub = sinon.stub(console, 'warn');
+      expect(() => new GrokAiService()).to.not.throw();
+      expect(warnStub.called).to.be.true;
+      warnStub.restore();
     });
 
     it('should create an instance with default values', () => {

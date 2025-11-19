@@ -72,7 +72,7 @@ Trả lời tự nhiên với cuộc trò chuyện đồng thời hữu ích cho
     // Logging control
     this.enableLogs = (process.env.ENABLE_GROK_LOGS || process.env.VITE_ENABLE_GROK_LOGS || 'true') === 'true';
     if (!this.apiKey && this.enableLogs) {
-      console.error('⚠️ ERROR: GROK_API_KEY environment variable not set!');
+      console.warn('⚠️ WARNING: GROK_API_KEY environment variable not set!');
     }
   }
 
