@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "ivs-159a7"
-  }
+    "default": "ivs-159a7",
+    "ivslearning": "ivs-159a7"
+  },
+  "targets": {},
+  "etags": {}
 }

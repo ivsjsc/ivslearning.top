@@ -289,3 +289,107 @@ exports.grokApi = functions.https.onRequest((req, res) => {
     app.use('/api/grok', grokApiRouter);
     return app(req, res);
 });
+
+// ---- Basic API router for compatibility and local testing ----
+const apiRouter = express.Router();
+
+// Health check - returns environment info and firebase status (if available)
+apiRouter.get('/health', async (req, res) => {
+    try {
+        // A simple DB check: list collections (if Firestore access is available)
+        const checks = { api: 'ok' };
+        try {
+            await admin.firestore().listCollections();
+            checks.firebase = 'ok';
+        } catch (e) {
+            checks.firebase = 'unavailable';
+        }
+
+        return res.json({
+            status: 'ok',
+            timestamp: new Date().toISOString(),
+            checks,
+            version: '1.0.0',
+            environment: process.env.NODE_ENV || 'development'
+        });
+    } catch (error) {
+        console.error('Health check error', error);
+        return res.status(500).json({ status: 'error', error: String(error) });
+    }
+});
+
+// Models - return configured model list and which ones appear configured via env
+apiRouter.get('/models', (req, res) => {
+    const models = [
+        { name: 'Gemini', provider: 'Google', status: process.env.GEMINI_API_KEY ? 'configured' : 'unconfigured' },
+        { name: 'OpenAI', provider: 'OpenAI', status: process.env.OPENAI_API_KEY ? 'configured' : 'unconfigured' },
+        { name: 'Claude', provider: 'Anthropic', status: process.env.CLAUDE_API_KEY ? 'configured' : 'unconfigured' },
+        { name: 'Grok', provider: 'Grok', status: process.env.GROK_API_KEY ? 'configured' : 'unconfigured' },
+        { name: 'DeepSeek', provider: 'DeepSeek', status: process.env.DEEPSEEK_API_KEY ? 'configured' : 'unconfigured' }
+    ];
+    res.json({ status: 'ok', configured_models: models.filter(m => m.status === 'configured').length, total_models: models.length, models });
+});
+
+// AI Router - lightweight router for a few tasks used by the frontend
+apiRouter.post('/ai-router', express.json(), async (req, res) => {
+    try {
+        const { task, data } = req.body || {};
+
+        if (!task) return res.status(400).json({ error: 'task is required' });
+
+        switch (task) {
+            case 'get_user_profile': {
+                // use admin to fetch user if uid provided
+                const uid = data?.userId || data?.uid;
+                if (!uid) return res.status(400).json({ error: 'userId is required' });
+                try {
+                    const user = await admin.auth().getUser(uid);
+                    return res.json({ status: 'ok', user: { uid: user.uid, email: user.email, displayName: user.displayName, customClaims: user.customClaims || {} } });
+                } catch (e) {
+                    return res.status(404).json({ error: 'User not found', details: e.message });
+                }
+            }
+            case 'get_posts': {
+                // Return a stubbed posts array for frontend tests
+                return res.json({ status: 'ok', posts: [ { id: 'post-1', authorId: 'u1', authorName: 'IVS Admin', content: 'Test post', createdAt: new Date().toISOString() } ] });
+            }
+            case 'generate_content': {
+                // Basic stub — in production this would call Gemini/OpenAI/Grok
+                return res.json({ status: 'ok', quiz: [], dialogue: 'This is a generated sample response', modelUsed: 'stub' });
+            }
+            default:
+                return res.status(501).json({ error: 'Task not implemented', task });
+        }
+
+    } catch (error) {
+        console.error('AI router error', error);
+        return res.status(500).json({ status: 'error', error: String(error) });
+    }
+});
+
+// Minimal auth endpoints for the frontend; these do basic operations or proxy to Firebase Auth where appropriate.
+apiRouter.post('/auth/login', express.json(), async (req, res) => {
+    // NOTE: Email/password auth should be handled client-side with Firebase Client SDK.
+    // Provide a dev fallback to create a custom token for a provided uid
+    const { uid } = req.body || {};
+    if (!uid) return res.status(400).json({ error: 'uid is required for dev login fallback' });
+    try {
+        const token = await admin.auth().createCustomToken(uid);
+        return res.json({ status: 'ok', token });
+    } catch (e) {
+        console.error('dev login error', e);
+        return res.status(500).json({ error: e.message });
+    }
+});
+
+apiRouter.post('/auth/logout', (req, res) => {
+    // Non-stateful logout placeholder (client should remove local token/cookies)
+    return res.json({ status: 'ok', message: 'logged out' });
+});
+
+// Mount the API router so it can be used in functions
+exports.api = functions.https.onRequest((req, res) => {
+    const app = express();
+    app.use('/api', apiRouter);
+    return app(req, res);
+});
