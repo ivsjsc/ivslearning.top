@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             if (isLoginMode) {
                 // Login
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                await signInWithEmailAndPassword(auth, email, password);
                 showMessage('Đăng nhập thành công!', 'success');
                 try { if (userCredential && userCredential.user) await setUserDoc(userCredential.user); } catch (err) { console.warn('Auth: failed to update user profile after login', err); }
                 // Redirect to dashboard
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 1000);
             } else {
                 // Register
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                await createUserWithEmailAndPassword(auth, email, password);
                 showMessage('Đăng ký thành công!', 'success');
                 try { if (userCredential && userCredential.user) await setUserDoc(userCredential.user, { role: 'student', createdAt: new Date().toISOString() }); } catch (err) { console.warn('Auth: failed to create user profile after signup', err); }
                 // Switch to login mode
