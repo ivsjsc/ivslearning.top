@@ -10,26 +10,27 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     const authForm = document.getElementById('auth-form');
-    const submitBtn = document.getElementById('submit-btn');
-    const buttonText = submitBtn.querySelector('.button-text');
-    const loadingSpinner = document.getElementById('loading-spinner');
+    // support older and newer DOM IDs (backwards compatible)
+    const submitBtn = document.getElementById('submit-btn') || document.getElementById('auth-submit') || (authForm ? authForm.querySelector('button[type="submit"]') : null);
+    const defaultSubmitHtml = submitBtn ? submitBtn.innerHTML : '';
     const authMessage = document.getElementById('auth-message');
-    const toggleAuthMode = document.getElementById('toggle-auth-mode');
-    const forgotPasswordBtn = document.getElementById('forgot-password-btn');
-    const authTitle = document.getElementById('auth-title');
-    const forgotPasswordArea = document.getElementById('forgot-password-area');
+    const toggleAuthMode = document.getElementById('toggle-auth-mode') || document.getElementById('toggle-form');
+    const forgotPasswordBtn = document.getElementById('forgot-password-btn') || document.getElementById('forgot-password-link');
+    const authTitle = document.getElementById('auth-title') || document.querySelector('.auth-title h1');
+    const forgotPasswordArea = document.getElementById('forgot-password-area') || document.querySelector('.forgot-password');
 
     let isLoginMode = true; // true for login, false for register
+    const registerForm = document.getElementById('register-form');
 
     // Toggle between login and register
-    toggleAuthMode.addEventListener('click', function(e) {
+    if (toggleAuthMode) toggleAuthMode.addEventListener('click', function(e) {
         e.preventDefault();
         isLoginMode = !isLoginMode;
         updateUI();
     });
 
     // Forgot password
-    forgotPasswordBtn.addEventListener('click', async function(e) {
+    if (forgotPasswordBtn) forgotPasswordBtn.addEventListener('click', async function(e) {
         e.preventDefault();
         const email = document.getElementById('email').value;
         if (!email) {
@@ -62,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             if (isLoginMode) {
                 // Login
-                await signInWithEmailAndPassword(auth, email, password);
+                    const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 showMessage('Đăng nhập thành công!', 'success');
                 try { if (userCredential && userCredential.user) await setUserDoc(userCredential.user); } catch (err) { console.warn('Auth: failed to update user profile after login', err); }
                 // Redirect to dashboard
@@ -71,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 1000);
             } else {
                 // Register
-                await createUserWithEmailAndPassword(auth, email, password);
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 showMessage('Đăng ký thành công!', 'success');
                 try { if (userCredential && userCredential.user) await setUserDoc(userCredential.user, { role: 'student', createdAt: new Date().toISOString() }); } catch (err) { console.warn('Auth: failed to create user profile after signup', err); }
                 // Switch to login mode
@@ -104,27 +105,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateUI() {
         if (isLoginMode) {
-            authTitle.textContent = 'Đăng nhập';
-            buttonText.textContent = 'Đăng nhập';
-            toggleAuthMode.textContent = 'Đăng ký ngay';
-            forgotPasswordArea.style.display = 'block';
+            if (authTitle) authTitle.textContent = 'Đăng nhập';
+            if (submitBtn) submitBtn.innerHTML = defaultSubmitHtml || 'Đăng nhập';
+            if (toggleAuthMode) toggleAuthMode.textContent = 'Đăng ký ngay';
+            if (forgotPasswordArea) forgotPasswordArea.style.display = 'block';
+            if (authForm) authForm.style.display = 'block';
+            if (registerForm) registerForm.style.display = 'none';
         } else {
-            authTitle.textContent = 'Đăng ký';
-            buttonText.textContent = 'Đăng ký';
-            toggleAuthMode.textContent = 'Đăng nhập';
-            forgotPasswordArea.style.display = 'none';
+            if (authTitle) authTitle.textContent = 'Đăng ký';
+            if (submitBtn) submitBtn.innerHTML = defaultSubmitHtml || 'Đăng ký';
+            if (toggleAuthMode) toggleAuthMode.textContent = 'Đăng nhập';
+            if (forgotPasswordArea) forgotPasswordArea.style.display = 'none';
+            if (authForm) authForm.style.display = 'none';
+            if (registerForm) registerForm.style.display = 'block';
         }
-        authMessage.classList.add('hidden');
+        if (authMessage) authMessage.classList.remove('hidden');
     }
 
     function setLoading(loading) {
+        if (!submitBtn) return;
         submitBtn.disabled = loading;
         if (loading) {
-            buttonText.style.display = 'none';
-            loadingSpinner.classList.remove('hidden');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang xử lý...';
         } else {
-            buttonText.style.display = 'inline';
-            loadingSpinner.classList.add('hidden');
+            submitBtn.innerHTML = defaultSubmitHtml || 'Gửi';
         }
     }
 

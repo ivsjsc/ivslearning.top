@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html class="dark scroll-smooth" lang="vi">
-<<<<<<< HEAD
+<!-- merge marker removed -->
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -12,7 +12,7 @@
     <link href="css/tailwind.css" rel="stylesheet"/>
     <link href="css/modern-ui.css" rel="stylesheet"/>
     <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
-=======
+<!-- merge branch separator removed -->
 
 <head>
     <meta charset="utf-8"/>
@@ -673,30 +673,26 @@
     </div>
 
 
->>>>>>> main
+<!-- merge marker removed -->
     <!-- Firebase CDN v12.5.0 -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
-<<<<<<< HEAD
+<!-- conflict: HEAD cleaned -->
         import { getAuth } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
         import { firebaseConfig } from "/js/firebase-config.js";
-=======
+<!-- conflict separator cleaned -->
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
         import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js';
         import { setUserDoc, safeSignOut } from '/js/auth-utils.js';
         import { firebaseConfig } from "/js/firebase-config.js";
         import { initiateGoogleLogin, handleOAuthCallback, isLoggedIn, getCurrentUser } from "/js/auth-flow.js";
->>>>>>> main
+<!-- conflict: main cleaned -->
 
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const auth = getAuth(app);
-<<<<<<< HEAD
-
-        window.firebaseApp = app;
-        window.firebaseAuth = auth;
-        window.firebaseAnalytics = analytics;
+// cleaned duplicate firebase export (kept consolidated version later)
     </script>
     <style>
         .auth-container {
@@ -778,7 +774,7 @@
 <script defer src="/js/universal-loader.js"></script>
 <script type="module" src="/js/auth.js"></script>
 
-=======
+<!-- removed merge separator -->
         // Expose app + services globally for other scripts
         window.firebaseApp = app;
         window.firebaseAuth = auth;
@@ -846,6 +842,12 @@
                 googleSigninBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Đang kết nối...</span>';
 
                 try {
+                    // Prefer the centralized helper which handles server differences
+                    if (typeof initiateGoogleLogin === 'function') {
+                        await initiateGoogleLogin();
+                        return;
+                    }
+
                     console.log('[Auth] Calling backend OAuth endpoint');
                     const response = await fetch(`${BACKEND_URL}/api/auth/google`, {
                         credentials: 'include',
@@ -940,7 +942,11 @@
                         body: JSON.stringify({ phoneNumber: fullPhone })
                     });
 
-                    if (!response.ok) throw new Error('Failed to send OTP');
+                    if (!response.ok) {
+                        const text = await response.text().catch(() => '');
+                        console.error('OTP send failed:', response.status, text);
+                        throw new Error('Failed to send OTP');
+                    }
                     
                     showMessage('OTP đã được gửi đến số điện thoại của bạn', 'success');
                     
@@ -992,7 +998,14 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ phoneNumber: phone })
             })
-            .then(r => r.ok ? Promise.resolve() : Promise.reject())
+            .then(async (r) => {
+                if (!r.ok) {
+                    const text = await r.text().catch(() => '');
+                    console.error('Resend OTP failed', r.status, text);
+                    return Promise.reject(new Error('Failed to resend OTP'));
+                }
+                return Promise.resolve();
+            })
             .then(() => {
                 showMessage('OTP mới đã được gửi', 'success');
                 startOtpTimer();
@@ -1020,7 +1033,11 @@
                         body: JSON.stringify({ phoneNumber: phone, otp: otpCode })
                     });
 
-                    if (!response.ok) throw new Error('OTP verification failed');
+                    if (!response.ok) {
+                        const text = await response.text().catch(() => '');
+                        console.error('OTP verify failed', response.status, text);
+                        throw new Error('OTP verification failed');
+                    }
 
                     const data = await response.json();
                     
@@ -1069,7 +1086,11 @@
                             body: JSON.stringify({ contact })
                         });
 
-                        if (!response.ok) throw new Error('Reset request failed');
+                        if (!response.ok) {
+                            const text = await response.text().catch(() => '');
+                            console.error('Reset request failed', response.status, text);
+                            throw new Error('Reset request failed');
+                        }
                         
                         showMessage('Mã OTP khôi phục đã được gửi', 'success');
                     }
