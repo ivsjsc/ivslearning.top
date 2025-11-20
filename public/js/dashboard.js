@@ -1,4 +1,5 @@
 import { signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js';
+import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js';
 
 document.addEventListener('DOMContentLoaded', function() {
     const auth = window.firebaseAuth;
@@ -39,7 +40,24 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('user-name').textContent = displayName;
     }
 
-    function loadUserData(user) {
+    async function loadUserData(user) {
+        // Try to load user data from Firestore
+        try {
+            let db = window.firebaseDB;
+            if (!db && window.firebaseApp) db = getFirestore(window.firebaseApp);
+            if (db) {
+                const userDoc = await getDoc(doc(db, 'users', user.uid));
+                if (userDoc && userDoc.exists()) {
+                    const data = userDoc.data();
+                    // Use real values if present
+                    const savedDisplayName = data.fullName || data.name || user.displayName || user.email.split('@')[0];
+                    document.getElementById('user-name').textContent = savedDisplayName;
+                }
+            }
+        } catch (err) {
+            console.warn('loadUserData: Firestore read failed', err);
+        }
+
         // Sample data - in real scenario, this would come from Firestore
         const sampleCourses = [
             { id: 1, name: 'Tiếng Anh Cơ bản', progress: 65, status: 'Đang học' },

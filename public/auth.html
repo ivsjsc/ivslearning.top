@@ -665,6 +665,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js';
         import { firebaseConfig } from "/js/firebase-config.js";
         import { initiateGoogleLogin, handleOAuthCallback, isLoggedIn, getCurrentUser } from "/js/auth-flow.js";
 
@@ -1038,6 +1039,15 @@
                 try {
                     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                     showMessage('Tài khoản tạo thành công!', 'success');
+                    try {
+                        let db = window.firebaseDB;
+                        if (!db && window.firebaseApp) db = getFirestore(window.firebaseApp);
+                        if (db) {
+                            await setDoc(doc(db, 'users', userCredential.user.uid), { email: userCredential.user.email, fullName: '', createdAt: new Date().toISOString(), role: 'student' }, { merge: true });
+                        }
+                    } catch (err) {
+                        console.warn('Failed to create user profile after signup', err);
+                    }
                     
                     setTimeout(() => {
                         window.location.href = '/my-learning.html';

@@ -29,10 +29,12 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
         import { getAuth } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
         import { firebaseConfig } from "/js/firebase-config.js";
 
         const app = initializeApp(firebaseConfig);
         window.firebaseAuth = getAuth(app);
+        window.firebaseDB = getFirestore(app);
     </script>
 <style>
         :root { --header-height: 4rem; }
@@ -117,7 +119,15 @@
                             <h3 class="text-2xl font-bold text-white mb-2">IVS English Learners</h3>
                             <p class="text-ivs-text-secondary mb-4 flex-grow">Nền tảng học Tiếng Anh tích hợp Sách điện tử, Luyện tập AI và hệ thống gamification.</p>
                         </div>
-                        <a href="https://ivseng.web.app" target="_blank" rel="noopener noreferrer" class="bg-ivs-green text-white px-5 py-3 rounded-lg font-semibold text-center hover:bg-green-600 transition-colors mt-4 shadow-md">
+                        <a href="#" data-app="el" target="_blank" rel="noopener noreferrer" class="bg-ivs-green text-white px-5 py-3 rounded-lg font-semibold text-center hover:bg-green-600 transition-colors mt-4 shadow-md">
+                                <!-- App URLs config -->
+                                <script src="/js/app-urls.js"></script>
+                                <script>
+                                    (function(){
+                                        const el = window.ELearnersUrl || 'https://ivseng.web.app';
+                                        document.querySelectorAll('[data-app="el"]').forEach(a => a.href = el);
+                                    })();
+                                </script>
                             Truy Cập Ứng Dụng <i class="fas fa-external-link-alt ml-2"></i>
                         </a>
                     </div>

@@ -21,6 +21,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
         import { getAuth } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
         import { firebaseConfig } from "/js/firebase-config.js";
 
         const app = initializeApp(firebaseConfig);
@@ -29,6 +30,7 @@
 
         window.firebaseApp = app;
         window.firebaseAuth = auth;
+        window.firebaseDB = getFirestore(app);
         window.firebaseAnalytics = analytics;
     </script>
     <style>
@@ -233,9 +235,20 @@
     const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
     
     function handleLogout() {
-        window.firebaseAuth.signOut().then(() => {
-            window.location.href = '/index.html';
-        });
+        (async () => {
+            try {
+                // Prefer modular signOut
+                try {
+                    const mod = await import('https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js');
+                    await mod.signOut(window.firebaseAuth);
+                } catch (e) {
+                    if (typeof window.firebaseAuth.signOut === 'function') await window.firebaseAuth.signOut();
+                }
+                window.location.href = '/index.html';
+            } catch (err) {
+                console.error('Logout failed:', err);
+            }
+        })();
     }
     
     if (logoutBtn) {

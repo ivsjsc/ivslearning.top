@@ -38,10 +38,11 @@ window.initializeFirebase = async function() {
     // Load Firebase SDK modules dynamically as ESM to avoid import errors when this file
     // is included as a regular script tag.
     try {
+        // Use the modern 12.x CDN for consistent SDK behavior across pages
         const [{ initializeApp }, { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged }, { getFirestore }] = await Promise.all([
-            import('https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js'),
-            import('https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js'),
-            import('https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js')
+            import('https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js'),
+            import('https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js'),
+            import('https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js')
         ]);
 
         const app = initializeApp(firebaseConfig);
@@ -69,6 +70,14 @@ window.initializeFirebase = async function() {
                 if (user) { window.currentUserId = user.uid; window.componentLog('[Firebase Init] Auth state: signed in ' + user.uid, 'info'); }
                 else { window.currentUserId = null; window.componentLog('[Firebase Init] Auth state: signed out', 'info'); }
             });
+        }
+
+        // Expose common globals and dispatch an event so other scripts can react
+        window.firebaseApp = app;
+        window.firebaseAuth = auth;
+        window.firebaseDB = db;
+        window.componentLog && window.componentLog('[Firebase Init] Exposed window.firebaseAuth and window.firebaseDB', 'info');
+        document.dispatchEvent(new CustomEvent('firebase-ready', { detail: { app, auth, db } }));
         }
 
         // Run auth init but don't block the initializer on it.

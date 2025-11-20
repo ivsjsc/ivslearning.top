@@ -13,7 +13,8 @@ const SSO_CONFIG = {
     subApps: {
         'english': {
             name: 'IVS English',
-            domain: 'https://ivseng.web.app',
+            // Support multiple domains: main site and optional alias like ivslearning.io.vn
+            domains: ['https://ivseng.web.app', 'https://ivslearning.io.vn'],
             tokenParam: 'sso_token'
         },
         'testing': {
@@ -79,8 +80,10 @@ export function getSSORedirectUrl(appId, ssoToken) {
     if (!app) {
         throw new Error(`Unknown app: ${appId}`);
     }
-
-    const url = new URL(app.domain);
+    // Allow runtime override for domain mapping (useful when ELearners moves to a new hostname)
+    const overrideDomain = (window.AppDomains && window.AppDomains[appId]) || (appId === 'english' && window.ELearnersUrl) || null;
+    const domain = overrideDomain || (Array.isArray(app.domains) ? app.domains[0] : app.domain);
+    const url = new URL(domain);
     url.searchParams.append(app.tokenParam, ssoToken);
     return url.toString();
 }

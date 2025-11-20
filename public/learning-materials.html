@@ -30,6 +30,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
         import { getAuth } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
         import { firebaseConfig } from "/js/firebase-config.js";
 
         const app = initializeApp(firebaseConfig);
@@ -39,6 +40,7 @@
         window.firebaseApp = app;
         window.firebaseAuth = auth;
         window.firebaseAnalytics = analytics;
+        window.firebaseDB = getFirestore(app);
 
         // Initialize global auth listener
         import('./app.js').then(module => {
@@ -164,7 +166,7 @@
                         <i class="fas fa-cubes text-ivs-orange mr-2"></i> <span class="text-white">Khám Phá Chương Trình Học Tập (ENGLISH Learners App)</span>
                     </h2>
                     <p class="text-xl text-ivs-text-secondary max-w-2xl mx-auto">
-                        Trải nghiệm ENGLISH Learners (<a href="https://ivseng.web.app" target="_blank" rel="noopener noreferrer">https://ivseng.web.app</a>) được nhúng trực tiếp vào website.
+                        Trải nghiệm ENGLISH Learners (<a data-app="el" href="#" target="_blank" rel="noopener noreferrer">https://ivseng.web.app</a>) được nhúng trực tiếp vào website.
                     </p>
                 </div>
                 
@@ -177,7 +179,16 @@
                     
                     <!-- Khung Iframe chính: w-full đảm bảo Responsive -->
                     <iframe
-                        src="https://ivseng.web.app"
+                        src="#" data-app="el-iframe"
+                            <!-- App URLs config -->
+                            <script src="/js/app-urls.js"></script>
+                            <script>
+                                (function(){
+                                    const el = window.ELearnersUrl || 'https://ivseng.web.app';
+                                    document.querySelectorAll('[data-app="el"]').forEach(a => a.href = el);
+                                    document.querySelectorAll('[data-app="el-iframe"]').forEach(iframe => iframe.src = el);
+                                })();
+                            </script>
                         title="IVS Curriculum Application Embedded"
                         class="w-full"
                         style="height: 1000px; min-height: 85vh; border: none; background-color: #f0f0f0; overflow: auto;"

@@ -1,4 +1,5 @@
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js';
+import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js';
 
 document.addEventListener('DOMContentLoaded', function() {
     const auth = window.firebaseAuth;
@@ -62,6 +63,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Login
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 showMessage('Đăng nhập thành công!', 'success');
+                try {
+                    let db = window.firebaseDB;
+                    if (!db && window.firebaseApp) db = getFirestore(window.firebaseApp);
+                    if (db) {
+                        await setDoc(doc(db, 'users', userCredential.user.uid), { email: userCredential.user.email, lastLoginAt: new Date().toISOString() }, { merge: true });
+                    }
+                } catch (err) {
+                    console.warn('Auth: failed to update user profile after login', err);
+                }
                 // Redirect to dashboard
                 setTimeout(() => {
                     window.location.href = 'dashboard.html';
@@ -70,6 +80,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Register
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 showMessage('Đăng ký thành công!', 'success');
+                try {
+                    let db = window.firebaseDB;
+                    if (!db && window.firebaseApp) db = getFirestore(window.firebaseApp);
+                    if (db) {
+                        await setDoc(doc(db, 'users', userCredential.user.uid), { email: userCredential.user.email, fullName: '', createdAt: new Date().toISOString(), role: 'student' }, { merge: true });
+                    }
+                } catch (err) {
+                    console.warn('Auth: failed to create user profile after signup', err);
+                }
                 // Switch to login mode
                 isLoginMode = true;
                 updateUI();

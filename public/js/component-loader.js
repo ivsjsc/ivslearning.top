@@ -22,9 +22,26 @@ class ComponentLoader {
             // Insert at the beginning of body
             document.body.insertBefore(headerContainer, document.body.firstChild);
             
-            // Setup header auth if Firebase is available
+            // Setup header auth if Firebase is available; otherwise fall back to a default
             if (window.firebaseAuth) {
                 this.setupHeaderAuth();
+            } else {
+                // If auth not ready yet, listen for firebase-ready event dispatched by firebase-init
+                const onFirebaseReady = () => {
+                    this.setupHeaderAuth();
+                    document.removeEventListener('firebase-ready', onFirebaseReady);
+                };
+                document.addEventListener('firebase-ready', onFirebaseReady);
+
+                // Also provide a safe fallback: after short timeout, render login buttons to avoid stuck spinner UI
+                setTimeout(() => {
+                    const headerAuthContainer = document.getElementById('header-auth-container');
+                    const mobileAuthContainer = document.getElementById('mobile-auth-container');
+                    if (headerAuthContainer && mobileAuthContainer && (!window.firebaseAuth)) {
+                        headerAuthContainer.innerHTML = `\n                            <a href="/auth.html" class="header-auth-button header-auth-login">\n                                <i class="fas fa-sign-in-alt"></i> Đăng nhập\n                            </a>\n                            <a href="/auth.html" class="header-auth-button header-auth-signup">\n                                <i class="fas fa-user-plus"></i> Đăng ký\n                            </a>\n                        `;
+                        mobileAuthContainer.innerHTML = `\n                            <a href="/auth.html" class="mobile-auth-button" style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); color: white;">\n                                <i class="fas fa-sign-in-alt"></i> Đăng nhập / Đăng ký\n                            </a>\n                        `;
+                    }
+                }, 900);
             }
         } catch (error) {
             console.error('Error loading header component:', error);
@@ -49,8 +66,22 @@ class ComponentLoader {
 
     static setupHeaderAuth() {
         const auth = window.firebaseAuth;
-        
-        auth.onAuthStateChanged((user) => {
+        if (!auth) return;
+
+        // Use modular onAuthStateChanged; import dynamically if not available as a global
+        const runSetup = async () => {
+            let onAuthStateChangedFn = window.onAuthStateChanged || null;
+            if (!onAuthStateChangedFn) {
+                try {
+                    const mod = await import('https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js');
+                    onAuthStateChangedFn = mod.onAuthStateChanged;
+                } catch (err) {
+                    console.error('Failed to import onAuthStateChanged from CDN', err);
+                    return;
+                }
+            }
+
+            onAuthStateChangedFn(auth, (user) => {
             const headerAuthContainer = document.getElementById('header-auth-container');
             const mobileAuthContainer = document.getElementById('mobile-auth-container');
             
@@ -84,7 +115,14 @@ class ComponentLoader {
                     btn.addEventListener('click', async (e) => {
                         e.preventDefault();
                         try {
-                            await auth.signOut();
+                            // Use modular signOut if available, otherwise attempt auth.signOut
+                            try {
+                                const mod = await import('https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js');
+                                await mod.signOut(auth);
+                            } catch (e) {
+                                if (typeof auth.signOut === 'function') await auth.signOut();
+                                else throw e;
+                            }
                             window.location.reload();
                         } catch (error) {
                             console.error('Logout error:', error);
@@ -117,6 +155,25 @@ class ComponentLoader {
                 mobileMenuOverlay.classList.remove('active');
                 document.body.style.overflow = 'auto';
             }
+            // Ensure app links (data-app) are set correctly
+            function setDynamicAppLinks() {
+                try {
+                    const elUrl = window.ELearnersUrl || (window.AppDomains && window.AppDomains.english) || null;
+                    if (elUrl) {
+                        document.querySelectorAll('[data-app="el"]').forEach(a => { a.href = elUrl; a.target = '_blank'; });
+                        document.querySelectorAll('[data-app="el-iframe"]').forEach(i => { i.src = elUrl });
+                    }
+                } catch (err) {
+                    console.warn('Error setting dynamic app links:', err);
+                }
+            }
+
+            setDynamicAppLinks();
+            // Also run on firebase-ready if global settings may change later
+            document.addEventListener('firebase-ready', setDynamicAppLinks);
+        };
+
+        runSetup().catch(err => console.error('Error initializing header auth setup:', err));
         });
     }
 

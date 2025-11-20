@@ -5,6 +5,7 @@ import {
     EmailAuthProvider,
     deleteUser 
 } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js';
+import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js';
 
 document.addEventListener('DOMContentLoaded', function() {
     const auth = window.firebaseAuth;
@@ -49,13 +50,32 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
     }
 
-    function loadUserData(user) {
+    async function loadUserData(user) {
         const displayName = user.displayName || user.email.split('@')[0];
         document.getElementById('user-name-display').textContent = displayName;
         document.getElementById('user-email-display').textContent = user.email;
         
+        // Default values for UI
         document.getElementById('fullname-input').value = displayName;
         document.getElementById('email-input').value = user.email;
+
+        // Get Firestore data if possible
+        try {
+            let db = window.firebaseDB;
+            if (!db && window.firebaseApp) db = getFirestore(window.firebaseApp);
+            if (!db) return;
+
+            const userDocRef = doc(db, 'users', user.uid);
+            const snap = await getDoc(userDocRef);
+            if (snap && snap.exists()) {
+                const data = snap.data();
+                if (data.fullName) document.getElementById('fullname-input').value = data.fullName;
+                if (data.phone) document.getElementById('phone-input').value = data.phone;
+                if (data.preferences) document.getElementById('preferences-input').value = JSON.stringify(data.preferences);
+            }
+        } catch (err) {
+            console.warn('loadUserData: Firestore read failed', err);
+        }
     }
 
     // Edit Profile
@@ -79,9 +99,37 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('cancel-profile-btn').style.display = 'none';
     });
 
-    document.getElementById('save-profile-btn').addEventListener('click', () => {
-        // Save profile changes (would call Firestore or Firebase Functions)
-        showMessage('Hồ sơ đã được cập nhật thành công!', 'success');
+    document.getElementById('save-profile-btn').addEventListener('click', async () => {
+        // Save profile changes into Firestore
+        try {
+            const uid = currentUser?.uid;
+            if (!uid) throw new Error('User not signed in');
+
+            let db = window.firebaseDB;
+            if (!db && window.firebaseApp) db = getFirestore(window.firebaseApp);
+            if (!db) throw new Error('Firestore not initialized');
+
+            const userDocRef = doc(db, 'users', uid);
+            const fullName = document.getElementById('fullname-input').value.trim();
+            const phone = document.getElementById('phone-input') ? document.getElementById('phone-input').value.trim() : '';
+            const preferencesValue = document.getElementById('preferences-input') ? document.getElementById('preferences-input').value.trim() : '';
+            let preferences = {};
+            try { if (preferencesValue) preferences = JSON.parse(preferencesValue); } catch (e) { preferences = {}; }
+
+            await setDoc(userDocRef, {
+                uid,
+                fullName,
+                phone,
+                preferences,
+                email: currentUser.email,
+                updatedAt: new Date().toISOString()
+            }, { merge: true });
+
+            showMessage('Hồ sơ đã được cập nhật thành công!', 'success');
+        } catch (err) {
+            console.error('Failed to save profile:', err);
+            showMessage('Không thể lưu hồ sơ. Vui lòng thử lại.', 'error');
+        }
         isEditingProfile = false;
         document.querySelectorAll('.form-input').forEach(input => {
             input.disabled = true;
