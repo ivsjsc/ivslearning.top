@@ -1,18 +1,5 @@
 <!DOCTYPE html>
 <html class="dark scroll-smooth" lang="vi">
-<<<<<<< HEAD
-<head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Đăng nhập & Đăng ký - IVS Learning Hub</title>
-    <link href="/images/logo/logo.svg" rel="icon" type="image/svg+xml"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link href="css/tailwind.css" rel="stylesheet"/>
-    <link href="css/modern-ui.css" rel="stylesheet"/>
-    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
-=======
 
 <head>
     <meta charset="utf-8"/>
@@ -117,6 +104,7 @@
         /* Auth Container with bottom padding */
         main {
             padding-bottom: 5rem;
+            padding-top: 5rem;
         }
 
         /* Auth Card */
@@ -673,112 +661,19 @@
     </div>
 
 
->>>>>>> main
     <!-- Firebase CDN v12.5.0 -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
-<<<<<<< HEAD
-        import { getAuth } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
-        import { firebaseConfig } from "/js/firebase-config.js";
-=======
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
         import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js';
         import { setUserDoc, safeSignOut } from '/js/auth-utils.js';
         import { firebaseConfig } from "/js/firebase-config.js";
         import { initiateGoogleLogin, handleOAuthCallback, isLoggedIn, getCurrentUser } from "/js/auth-flow.js";
->>>>>>> main
 
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const auth = getAuth(app);
-<<<<<<< HEAD
-
-        window.firebaseApp = app;
-        window.firebaseAuth = auth;
-        window.firebaseAnalytics = analytics;
-    </script>
-    <style>
-        .auth-container {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #0d1117 0%, #1a1a2e 100%);
-        }
-        .auth-form-container {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 32px;
-        }
-        .auth-input {
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #f4f4f5;
-        }
-        .auth-input:focus {
-            background-color: rgba(255, 255, 255, 0.08);
-            border-color: #58a6ff;
-            outline: none;
-        }
-        .auth-btn {
-            background: linear-gradient(135deg, #58a6ff 0%, #79c0ff 100%);
-        }
-        .auth-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(88, 166, 255, 0.4);
-        }
-    </style>
-</head>
-<body class="bg-ivs-bg text-ivs-text-primary antialiased">
-
-<div class="auth-container flex items-center justify-center p-4">
-    <div class="max-w-md w-full">
-        <div class="text-center mb-8">
-            <a href="/" class="inline-block">
-                <img src="/images/logo/logo.svg" alt="IVS Logo" class="h-16 w-auto mx-auto">
-            </a>
-            <h1 class="text-3xl font-bold text-white mt-4">Chào mừng trở lại</h1>
-            <p class="text-gray-400">Đăng nhập để tiếp tục học tập</p>
-        </div>
-
-        <div class="auth-form-container">
-            <div id="message-container"></div>
-            <!-- Login Form -->
-            <form id="login-form" class="space-y-6">
-                <div>
-                    <label for="login-email" class="block text-sm font-semibold mb-2">Email</label>
-                    <input type="email" id="login-email" class="auth-input w-full rounded-lg p-3" required>
-                </div>
-                <div>
-                    <label for="login-password" class="block text-sm font-semibold mb-2">Mật khẩu</label>
-                    <input type="password" id="login-password" class="auth-input w-full rounded-lg p-3" required>
-                </div>
-                <button type="submit" class="auth-btn w-full text-white font-bold py-3 rounded-lg transition">Đăng nhập</button>
-            </form>
-
-            <!-- Registration Form (hidden by default) -->
-            <form id="register-form" class="space-y-6" style="display: none;">
-                 <div>
-                    <label for="register-email" class="block text-sm font-semibold mb-2">Email</label>
-                    <input type="email" id="register-email" class="auth-input w-full rounded-lg p-3" required>
-                </div>
-                <div>
-                    <label for="register-password" class="block text-sm font-semibold mb-2">Mật khẩu</label>
-                    <input type="password" id="register-password" class="auth-input w-full rounded-lg p-3" required>
-                </div>
-                <button type="submit" class="auth-btn w-full text-white font-bold py-3 rounded-lg transition">Đăng ký</button>
-            </form>
-
-            <div class="text-center mt-6">
-                <a href="#" id="toggle-form" class="text-blue-400 hover:text-blue-300">Chưa có tài khoản? Đăng ký ngay</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script defer src="/js/universal-loader.js"></script>
-<script type="module" src="/js/auth.js"></script>
-
-=======
         // Expose app + services globally for other scripts
         window.firebaseApp = app;
         window.firebaseAuth = auth;
@@ -1216,6 +1111,5 @@
 
     <!-- Component Loader - Load header, footer, and AIVY chatbot in one go -->
     <script defer src="/js/component-loader.js"></script>
->>>>>>> main
 </body>
 </html>

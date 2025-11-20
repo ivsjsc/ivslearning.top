@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link href="css/tailwind.css" rel="stylesheet"/>
     <link href="css/modern-ui.css" rel="stylesheet"/>
+    <link href="css/home.css" rel="stylesheet"/>
     <link href="css/design-system.css" rel="stylesheet"/>
     <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -186,385 +187,7 @@
         document.documentElement.style.setProperty('--ivs-orange', IVS_COLORS['ivs-orange']);
         document.documentElement.style.setProperty('--ivs-purple', IVS_COLORS['ivs-purple']);
         document.documentElement.style.setProperty('--ivs-text-secondary', IVS_COLORS['ivs-text-secondary']);
-
-        // Mobile Menu Toggle Handler
-        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
-        
-        if (mobileMenuToggle && mobileMenuOverlay) {
-            // Open menu
-            mobileMenuToggle.addEventListener('click', () => {
-                mobileMenuOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-            
-            // Close menu on link click
-            mobileMenuOverlay.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenuOverlay.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                });
-            });
-            
-            // Close menu on Escape key
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && mobileMenuOverlay.classList.contains('active')) {
-                    mobileMenuOverlay.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                }
-            });
-        }
     </script>
-
-    <style>
-        /* Hero Section */
-        .hero-section {
-            background: linear-gradient(135deg, rgba(76, 94, 247, 0.15) 0%, rgba(34, 211, 238, 0.1) 100%),
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="1200" height="600" fill="url(%23grid)"/></svg>');
-            background-size: cover, 40px 40px;
-            position: relative;
-            overflow: hidden;
-            min-height: 600px;
-            display: flex;
-            align-items: center;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-        }
-
-        .hero-title {
-            font-size: clamp(2.5rem, 5vw, 4.5rem);
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #4c5ef7 0%, #22d3ee 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-subtitle {
-            font-size: 1.25rem;
-            color: var(--color-text-secondary);
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-
-        .hero-cta-group {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .cta-button {
-            padding: 0.75rem 2rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            font-size: 1rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-        }
-
-        .cta-primary {
-            background: linear-gradient(135deg, #4c5ef7 0%, #3b4fd6 100%);
-            color: white;
-        }
-
-        .cta-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(76, 94, 247, 0.4);
-        }
-
-        .cta-secondary {
-            background: transparent;
-            color: #22d3ee;
-            border: 2px solid #22d3ee;
-        }
-
-        .cta-secondary:hover {
-            background: rgba(34, 211, 238, 0.1);
-            transform: translateY(-2px);
-        }
-
-        /* Featured Courses Section */
-        .featured-section {
-            padding: 4rem 2rem;
-            background: var(--color-bg);
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            color: var(--color-text);
-        }
-
-        .section-subtitle {
-            font-size: 1.1rem;
-            color: var(--color-text-secondary);
-            margin-bottom: 3rem;
-        }
-
-        .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .course-card {
-            background: var(--color-bg-secondary);
-            border: 1px solid var(--color-border);
-            border-radius: 1rem;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .course-card:hover {
-            border-color: #4c5ef7;
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(76, 94, 247, 0.2);
-        }
-
-        .course-image {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, rgba(76, 94, 247, 0.3), rgba(34, 211, 238, 0.3));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        .course-body {
-            padding: 1.5rem;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .course-category {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: rgba(76, 94, 247, 0.2);
-            color: #5d6eff;
-            border-radius: 2rem;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            width: fit-content;
-        }
-
-        .course-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-            color: var(--color-text);
-            line-height: 1.4;
-        }
-
-        .course-description {
-            font-size: 0.95rem;
-            color: var(--color-text-secondary);
-            margin-bottom: 1rem;
-            flex: 1;
-            line-height: 1.5;
-        }
-
-        .course-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 1rem;
-            border-top: 1px solid var(--color-border);
-        }
-
-        .course-instructor {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .course-rating {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-            color: #f97316;
-        }
-
-        /* Categories Carousel */
-        .categories-section {
-            padding: 4rem 2rem;
-            background: var(--color-bg-secondary);
-        }
-
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .category-card {
-            background: var(--color-bg);
-            border: 1px solid var(--color-border);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .category-card:hover {
-            border-color: #22d3ee;
-            transform: scale(1.05);
-            background: rgba(34, 211, 238, 0.05);
-        }
-
-        .category-icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .category-name {
-            font-weight: 600;
-            color: var(--color-text);
-            font-size: 1rem;
-        }
-
-        .category-count {
-            font-size: 0.85rem;
-            color: var(--color-text-secondary);
-            margin-top: 0.25rem;
-        }
-
-        /* Stats Section */
-        .stats-section {
-            padding: 4rem 2rem;
-            background: var(--color-bg);
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            text-align: center;
-        }
-
-        .stat-card {
-            padding: 2rem;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #4c5ef7 0%, #22d3ee 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 1.1rem;
-            color: var(--color-text-secondary);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1rem;
-            }
-
-            .hero-cta-group {
-                flex-direction: column;
-            }
-
-            .cta-button {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .courses-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .categories-grid {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            }
-
-            .stats-section {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- HEADER COMPONENT - Unified & Responsive -->
-<header id="app-header" class="app-header">
-    <div class="header-wrapper">
-        <!-- Logo -->
-        <a href="/" class="header-logo-link" title="IVS Learning Hub">
-            <img alt="IVS Logo" class="header-logo-img" src="/images/logo/logo.svg" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4c5ef7/ffffff?text=IVS';"/>
-            <span class="header-logo-text">IVS</span>
-        </a>
-
-        <nav class="header-nav desktop-nav">
-            <a href="/" class="nav-link" data-en="Home">Trang chủ</a>
-            <a href="/dashboard.html" class="nav-link" data-en="Dashboard">Dashboard</a>
-            <a href="/learning-materials.html" class="nav-link" data-en="Documents">Tài liệu</a>
-            <a href="/auth.html" class="nav-link nav-cta" data-en="Login">Đăng nhập</a>
-        </nav>
-
-        <!-- Language Toggle -->
-        <div class="language-toggle-container">
-            <button id="language-toggle" class="language-toggle-btn">
-                <span class="fi fi-vn"></span>
-                <span class="lang-text">VIE</span>
-            </button>
-        </div>
-
-        <!-- Mobile Menu Button -->
-        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menu">
-            <i class="fas fa-bars"></i>
-        </button>
-    </div>
-
-    <!-- Mobile Menu Dropdown -->
-    <div class="mobile-menu" id="mobile-menu">
-        <a href="/" class="mobile-nav-link"><i class="fas fa-home"></i><span data-en="Home">Trang chủ</span></a>
-        <a href="/dashboard.html" class="mobile-nav-link"><i class="fas fa-chart-line"></i><span data-en="Dashboard">Dashboard</span></a>
-        <a href="/learning-materials.html" class="mobile-nav-link"><i class="fas fa-book"></i><span data-en="Documents">Tài liệu</span></a>
-        <a href="/auth.html" class="mobile-nav-link mobile-nav-cta"><i class="fas fa-sign-in-alt"></i><span data-en="Login">Đăng nhập</span></a>
-    </div>
-</header>
-
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu-overlay" id="mobile-menu-overlay" role="navigation" aria-label="Mobile Menu">
-        <nav class="mobile-nav">
-            <a href="live_index.html" class="mobile-nav-item" data-en="About IVS JSC">Giới Thiệu IVS JSC</a>
-            <a href="#applications" class="mobile-nav-item" data-en="Learning Applications">Ứng Dụng Học Tập</a>
-            <a href="learning-resources.html" class="mobile-nav-item" data-en="EdTech Resources">Tài Nguyên EdTech</a>
-            <a href="analytics.html" class="mobile-nav-item" data-en="Analytics (Admin)">Thống Kê (Admin)</a>
-            <div class="mobile-auth" id="mobile-auth-container">
-                <!-- Auth buttons injected here -->
-            </div>
-        </nav>
-    </div>
-
     <main class="pt-20">
         <!-- SECTION 1: HERO - TRUNG TÂM HỌC TẬP -->
         <section class="hero-banner relative min-h-[85vh] flex items-center justify-center text-center p-8 border-b ivs-border">
@@ -578,6 +201,9 @@
                 </p>
                 <div id="hero-auth-cta" class="flex justify-center">
                     <!-- Nút Auth/Dashboard sẽ được chèn ở đây qua JS -->
+                    <a href="auth.html" class="btn btn-lg btn-primary">
+                        <i class="fas fa-spinner fa-spin"></i> Đang tải...
+                    </a>
                 </div>
             </div>
         </section>
@@ -856,8 +482,7 @@
             // Tải các script khác (utils, language, loadComponents)
             const scriptFiles = [
                 "js/utils.js",
-                "js/language.js",
-                "ai/js/loadComponents.js"
+                "js/language.js"
             ];
 
             scriptFiles.forEach(src => {
@@ -866,67 +491,14 @@
                 script.defer = true;
                 document.body.appendChild(script);
             });
-            
-            // Xử lý Mobile Menu (Fixed Logic with Close Button)
-            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-            const mobileMenuClose = document.getElementById('mobile-menu-close');
-            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
 
-            function openMobileMenu() {
-                mobileMenuOverlay.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-                mobileMenuOverlay.focus(); // Focus trap
-            }
-
-            function closeMobileMenu() {
-                mobileMenuOverlay.classList.add('hidden');
-                document.body.style.overflow = '';
-                mobileMenuToggle?.focus(); // Restore focus
-            }
-
-            if (mobileMenuToggle) {
-                mobileMenuToggle.addEventListener('click', openMobileMenu);
-            }
-
-            if (mobileMenuClose) {
-                mobileMenuClose.addEventListener('click', closeMobileMenu);
-            }
-
-            // Đóng menu khi click vào link
-            if (mobileMenuOverlay) {
-                mobileMenuOverlay.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', closeMobileMenu);
-                });
-                
-                // Đóng khi nhấn Escape
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape' && !mobileMenuOverlay.classList.contains('hidden')) {
-                        closeMobileMenu();
-                    }
-                });
-            }
         });
     </script>
     
-    <!-- Modern UI Components (Modals, Dropdowns, Accordions, Tabs) -->
+    <!-- Modern UI Components -->
     <script src="js/modern-ui-components.js"></script>
-    <script src="js/language.js"></script>
     
-    <!-- Universal Loader - Load header, footer, and AIVY chatbot in one go -->
-    <script defer src="/js/universal-loader.js"></script>
-    <script defer src="/js/header.js"></script>
-    
-    <!-- AOS Animations -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 1000,
-            easing: 'ease-in-out-cubic',
-            once: true,
-            mirror: false
-        });
-    </script>
-    <!-- Component Loader - Load header, footer, and AIVY chatbot in one go -->
+
     <script defer src="/js/component-loader.js"></script>
 </body>
 </html>
