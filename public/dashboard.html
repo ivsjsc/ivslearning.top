@@ -234,21 +234,14 @@
     const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
     const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
     
-    function handleLogout() {
-        (async () => {
-            try {
-                // Prefer modular signOut
-                try {
-                    const mod = await import('https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js');
-                    await mod.signOut(window.firebaseAuth);
-                } catch (e) {
-                    if (typeof window.firebaseAuth.signOut === 'function') await window.firebaseAuth.signOut();
-                }
-                window.location.href = '/index.html';
-            } catch (err) {
-                console.error('Logout failed:', err);
-            }
-        })();
+    async function handleLogout() {
+        try {
+            const { safeSignOut } = await import('/js/auth-utils.js');
+            await safeSignOut(window.firebaseAuth);
+            window.location.href = '/index.html';
+        } catch (err) {
+            console.error('Logout failed:', err);
+        }
     }
     
     if (logoutBtn) {

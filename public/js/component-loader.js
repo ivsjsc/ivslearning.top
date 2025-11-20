@@ -81,13 +81,14 @@ class ComponentLoader {
                 }
             }
 
-            onAuthStateChangedFn(auth, (user) => {
+            onAuthStateChangedFn(auth, async (user) => {
             const headerAuthContainer = document.getElementById('header-auth-container');
             const mobileAuthContainer = document.getElementById('mobile-auth-container');
             
             if (!headerAuthContainer || !mobileAuthContainer) return;
 
-            if (user) {
+                if (user) {
+                    try { const mui = await import('/js/auth-utils.js'); if (mui && mui.setUserDoc) await mui.setUserDoc(user); } catch (e) { console.warn('component-loader setUserDoc failed', e); }
                 // User is logged in
                 const emailPart = user.email.split('@')[0];
                 const userHTML = `
@@ -111,18 +112,13 @@ class ComponentLoader {
                 mobileAuthContainer.innerHTML = mobileUserHTML;
 
                 // Attach logout listeners
+                // Use centralized safeSignOut to avoid duplicate logic
                 document.querySelectorAll('.logout-btn').forEach(btn => {
                     btn.addEventListener('click', async (e) => {
                         e.preventDefault();
                         try {
-                            // Use modular signOut if available, otherwise attempt auth.signOut
-                            try {
-                                const mod = await import('https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js');
-                                await mod.signOut(auth);
-                            } catch (e) {
-                                if (typeof auth.signOut === 'function') await auth.signOut();
-                                else throw e;
-                            }
+                            const { safeSignOut } = await import('/js/auth-utils.js');
+                            await safeSignOut(auth);
                             window.location.reload();
                         } catch (error) {
                             console.error('Logout error:', error);

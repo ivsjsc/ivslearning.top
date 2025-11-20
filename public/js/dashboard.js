@@ -1,4 +1,5 @@
 import { signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js';
+import { safeSignOut, setUserDoc } from '/js/auth-utils.js';
 import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js';
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -12,11 +13,12 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentUser = null;
 
     // Listen to auth state changes
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
         if (user) {
             currentUser = user;
             updateDashboardUI(user);
             loadUserData(user);
+            try { await setUserDoc(user); } catch (err) { console.warn('dashboard setUserDoc failed', err) }
         } else {
             // Redirect to login if not authenticated
             window.location.href = 'auth.html';
@@ -26,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Logout
     document.getElementById('logout-btn').addEventListener('click', async () => {
         try {
-            await signOut(auth);
+            await safeSignOut(auth);
             console.log('User logged out');
             window.location.href = 'auth.html';
         } catch (error) {

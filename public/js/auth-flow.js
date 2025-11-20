@@ -17,6 +17,8 @@ export async function initiateGoogleLogin() {
     }
 }
 
+import { setUserDoc } from '/js/auth-utils.js';
+
 export async function handleOAuthCallback() {
     const params = new URLSearchParams(window.location.search);
     const token = params.get('token') || params.get('sso_token') || params.get('auth_token');
@@ -34,12 +36,14 @@ export async function handleOAuthCallback() {
 
         // Sign in with custom token via Firebase
         const { signInWithCustomToken: signInWithCustomTokenMod } = await import('https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js');
-        const uid = await signInWithCustomTokenMod(window.firebaseAuth, token);
+        const userCredential = await signInWithCustomTokenMod(window.firebaseAuth, token);
+        // Persist user doc briefly
+        try { if (userCredential && userCredential.user) await setUserDoc(userCredential.user); } catch (e) { console.warn('auth-flow: setUserDoc failed', e); }
         // Remove query params
         const url = new URL(window.location.href);
         url.searchParams.delete('token');
         window.history.replaceState({}, document.title, url.toString());
-        return uid;
+        return userCredential;
     } catch (err) {
         console.error('handleOAuthCallback error:', err);
         return null;

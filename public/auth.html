@@ -666,6 +666,7 @@
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
         import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js';
+        import { setUserDoc, safeSignOut } from '/js/auth-utils.js';
         import { firebaseConfig } from "/js/firebase-config.js";
         import { initiateGoogleLogin, handleOAuthCallback, isLoggedIn, getCurrentUser } from "/js/auth-flow.js";
 
@@ -1002,13 +1003,7 @@
                 try {
                     const userCredential = await signInWithEmailAndPassword(auth, email, password);
                     showMessage('Đăng nhập thành công!', 'success');
-                    try {
-                        let db = window.firebaseDB;
-                        if (!db && window.firebaseApp) db = getFirestore(window.firebaseApp);
-                        if (db) await setDoc(doc(db, 'users', userCredential.user.uid), { email: userCredential.user.email, lastLoginAt: new Date().toISOString() }, { merge: true });
-                    } catch (e) {
-                        console.warn('Failed to update user lastLoginAt on sign-in', e);
-                    }
+                    try { if (userCredential && userCredential.user) await setUserDoc(userCredential.user); } catch (e) { console.warn('Failed to update user lastLoginAt on sign-in', e);} 
                     
                     setTimeout(() => {
                         window.location.href = '/my-learning.html';
@@ -1049,15 +1044,7 @@
                 try {
                     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                     showMessage('Tài khoản tạo thành công!', 'success');
-                    try {
-                        let db = window.firebaseDB;
-                        if (!db && window.firebaseApp) db = getFirestore(window.firebaseApp);
-                        if (db) {
-                            await setDoc(doc(db, 'users', userCredential.user.uid), { email: userCredential.user.email, fullName: '', createdAt: new Date().toISOString(), role: 'student', lastLoginAt: new Date().toISOString() }, { merge: true });
-                        }
-                    } catch (err) {
-                        console.warn('Failed to create user profile after signup', err);
-                    }
+                    try { if (userCredential && userCredential.user) await setUserDoc(userCredential.user, { role: 'student', createdAt: new Date().toISOString()}); } catch (err) { console.warn('Failed to create user profile after signup', err);} 
                     
                     setTimeout(() => {
                         window.location.href = '/my-learning.html';
@@ -1081,13 +1068,7 @@
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 // Persist lastLoginAt in Firestore for any sign-in method
-                try {
-                    let db = window.firebaseDB;
-                    if (!db && window.firebaseApp) db = getFirestore(window.firebaseApp);
-                    if (db) await setDoc(doc(db, 'users', user.uid), { email: user.email, lastLoginAt: new Date().toISOString() }, { merge: true });
-                } catch (err) {
-                    console.warn('Failed to persist user lastLoginAt on auth state change', err);
-                }
+                try { if (window.authUtils && window.authUtils.setUserDoc) await window.authUtils.setUserDoc(user); else await setUserDoc(user); } catch (err) { console.warn('Failed to persist user lastLoginAt on auth state change', err); }
                 if (window.location.pathname.includes('auth.html')) {
                     window.location.href = '/my-learning.html';
                 }
