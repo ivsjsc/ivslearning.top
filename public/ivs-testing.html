@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html class="dark scroll-smooth" lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>IVS Testing & Placement - IVS Learning Hub</title>
+    <meta content="Ứng Dụng Kiểm tra test lớp đầu vào (IVS Testing & Placement App) cho Trung tâm Ngoại ngữ." name="description"/>
+    <link href="/images/logo/logo.svg" rel="icon" type="image/svg+xml"/>
+    <link href="css/tailwind.css" rel="stylesheet"/>
+    <link href="css/modern-ui.css" rel="stylesheet"/>
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow: hidden; /* Hide scrollbar for the body as iframe handles it */
+        }
+        main {
+            flex: 1;
+            display: flex;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            flex: 1;
+        }
+        .app-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 80px); /* Adjust based on header height */
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Placeholder (will be loaded by component-loader) -->
+    <header id="header-placeholder"></header>
+
+    <main class="app-container">
+        <iframe src="https://test.ivsacademy.edu.vn" title="IVS Testing & Placement App" allowfullscreen></iframe>
+    </main>
+
+    <!-- Scripts -->
+    <script defer src="/js/component-loader.js"></script>
+</body>
+</html>
