@@ -672,7 +672,10 @@
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const auth = getAuth(app);
+        // Expose app + services globally for other scripts
+        window.firebaseApp = app;
         window.firebaseAuth = auth;
+        window.firebaseDB = getFirestore ? getFirestore(app) : null;
 
         const BACKEND_URL = 'https://backend-studio-ivssever--ivs-159a7.us-east4.hosted.app';
 
@@ -999,6 +1002,13 @@
                 try {
                     const userCredential = await signInWithEmailAndPassword(auth, email, password);
                     showMessage('Đăng nhập thành công!', 'success');
+                    try {
+                        let db = window.firebaseDB;
+                        if (!db && window.firebaseApp) db = getFirestore(window.firebaseApp);
+                        if (db) await setDoc(doc(db, 'users', userCredential.user.uid), { email: userCredential.user.email, lastLoginAt: new Date().toISOString() }, { merge: true });
+                    } catch (e) {
+                        console.warn('Failed to update user lastLoginAt on sign-in', e);
+                    }
                     
                     setTimeout(() => {
                         window.location.href = '/my-learning.html';
@@ -1043,7 +1053,7 @@
                         let db = window.firebaseDB;
                         if (!db && window.firebaseApp) db = getFirestore(window.firebaseApp);
                         if (db) {
-                            await setDoc(doc(db, 'users', userCredential.user.uid), { email: userCredential.user.email, fullName: '', createdAt: new Date().toISOString(), role: 'student' }, { merge: true });
+                            await setDoc(doc(db, 'users', userCredential.user.uid), { email: userCredential.user.email, fullName: '', createdAt: new Date().toISOString(), role: 'student', lastLoginAt: new Date().toISOString() }, { merge: true });
                         }
                     } catch (err) {
                         console.warn('Failed to create user profile after signup', err);
@@ -1068,16 +1078,35 @@
         }
 
         // ========== AUTO-LOGIN IF ALREADY AUTHENTICATED ==========
-        onAuthStateChanged(auth, (user) => {
-            if (user && window.location.pathname.includes('auth.html')) {
-                window.location.href = '/my-learning.html';
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // Persist lastLoginAt in Firestore for any sign-in method
+                try {
+                    let db = window.firebaseDB;
+                    if (!db && window.firebaseApp) db = getFirestore(window.firebaseApp);
+                    if (db) await setDoc(doc(db, 'users', user.uid), { email: user.email, lastLoginAt: new Date().toISOString() }, { merge: true });
+                } catch (err) {
+                    console.warn('Failed to persist user lastLoginAt on auth state change', err);
+                }
+                if (window.location.pathname.includes('auth.html')) {
+                    window.location.href = '/my-learning.html';
+                }
             }
         });
 
-        // Handle OAuth callback from backend
-        if (window.location.search.includes('token=')) {
-            handleOAuthCallback();
-        }
+        // Handle OAuth callback from backend (support token variants)
+        (async () => {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                if (params.get('token') || params.get('sso_token') || params.get('auth_token')) {
+                    showMessage('Đang xác thực OAuth, vui lòng chờ...', 'success');
+                    await handleOAuthCallback();
+                }
+            } catch (err) {
+                console.warn('OAuth callback error', err);
+                showMessage('Không thể xác thực OAuth. Vui lòng thử lại.', 'error');
+            }
+        })();
 
         // ========== BOTTOM NAV ACTIVE STATE ==========
         const currentPath = window.location.pathname;
