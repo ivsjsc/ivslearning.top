@@ -343,27 +343,6 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="sticky top-0 z-50 bg-[var(--color-bg)]/80 backdrop-blur border-b border-[var(--color-border)]">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="/" class="flex items-center gap-2">
-                <i class="fas fa-graduation-cap text-2xl text-[#4c5ef7]"></i>
-                <span class="font-bold text-xl">IVS Learning</span>
-            </a>
-            
-            <nav class="hidden md:flex gap-8 items-center">
-                <a href="index-new.html" class="hover:text-[#4c5ef7] transition">Trang Chủ</a>
-                <a href="courses.html" class="text-[#4c5ef7] font-semibold transition">Khóa Học</a>
-                <a href="learning-paths.html" class="hover:text-[#4c5ef7] transition">Lộ Trình</a>
-                <a href="applications.html" class="hover:text-[#4c5ef7] transition">Ứng Dụng</a>
-            </nav>
-
-            <div id="header-auth-container" class="flex gap-3 items-center">
-                <a href="auth.html" class="px-4 py-2 rounded-lg hover:bg-[var(--color-bg-secondary)] transition">Đăng nhập</a>
-                <a href="auth.html" class="px-4 py-2 bg-[#4c5ef7] text-white rounded-lg hover:bg-[#3b4fd6] transition">Đăng ký</a>
-            </div>
-        </div>
-    </header>
 
     <main class="courses-page">
         <!-- Page Header -->
@@ -514,53 +493,20 @@
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-[var(--color-bg-secondary)] border-t border-[var(--color-border)] py-12 mt-8">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <h4 class="font-bold mb-4 flex items-center gap-2">
-                        <i class="fas fa-graduation-cap text-[#4c5ef7]"></i> IVS Learning
-                    </h4>
-                    <p class="text-[var(--color-text-secondary)] text-sm">Nền tảng học tập trực tuyến hàng đầu</p>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4">Khám Phá</h4>
-                    <ul class="space-y-2 text-sm text-[var(--color-text-secondary)]">
-                        <li><a href="#" class="hover:text-[#4c5ef7] transition">Khóa Học</a></li>
-                        <li><a href="#" class="hover:text-[#4c5ef7] transition">Lộ Trình</a></li>
-                        <li><a href="#" class="hover:text-[#4c5ef7] transition">Ứng Dụng</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4">Công Ty</h4>
-                    <ul class="space-y-2 text-sm text-[var(--color-text-secondary)]">
-                        <li><a href="#" class="hover:text-[#4c5ef7] transition">Về Chúng Tôi</a></li>
-                        <li><a href="#" class="hover:text-[#4c5ef7] transition">Blog</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4">Hỗ Trợ</h4>
-                    <ul class="space-y-2 text-sm text-[var(--color-text-secondary)]">
-                        <li><a href="#" class="hover:text-[#4c5ef7] transition">Liên Hệ</a></li>
-                        <li><a href="#" class="hover:text-[#4c5ef7] transition">FAQ</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-[var(--color-border)] pt-8 text-center text-[var(--color-text-secondary)] text-sm">
-                <p>&copy; 2024 IVS Learning Hub. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
 
     <!-- Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+        import { safeSignOut } from '/js/auth-utils.js';
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
         import { firebaseConfig } from "/js/firebase-config.js";
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        window.firebaseApp = app;
+        window.firebaseAuth = auth;
+        window.firebaseDB = getFirestore(app);
 
         onAuthStateChanged(auth, (user) => {
             const headerAuthContainer = document.getElementById('header-auth-container');
@@ -579,7 +525,7 @@
                 `;
                 document.querySelectorAll('.logout-btn').forEach(btn => {
                     btn.addEventListener('click', async () => {
-                        await signOut(auth);
+                        await safeSignOut(auth);
                         window.location.reload();
                     });
                 });
@@ -588,18 +534,31 @@
 
         // Sample courses data
         const coursesData = [
+            // Programming
             { id: 1, title: "React.js Từ Cơ Bản Đến Nâng Cao", category: "programming", level: "beginner", rating: 4.8, students: 2500, price: "Miễn Phí", icon: "📱" },
+            { id: 5, title: "Docker & Kubernetes Essentials", category: "programming", level: "advanced", rating: 4.8, students: 1500, price: "Miễn Phí", icon: "🚀" },
+            { id: 7, title: "Advanced JavaScript", category: "programming", level: "advanced", rating: 4.7, students: 2200, price: "Miễn Phí", icon: "📝" },
+            { id: 10, title: "Cloud Architecture with AWS", category: "programming", level: "advanced", rating: 4.5, students: 800, price: "Miễn Phí", icon: "☁️" },
+            { id: 13, title: "Python for Beginners", category: "programming", level: "beginner", rating: 4.9, students: 3500, price: "Miễn Phí", icon: "🐍" },
+            { id: 14, title: "Java Spring Boot Microservices", category: "programming", level: "intermediate", rating: 4.6, students: 1200, price: "Miễn Phí", icon: "☕" },
+
+            // Design
             { id: 2, title: "UI/UX Design Masterclass", category: "design", level: "intermediate", rating: 4.9, students: 1800, price: "Miễn Phí", icon: "🎨" },
+            { id: 9, title: "Web Design Principles", category: "design", level: "beginner", rating: 4.8, students: 3000, price: "Miễn Phí", icon: "🎨" },
+            { id: 15, title: "Figma for Designers", category: "design", level: "beginner", rating: 4.7, students: 2100, price: "Miễn Phí", icon: "🖌️" },
+
+            // AI & Data
             { id: 3, title: "Machine Learning Basics", category: "ai", level: "advanced", rating: 4.7, students: 1200, price: "Miễn Phí", icon: "🤖" },
             { id: 4, title: "Data Analytics với Python & SQL", category: "data", level: "intermediate", rating: 4.6, students: 2000, price: "Miễn Phí", icon: "📊" },
-            { id: 5, title: "Docker & Kubernetes Essentials", category: "programming", level: "advanced", rating: 4.8, students: 1500, price: "Miễn Phí", icon: "🚀" },
-            { id: 6, title: "Product Management Essentials", category: "business", level: "beginner", rating: 4.9, students: 1900, price: "Miễn Phí", icon: "💼" },
-            { id: 7, title: "Advanced JavaScript", category: "programming", level: "advanced", rating: 4.7, students: 2200, price: "Miễn Phí", icon: "📝" },
-            { id: 8, title: "Flutter Mobile Development", category: "mobile", level: "intermediate", rating: 4.6, students: 1400, price: "Miễn Phí", icon: "📱" },
-            { id: 9, title: "Web Design Principles", category: "design", level: "beginner", rating: 4.8, students: 3000, price: "Miễn Phí", icon: "🎨" },
-            { id: 10, title: "Cloud Architecture with AWS", category: "programming", level: "advanced", rating: 4.5, students: 800, price: "Miễn Phí", icon: "☁️" },
             { id: 11, title: "Deep Learning Advanced", category: "ai", level: "advanced", rating: 4.7, students: 600, price: "Miễn Phí", icon: "🧠" },
+            { id: 16, title: "Generative AI Fundamentals", category: "ai", level: "beginner", rating: 4.9, students: 5000, price: "Miễn Phí", icon: "✨" },
+
+            // Business & Mobile
+            { id: 6, title: "Product Management Essentials", category: "business", level: "beginner", rating: 4.9, students: 1900, price: "Miễn Phí", icon: "💼" },
+            { id: 8, title: "Flutter Mobile Development", category: "mobile", level: "intermediate", rating: 4.6, students: 1400, price: "Miễn Phí", icon: "📱" },
             { id: 12, title: "Business Strategy 101", category: "business", level: "beginner", rating: 4.6, students: 2100, price: "Miễn Phí", icon: "📈" },
+            { id: 17, title: "Digital Marketing Mastery", category: "business", level: "intermediate", rating: 4.5, students: 2500, price: "Miễn Phí", icon: "📢" },
+            { id: 18, title: "iOS App Development with Swift", category: "mobile", level: "advanced", rating: 4.7, students: 900, price: "Miễn Phí", icon: "🍎" }
         ];
 
         function renderCourses(courses) {
@@ -637,7 +596,7 @@
             renderCourses(coursesData);
         };
     </script>
-    <!-- Universal Loader - Load header, footer, and AIVY chatbot in one go -->
-    <script defer src="/js/universal-loader.js"></script>
+    <!-- Component Loader - Load header, footer, and AIVY chatbot in one go -->
+    <script defer src="/js/component-loader.js"></script>
 </body>
 </html>

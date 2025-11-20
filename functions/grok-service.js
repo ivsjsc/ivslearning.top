@@ -12,16 +12,22 @@
 
 require('dotenv').config();
 const https = require('https');
+const Bottleneck = require('bottleneck');
 
 class GrokAiService {
   constructor() {
+    // Add rate limiting
+    this.limiter = new Bottleneck({
+      minTime: 200 // 5 requests per second
+    });
     // Load API key from environment
-    this.apiKey = process.env.GROK_API_KEY;
+    // Support both GROK_API_KEY and VITE_GROK_API_KEY (local dev or other tooling)
+    this.apiKey = process.env.GROK_API_KEY || process.env.VITE_GROK_API_KEY;
     if (!this.apiKey) {
-      throw new Error('GROK_API_KEY environment variable is required');
+      if (this.enableLogs) console.warn('⚠️ WARNING: GROK_API_KEY environment variable not set! Grok service may be disabled.');
     }
     
-    this.apiEndpoint = 'https://api.x.ai/v1/chat/completions';
+    this.apiEndpoint = process.env.GROK_API_ENDPOINT || process.env.VITE_GROK_API_ENDPOINT || 'https://api.x.ai/v1/chat/completions';
     this.model = process.env.GROK_MODEL || 'grok-2';
     this.maxTokens = 1024;
     this.temperature = 0.7;
@@ -63,8 +69,10 @@ Các lệnh có sẵn: ngôn ngữ, chế độ tối, âm lượng, giúp
 Trả lời tự nhiên với cuộc trò chuyện đồng thời hữu ích cho việc học tiếng Anh.`
     };
 
-    if (!this.apiKey) {
-      console.error('⚠️ ERROR: GROK_API_KEY environment variable not set!');
+    // Logging control
+    this.enableLogs = (process.env.ENABLE_GROK_LOGS || process.env.VITE_ENABLE_GROK_LOGS || 'true') === 'true';
+    if (!this.apiKey && this.enableLogs) {
+      console.warn('⚠️ WARNING: GROK_API_KEY environment variable not set!');
     }
   }
 
@@ -100,12 +108,12 @@ Trả lời tự nhiên với cuộc trò chuyện đồng thời hữu ích cho
         }
       ];
 
-      console.log(`[Grok] Sending request: "${userMessage.substring(0, 50)}..."`);
+      if (this.enableLogs) console.log(`[Grok] Sending request: "${userMessage.substring(0, 50)}..."`);
 
       // Call Grok API
       const response = await this._callGrokApi(messages);
       
-      console.log(`[Grok] Received response successfully`);
+      if (this.enableLogs) console.log(`[Grok] Received response successfully`);
       
       return response;
     } catch (error) {
@@ -196,6 +204,7 @@ Trả lời tự nhiên với cuộc trò chuyện đồng thời hữu ích cho
    * Private: Call Grok API
    */
   async _callGrokApi(messages) {
+    if (!this.apiKey) return Promise.reject(new Error('Grok API key not set')); 
     return new Promise((resolve, reject) => {
       const payload = JSON.stringify({
         model: this.model,

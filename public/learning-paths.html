@@ -9,9 +9,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link href="css/tailwind.css" rel="stylesheet"/>
-    <link href="css/modern-ui.css" rel="stylesheet"/>
-    <link href="css/design-system.css" rel="stylesheet"/>
+    <link href="/css/tailwind.css" rel="stylesheet"/>
+    <link href="/css/modern-ui.css" rel="stylesheet"/>
+    <link href="/css/design-system.css" rel="stylesheet"/>
     <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
     
     <style>
@@ -325,27 +325,6 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="sticky top-0 z-50 bg-[var(--color-bg)]/80 backdrop-blur border-b border-[var(--color-border)]">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="/" class="flex items-center gap-2">
-                <i class="fas fa-graduation-cap text-2xl text-[#4c5ef7]"></i>
-                <span class="font-bold text-xl">IVS Learning</span>
-            </a>
-            
-            <nav class="hidden md:flex gap-8 items-center">
-                <a href="index-new.html" class="hover:text-[#4c5ef7] transition">Trang Chủ</a>
-                <a href="courses.html" class="hover:text-[#4c5ef7] transition">Khóa Học</a>
-                <a href="learning-paths.html" class="text-[#4c5ef7] font-semibold transition">Lộ Trình</a>
-                <a href="applications.html" class="hover:text-[#4c5ef7] transition">Ứng Dụng</a>
-            </nav>
-
-            <div id="header-auth-container" class="flex gap-3 items-center">
-                <a href="auth.html" class="px-4 py-2 rounded-lg hover:bg-[var(--color-bg-secondary)] transition">Đăng nhập</a>
-                <a href="auth.html" class="px-4 py-2 bg-[#4c5ef7] text-white rounded-lg hover:bg-[#3b4fd6] transition">Đăng ký</a>
-            </div>
-        </div>
-    </header>
 
     <main class="learning-paths-page">
         <!-- Page Header -->
@@ -595,33 +574,30 @@
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-[var(--color-bg-secondary)] border-t border-[var(--color-border)] py-12 mt-12">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center text-[var(--color-text-secondary)] text-sm">
-                <p>&copy; 2024 IVS Learning Hub. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
 
     <!-- Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+        import { safeSignOut } from '/js/auth-utils.js';
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
         import { firebaseConfig } from "/js/firebase-config.js";
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        window.firebaseApp = app;
+        window.firebaseAuth = auth;
+        window.firebaseDB = getFirestore(app);
 
         onAuthStateChanged(auth, (user) => {
             const headerAuthContainer = document.getElementById('header-auth-container');
             if (user) {
                 const emailPart = user.email.split('@')[0];
                 headerAuthContainer.innerHTML = `
-                    <a href="my-learning.html" class="px-4 py-2 rounded-lg hover:bg-[var(--color-bg-secondary)] transition">
+                    <a href="/my-learning.html" class="px-4 py-2 rounded-lg hover:bg-[var(--color-bg-secondary)] transition">
                         <i class="fas fa-book-open"></i> Khóa Học Của Tôi
                     </a>
-                    <a href="dashboard.html" class="px-4 py-2 rounded-lg hover:bg-[var(--color-bg-secondary)] transition">
+                    <a href="/dashboard.html" class="px-4 py-2 rounded-lg hover:bg-[var(--color-bg-secondary)] transition">
                         ${emailPart}
                     </a>
                     <button class="px-4 py-2 bg-[#ef4444] text-white rounded-lg hover:bg-[#dc2626] transition logout-btn">
@@ -630,14 +606,14 @@
                 `;
                 document.querySelectorAll('.logout-btn').forEach(btn => {
                     btn.addEventListener('click', async () => {
-                        await signOut(auth);
+                        await safeSignOut(auth);
                         window.location.reload();
                     });
                 });
             }
         });
     </script>
-    <!-- Universal Loader - Load header, footer, and AIVY chatbot in one go -->
-    <script defer src="/js/universal-loader.js"></script>
+    <!-- Component Loader - Load header, footer, and AIVY chatbot in one go -->
+    <script defer src="/js/component-loader.js"></script>
 </body>
 </html>

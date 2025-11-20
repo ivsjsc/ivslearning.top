@@ -1,4 +1,6 @@
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js';
+import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js';
+import { setUserDoc } from '/js/auth-utils.js';
 
 document.addEventListener('DOMContentLoaded', function() {
     const auth = window.firebaseAuth;
@@ -62,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Login
                 await signInWithEmailAndPassword(auth, email, password);
                 showMessage('Đăng nhập thành công!', 'success');
+                try { if (userCredential && userCredential.user) await setUserDoc(userCredential.user); } catch (err) { console.warn('Auth: failed to update user profile after login', err); }
                 // Redirect to dashboard
                 setTimeout(() => {
                     window.location.href = 'dashboard.html';
@@ -70,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Register
                 await createUserWithEmailAndPassword(auth, email, password);
                 showMessage('Đăng ký thành công!', 'success');
+                try { if (userCredential && userCredential.user) await setUserDoc(userCredential.user, { role: 'student', createdAt: new Date().toISOString() }); } catch (err) { console.warn('Auth: failed to create user profile after signup', err); }
                 // Switch to login mode
                 isLoginMode = true;
                 updateUI();

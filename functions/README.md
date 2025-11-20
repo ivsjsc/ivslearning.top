@@ -29,13 +29,13 @@ This folder contains Firebase Cloud Functions for supporting Single Sign-On (SSO
   }
   ```
 
-### 2. `validateCustomToken`
-- **Purpose**: Validate and decode a custom token
+### 2. `validateIdToken` (preferred)
+- **Purpose**: Validate and decode a Firebase ID token (issued by Firebase after signing in).
 - **Method**: POST
 - **Request Body**:
   ```json
   {
-    "customToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ..."
+    "idToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ..."
   }
   ```
 - **Response**:
@@ -47,6 +47,8 @@ This folder contains Firebase Cloud Functions for supporting Single Sign-On (SSO
     "claims": { ... }
   }
   ```
+
+> Note: Because custom tokens must be exchanged client-side using `signInWithCustomToken` which returns an ID token, we recommend using `validateIdToken` for server-side token verification. `validateCustomToken` continues to exist as a deprecated wrapper and will return a helpful error telling the caller to exchange the custom token for an ID token instead.
 
 ### 3. `getUserProfile`
 - **Purpose**: Get user profile with custom claims

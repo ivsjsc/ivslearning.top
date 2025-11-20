@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html class="dark scroll-smooth" lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Ứng Dụng Hỗ Trợ Học Tập & Công Việc - IVS Learning Hub</title>
+    <meta content="Khám phá hệ sinh thái ứng dụng EdTech của IVS: Trợ lý AI Aivy, Tạo CV, Scan tài liệu và các công cụ học tập mạnh mẽ khác." name="description"/>
+    <link href="/images/logo/logo.svg" rel="icon" type="image/svg+xml"/>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="css/tailwind.css" rel="stylesheet"/>
+    <link href="css/modern-ui.css" rel="stylesheet"/>
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
+    
+    <style>
+        :root {
+            --color-bg: #111827;
+            --color-bg-secondary: #1F2937;
+            --color-border: #374151;
+            --color-text: #F9FAFB;
+            --color-text-secondary: #9CA3AF;
+            --color-primary: #4c5ef7;
+            --color-primary-hover: #3b4fd6;
+            --color-green: #10b981;
+            --color-orange: #f97316;
+            --color-purple: #8b5cf6;
+            --color-red: #ef4444;
+        }
+        html.dark {
+            color-scheme: dark;
+        }
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'Be Vietnam Pro', sans-serif;
+        }
+
+        .apps-page {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--color-primary) 0%, #22d3ee 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--color-text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .apps-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-header {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-description {
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .app-card {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-card:hover {
+            border-color: var(--color-primary);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -10px rgba(76, 94, 247, 0.2);
+        }
+
+        .app-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, rgba(76, 94, 247, 0.1), rgba(34, 211, 238, 0.1));
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(76, 94, 247, 0.2);
+            color: var(--color-primary);
+            font-size: 2rem;
+        }
+
+        .app-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+        }
+
+        .app-description {
+            color: var(--color-text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .app-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            width: fit-content;
+        }
+
+        .status-active { background: rgba(16, 185, 129, 0.2); color: var(--color-green); }
+        .status-beta { background: rgba(249, 115, 22, 0.2); color: var(--color-orange); }
+        .status-coming { background: rgba(139, 92, 246, 0.2); color: var(--color-purple); }
+
+        .app-actions { display: flex; gap: 0.75rem; margin-top: auto; }
+
+        .app-btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .app-btn-primary { background: var(--color-primary); color: white; }
+        .app-btn-primary:hover { background: var(--color-primary-hover); }
+        .app-btn-secondary { background: transparent; color: var(--color-primary); border: 2px solid var(--color-primary); }
+        .app-btn-secondary:hover { background: rgba(76, 94, 247, 0.1); }
+
+        .featured-banner {
+            background: linear-gradient(135deg, rgba(76, 94, 247, 0.1) 0%, rgba(34, 211, 238, 0.05) 100%), var(--color-bg-secondary);
+            border: 1px solid var(--color-primary);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            margin-bottom: 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .featured-content h2 { font-size: 2rem; font-weight: 800; margin-bottom: 1rem; color: var(--color-text); }
+        .featured-content p { color: var(--color-text-secondary); margin-bottom: 1.5rem; line-height: 1.8; }
+        .featured-icon { font-size: 6rem; text-align: center; color: var(--color-primary); opacity: 0.8; }
+
+        @media (max-width: 768px) {
+            .page-title { font-size: 2rem; }
+            .apps-grid { grid-template-columns: 1fr; }
+            .featured-banner { grid-template-columns: 1fr; padding: 2rem; text-align: center; }
+            .featured-icon { margin-bottom: 1.5rem; }
+            .app-actions { flex-direction: column; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Header Placeholder -->
+    <header id="header-placeholder"></header>
+        <!-- Featured App Banner: Aivy -->
+        <div class="featured-banner" data-aos="fade-up" data-aos-delay="100">
+            <div class="featured-icon order-last md:order-first">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div class="featured-content">
+                <h2>Aivy - Trợ lý AI Thông Minh</h2>
+                <p>Aivy là trợ lý AI "cheeky but helpful", sẵn sàng giải đáp thắc mắc, hướng dẫn học tập, và thậm chí điều khiển ứng dụng bằng giọng nói. Tương tác 24/7 bằng cả Tiếng Việt và Tiếng Anh.</p>
+                <a href="#aivy-card" class="app-btn app-btn-primary w-full md:w-auto">
+                    <i class="fas fa-info-circle"></i> Tìm Hiểu Thêm
+                </a>
+            </div>
+        </div>
+
+        <!-- Professional Tools Section -->
+        <div class="apps-section">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title" style="color: var(--color-orange);">
+                    <i class="fas fa-briefcase"></i> Công Cụ Hỗ Trợ Công Việc
+                </h2>
+                <p class="section-description">Nâng cao năng suất và sự chuyên nghiệp với các công cụ AI hiện đại.</p>
+            </div>
+
+            <div class="apps-grid">
+                <!-- AI CV Builder -->
+                <div class="app-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="app-status status-beta">🔶 Beta</div>
+                    <div class="app-icon" style="color: var(--color-orange);">
+                        <i class="fas fa-file-signature"></i>
+                    </div>
+                    <h3 class="app-title">AI CV Builder</h3>
+                    <p class="app-description">Tạo CV chuyên nghiệp, ấn tượng chỉ trong vài phút. AI sẽ gợi ý nội dung, từ khóa và định dạng phù hợp với vị trí ứng tuyển của bạn.</p>
+                    <div class="app-actions">
+                        <button class="app-btn app-btn-primary" style="background-color: var(--color-orange);">
+                            <i class="fas fa-play-circle"></i> Thử Ngay
+                        </button>
+                        <button class="app-btn app-btn-secondary" style="color: var(--color-orange); border-color: var(--color-orange);">
+                            <i class="fas fa-info-circle"></i> Chi Tiết
+                        </button>
+                    </div>
+                </div>
+
+                <!-- AI Document Scanner -->
+                <div class="app-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="app-status status-active">✓ Hoạt Động</div>
+                    <div class="app-icon" style="color: var(--color-orange);">
+                        <i class="fas fa-scanner"></i>
+                    </div>
+                    <h3 class="app-title">AI Document Scanner</h3>
+                    <p class="app-description">Biến ảnh chụp tài liệu, hóa đơn, danh thiếp thành file PDF hoặc Word có thể tìm kiếm và chỉnh sửa. Tự động cắt, chỉnh sáng và nhận diện văn bản (OCR).</p>
+                    <div class="app-actions">
+                        <button class="app-btn app-btn-primary" style="background-color: var(--color-orange);">
+                            <i class="fas fa-play-circle"></i> Bắt Đầu
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Tools Section -->
+        <div class="apps-section">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title" style="color: var(--color-green);">
+                    <i class="fas fa-graduation-cap"></i> Công Cụ Hỗ Trợ Học Tập
+                </h2>
+                <p class="section-description">Các công cụ được thiết kế để tối ưu hóa quá trình học tập của bạn.</p>
+                <a href="learning-resources.html" class="text-sm font-semibold text-[var(--color-primary)] hover:underline mt-2 inline-block">
+                    <i class="fas fa-book"></i> Xem Tài Nguyên & Liên Kết Hữu Ích
+                </a>
+            </div>
+
+            <div class="apps-grid">
+                <!-- AIVY Card -->
+                <div class="app-card" id="aivy-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="app-status status-active">✓ Hoạt Động</div>
+                    <div class="app-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="app-title">Aivy - AI Learning Assistant</h3>
+                    <p class="app-description">Trợ lý AI thông minh giúp bạn học tập hiệu quả hơn: giải thích ngữ pháp, luyện tập đối thoại, và hướng dẫn sử dụng các tính năng của IVS.</p>
+                    <div class="app-actions">
+                        <button class="app-btn app-btn-primary">
+                            <i class="fas fa-comments"></i> Chat với Aivy
+                        </button>
+                        <a href="GUIDE/AivyAssistant.md" target="_blank" class="app-btn app-btn-secondary">
+                            <i class="fas fa-book-open"></i> Đọc tài liệu
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Code IDE -->
+                <div class="app-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="app-status status-active">✓ Hoạt Động</div>
+                    <div class="app-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="app-title">IVS Code IDE</h3>
+                    <p class="app-description">Môi trường lập trình trực tuyến (Online IDE) cho các bài tập và dự án. Hỗ trợ nhiều ngôn ngữ, biên dịch và chạy code ngay trên trình duyệt.</p>
+                    <div class="app-actions">
+                        <button class="app-btn app-btn-primary">
+                            <i class="fas fa-play-circle"></i> Mở IDE
+                        </button>
+                    </div>
+                </div>
+
+                <!-- IVS Testing & Placement -->
+                <div class="app-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="app-status status-active">✓ Hoạt Động</div>
+                    <div class="app-icon" style="color: var(--color-green);">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <h3 class="app-title">IVS Testing & Placement</h3>
+                    <p class="app-description">Ứng dụng Kiểm tra & Xếp lớp đầu vào cho Trung tâm Ngoại ngữ. Đánh giá chính xác trình độ và gợi ý lộ trình học tập phù hợp.</p>
+                    <div class="app-actions">
+                        <a href="ivs-testing.html" class="app-btn app-btn-primary">
+                            <i class="fas fa-play-circle"></i> Truy Cập
+                        </a>
+                    </div>
+                </div>
+
+                <!-- IVS Kinderlink -->
+                <div class="app-card" data-aos="fade-up" data-aos-delay="450">
+                    <div class="app-status status-active">✓ Hoạt Động</div>
+                    <div class="app-icon" style="color: var(--color-purple);">
+                        <i class="fas fa-child"></i>
+                    </div>
+                    <h3 class="app-title">IVS Kinderlink</h3>
+                    <p class="app-description">Nền tảng Quản lý Trường mầm non toàn diện. Kết nối nhà trường và phụ huynh, theo dõi sự phát triển của trẻ mỗi ngày.</p>
+                    <div class="app-actions">
+                        <a href="ivs-kinderlink.html" class="app-btn app-btn-primary" style="background-color: var(--color-purple);">
+                            <i class="fas fa-play-circle"></i> Truy Cập
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Learning Analytics -->
+                <div class="app-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="app-status status-coming">📅 Sắp ra mắt</div>
+                    <div class="app-icon" style="color: var(--color-purple);">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="app-title">Learning Analytics</h3>
+                    <p class="app-description">Theo dõi tiến độ học tập của bạn qua các biểu đồ và thống kê trực quan. Phân tích điểm mạnh, điểm yếu và nhận gợi ý cải thiện cá nhân hóa.</p>
+                    <div class="app-actions">
+                        <button class="app-btn app-btn-secondary" style="color: var(--color-purple); border-color: var(--color-purple);">
+                            <i class="fas fa-bell"></i> Nhận Thông Báo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer Placeholder -->
+    <footer id="footer-placeholder"></footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 50,
+                easing: 'ease-out-quad',
+            });
+        });
+    </script>
+    
+    <!-- Component Loader - Load header, footer, and AIVY chatbot in one go -->
+    <script defer src="/js/component-loader.js"></script>
+</body>
+</html>

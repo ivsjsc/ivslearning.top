@@ -30,6 +30,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
         import { getAuth } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
         import { firebaseConfig } from "/js/firebase-config.js";
 
         const app = initializeApp(firebaseConfig);
@@ -39,6 +40,7 @@
         window.firebaseApp = app;
         window.firebaseAuth = auth;
         window.firebaseAnalytics = analytics;
+        window.firebaseDB = getFirestore(app);
 
         // Initialize global auth listener
         import('./app.js').then(module => {
@@ -46,8 +48,22 @@
         });
     </script>
 </head>
+<<<<<<< HEAD
 <body class="bg-ivs-bg text-ivs-text-primary font-sans">
     <header id="header-placeholder"></header>
+=======
+<body class="bg-gray-100 text-gray-800 font-sans">
+    <!-- HEADER COMPONENT -->
+    <div id="app-header-container"></div>
+    <script>
+        fetch('/components/header.html')
+            .then(r => r.text())
+            .then(html => {
+                document.getElementById('app-header-container').innerHTML = html;
+            })
+            .catch(e => console.error('Header load error:', e));
+    </script>
+>>>>>>> main
 
     <main>
         <!-- Banner Section -->
@@ -124,6 +140,29 @@
             </div>
         </section>
 
+        <!-- AI-Generated Learning Materials Section -->
+        <section class="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+            <div class="container mx-auto px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                        <i class="fas fa-sparkles text-yellow-400 mr-2"></i>Tài Liệu Học Tập (AI-Generated)
+                    </h2>
+                    <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                        Các tài liệu học tập được tạo tự động bởi AI, được sắp xếp theo chủ đề, độ khó, và loại nội dung
+                    </p>
+                </div>
+
+                <!-- Materials Grid -->
+                <div id="learning-materials-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Loading State -->
+                    <div class="col-span-full text-center py-12">
+                        <i class="fas fa-spinner fa-spin text-blue-400 text-4xl mb-4"></i>
+                        <p class="text-gray-400">Đang tải tài liệu...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Course Categories / Ứng dụng tích hợp (Đã thay đổi) -->
         <section class="py-16 bg-ivs-card">
             <div class="container mx-auto px-6 lg:px-8">
@@ -132,7 +171,7 @@
                         <i class="fas fa-cubes text-ivs-orange mr-2"></i> <span class="text-white">Khám Phá Chương Trình Học Tập (ENGLISH Learners App)</span>
                     </h2>
                     <p class="text-xl text-ivs-text-secondary max-w-2xl mx-auto">
-                        Trải nghiệm ENGLISH Learners (<a href="https://ivseng.web.app" target="_blank" rel="noopener noreferrer">https://ivseng.web.app</a>) được nhúng trực tiếp vào website.
+                        Trải nghiệm ENGLISH Learners (<a data-app="el" href="#" target="_blank" rel="noopener noreferrer">https://ivseng.web.app</a>) được nhúng trực tiếp vào website.
                     </p>
                 </div>
                 
@@ -145,7 +184,16 @@
                     
                     <!-- Khung Iframe chính: w-full đảm bảo Responsive -->
                     <iframe
-                        src="https://ivseng.web.app"
+                        src="#" data-app="el-iframe"
+                            <!-- App URLs config -->
+                            <script src="/js/app-urls.js"></script>
+                            <script>
+                                (function(){
+                                    const el = window.ELearnersUrl || 'https://ivseng.web.app';
+                                    document.querySelectorAll('[data-app="el"]').forEach(a => a.href = el);
+                                    document.querySelectorAll('[data-app="el-iframe"]').forEach(iframe => iframe.src = el);
+                                })();
+                            </script>
                         title="IVS Curriculum Application Embedded"
                         class="w-full"
                         style="height: 1000px; min-height: 85vh; border: none; background-color: #f0f0f0; overflow: auto;"
@@ -326,44 +374,25 @@
             </div>
         </section>
     </main>
-    <footer id="footer-placeholder">
-        <div id="footer-auth" style="margin-top: 20px; text-align: center;"></div>
-    </footer>
+    <!-- FOOTER COMPONENT -->
+    <div id="app-footer-container"></div>
     <div id="fab-container-placeholder"></div>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="../js/scripts.js"></script>
     <script>
         AOS.init({
             duration: 1000,
             once: true
         });
-
-        // Mobile Menu Toggle
-        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
-        
-        if (mobileMenuToggle && mobileMenuOverlay) {
-            mobileMenuToggle.addEventListener('click', () => {
-                mobileMenuOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-            
-            mobileMenuOverlay.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenuOverlay.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                });
-            });
-            
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && mobileMenuOverlay.classList.contains('active')) {
-                    mobileMenuOverlay.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                }
-            });
-        }
     </script>
-    <!-- Universal Loader - Load header, footer, and AIVY chatbot in one go -->
-    <script defer src="js/universal-loader.js"></script>
+
+    <!-- API Service Initialization -->
+    <script>
+        // Set backend URL - replace with your actual backend URL
+        window.BACKEND_URL = window.BACKEND_URL || 'http://localhost:3000';
+    </script>
+    <script src="js/api-init.js"></script>
+    <script src="js/learning-materials-loader.js"></script>
+    <!-- Component Loader - Load header, footer, and AIVY chatbot in one go -->
+    <script defer src="/js/component-loader.js"></script>
 </body>
 </html>

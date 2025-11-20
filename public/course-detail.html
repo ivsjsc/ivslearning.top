@@ -354,27 +354,6 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="sticky top-0 z-50 bg-[var(--color-bg)]/80 backdrop-blur border-b border-[var(--color-border)]">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="/" class="flex items-center gap-2">
-                <i class="fas fa-graduation-cap text-2xl text-[#4c5ef7]"></i>
-                <span class="font-bold text-xl">IVS Learning</span>
-            </a>
-            
-            <nav class="hidden md:flex gap-8 items-center">
-                <a href="index-new.html" class="hover:text-[#4c5ef7] transition">Trang Chủ</a>
-                <a href="courses.html" class="hover:text-[#4c5ef7] transition">Khóa Học</a>
-                <a href="learning-paths.html" class="hover:text-[#4c5ef7] transition">Lộ Trình</a>
-                <a href="applications.html" class="hover:text-[#4c5ef7] transition">Ứng Dụng</a>
-            </nav>
-
-            <div id="header-auth-container" class="flex gap-3 items-center">
-                <a href="auth.html" class="px-4 py-2 rounded-lg hover:bg-[var(--color-bg-secondary)] transition">Đăng nhập</a>
-                <a href="auth.html" class="px-4 py-2 bg-[#4c5ef7] text-white rounded-lg hover:bg-[#3b4fd6] transition">Đăng ký</a>
-            </div>
-        </div>
-    </header>
 
     <main class="course-detail-container">
         <!-- Hero Section -->
@@ -608,23 +587,20 @@
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-[var(--color-bg-secondary)] border-t border-[var(--color-border)] py-12 mt-8">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center text-[var(--color-text-secondary)] text-sm">
-                <p>&copy; 2024 IVS Learning Hub. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
 
     <!-- Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+        import { safeSignOut } from '/js/auth-utils.js';
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
         import { firebaseConfig } from "/js/firebase-config.js";
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        window.firebaseApp = app;
+        window.firebaseAuth = auth;
+        window.firebaseDB = getFirestore(app);
 
         onAuthStateChanged(auth, (user) => {
             const headerAuthContainer = document.getElementById('header-auth-container');
@@ -643,7 +619,7 @@
                 `;
                 document.querySelectorAll('.logout-btn').forEach(btn => {
                     btn.addEventListener('click', async () => {
-                        await signOut(auth);
+                        await safeSignOut(auth);
                         window.location.reload();
                     });
                 });
@@ -659,7 +635,7 @@
                 '<i class="fas fa-chevron-down"></i>';
         };
     </script>
-    <!-- Universal Loader - Load header, footer, and AIVY chatbot in one go -->
-    <script defer src="/js/universal-loader.js"></script>
+    <!-- Component Loader - Load header, footer, and AIVY chatbot in one go -->
+    <script defer src="/js/component-loader.js"></script>
 </body>
 </html>

@@ -1,15 +1,17 @@
 import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js';
+import { safeSignOut, setUserDoc } from '/js/auth-utils.js';
 
 // Global auth state management
 export function initializeGlobalAuthListener() {
     const auth = window.firebaseAuth;
     if (!auth) return;
 
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
         updateAuthUIGlobally(user);
         localStorage.setItem('userAuthenticated', user ? 'true' : 'false');
         if (user) {
             localStorage.setItem('userEmail', user.email);
+            try { await setUserDoc(user); } catch (err) { console.warn('app.js setUserDoc failed', err); }
         }
     });
 }
@@ -53,7 +55,7 @@ function updateAuthUIGlobally(user) {
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', async () => {
                     try {
-                        await signOut(auth);
+                        await safeSignOut(auth);
                         window.location.href = 'auth.html';
                     } catch (error) {
                         console.error('Logout error:', error);
