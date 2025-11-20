@@ -188,10 +188,6 @@
         document.documentElement.style.setProperty('--ivs-purple', IVS_COLORS['ivs-purple']);
         document.documentElement.style.setProperty('--ivs-text-secondary', IVS_COLORS['ivs-text-secondary']);
     </script>
-</head>
-<body>
-
-    <!-- Main Content Wrapper -->
     <main class="pt-20">
         <!-- SECTION 1: HERO - TRUNG TÂM HỌC TẬP -->
         <section class="hero-banner relative min-h-[85vh] flex items-center justify-center text-center p-8 border-b ivs-border">
@@ -337,7 +333,103 @@
             </div>
         </section>
 
-        <!-- SECTION 4: CALL TO ACTION - Dịch vụ Tùy chỉnh (Optimized) -->
+        <!-- SECTION 4: FEATURED COURSES -->
+        <section class="py-20 bg-ivs-bg border-t ivs-border" id="courses">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-4xl mx-auto mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                        <i class="fas fa-book-open text-ivs-orange mr-2"></i><span data-en="Featured Courses">KHÓA HỌC NỔI BẬT</span>
+                    </h2>
+                    <p class="text-xl text-ivs-text-secondary" data-en="Curated learning paths from industry experts">
+                        Những khóa học được chọn lọc kỹ càng từ các chuyên gia hàng đầu
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Course 1: React -->
+                    <div class="ivs-card rounded-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
+                        <div class="h-40 bg-gradient-to-br from-ivs-blue to-ivs-cyan flex items-center justify-center text-5xl">📱</div>
+                        <div class="p-6">
+                            <span class="inline-block px-3 py-1 bg-ivs-blue/20 text-ivs-blue rounded-full text-sm font-semibold mb-3">Lập Trình</span>
+                            <h3 class="text-xl font-bold text-white mb-2">React.js Từ Cơ Bản Đến Nâng Cao</h3>
+                            <p class="text-ivs-text-secondary mb-4">Học React với dự án thực tế. Nắm vững hooks, state management, và best practices.</p>
+                            <div class="flex justify-between items-center pt-4 border-t ivs-border">
+                                <span class="text-sm text-ivs-text-secondary"><i class="fas fa-star text-ivs-orange"></i> 4.8 (120)</span>
+                                <a href="/courses.html" class="text-ivs-blue hover:text-ivs-cyan transition">Xem chi tiết →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course 2: UI/UX Design -->
+                    <div class="ivs-card rounded-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
+                        <div class="h-40 bg-gradient-to-br from-ivs-purple to-ivs-blue flex items-center justify-center text-5xl">🎨</div>
+                        <div class="p-6">
+                            <span class="inline-block px-3 py-1 bg-ivs-purple/20 text-ivs-purple rounded-full text-sm font-semibold mb-3">Thiết Kế</span>
+                            <h3 class="text-xl font-bold text-white mb-2">UI/UX Design Masterclass</h3>
+                            <p class="text-ivs-text-secondary mb-4">Thiết kế giao diện tuyệt vời. Học Figma, design thinking, user research.</p>
+                            <div class="flex justify-between items-center pt-4 border-t ivs-border">
+                                <span class="text-sm text-ivs-text-secondary"><i class="fas fa-star text-ivs-orange"></i> 4.9 (98)</span>
+                                <a href="/courses.html" class="text-ivs-purple hover:text-ivs-cyan transition">Xem chi tiết →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course 3: Machine Learning -->
+                    <div class="ivs-card rounded-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300">
+                        <div class="h-40 bg-gradient-to-br from-ivs-orange to-ivs-red flex items-center justify-center text-5xl">🤖</div>
+                        <div class="p-6">
+                            <span class="inline-block px-3 py-1 bg-ivs-orange/20 text-ivs-orange rounded-full text-sm font-semibold mb-3">AI & ML</span>
+                            <h3 class="text-xl font-bold text-white mb-2">Machine Learning Basics</h3>
+                            <p class="text-ivs-text-secondary mb-4">Bắt đầu với ML. Học Python, scikit-learn, và algorithms cơ bản.</p>
+                            <div class="flex justify-between items-center pt-4 border-t ivs-border">
+                                <span class="text-sm text-ivs-text-secondary"><i class="fas fa-star text-ivs-orange"></i> 4.7 (85)</span>
+                                <a href="/courses.html" class="text-ivs-orange hover:text-ivs-cyan transition">Xem chi tiết →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course 4: Data Analytics -->
+                    <div class="ivs-card rounded-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="400">
+                        <div class="h-40 bg-gradient-to-br from-ivs-green to-ivs-cyan flex items-center justify-center text-5xl">📊</div>
+                        <div class="p-6">
+                            <span class="inline-block px-3 py-1 bg-ivs-green/20 text-ivs-green rounded-full text-sm font-semibold mb-3">Data Science</span>
+                            <h3 class="text-xl font-bold text-white mb-2">Data Analytics với Python & SQL</h3>
+                            <p class="text-ivs-text-secondary mb-4">Phân tích dữ liệu chuyên nghiệp. Pandas, SQL, visualization.</p>
+                            <div class="flex justify-between items-center pt-4 border-t ivs-border">
+                                <span class="text-sm text-ivs-text-secondary"><i class="fas fa-star text-ivs-orange"></i> 4.6 (76)</span>
+                                <a href="/courses.html" class="text-ivs-green hover:text-ivs-cyan transition">Xem chi tiết →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course 5: DevOps -->
+                    <div class="ivs-card rounded-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="500">
+                        <div class="h-40 bg-gradient-to-br from-ivs-cyan to-ivs-blue flex items-center justify-center text-5xl">🚀</div>
+                        <div class="p-6">
+                            <span class="inline-block px-3 py-1 bg-ivs-cyan/20 text-ivs-cyan rounded-full text-sm font-semibold mb-3">DevOps</span>
+                            <h3 class="text-xl font-bold text-white mb-2">Docker & Kubernetes Essentials</h3>
+                            <p class="text-ivs-text-secondary mb-4">Containerization & orchestration. Docker, Kubernetes, CI/CD.</p>
+                            <div class="flex justify-between items-center pt-4 border-t ivs-border">
+                                <span class="text-sm text-ivs-text-secondary"><i class="fas fa-star text-ivs-orange"></i> 4.8 (92)</span>
+                                <a href="/courses.html" class="text-ivs-cyan hover:text-ivs-green transition">Xem chi tiết →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course 6: CTA View All -->
+                    <div class="ivs-card rounded-xl overflow-hidden flex flex-col items-center justify-center border-2 border-dashed border-ivs-text-secondary/30 hover:border-ivs-cyan transition-colors" data-aos="fade-up" data-aos-delay="600">
+                        <i class="fas fa-arrow-right text-4xl text-ivs-cyan mb-4"></i>
+                        <h3 class="text-xl font-bold text-white mb-2">Xem Thêm Khóa Học</h3>
+                        <p class="text-ivs-text-secondary mb-6 text-center text-sm px-4">500+ khóa học từ các lĩnh vực khác nhau</p>
+                        <a href="/courses.html" class="bg-ivs-cyan hover:bg-cyan-600 text-black font-bold px-8 py-3 rounded-lg transition">
+                            Khám phá →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: CALL TO ACTION - Dịch vụ Tùy chỉnh (Optimized) -->
         <section class="py-20 bg-ivs-card border-t ivs-border">
             <div class="container mx-auto px-6 lg:px-8 text-center" data-aos="zoom-in">
                 <h2 class="text-4xl lg:text-5xl font-bold text-white mb-4" data-en="Need a Specialized Application?">
@@ -399,13 +491,14 @@
                 script.defer = true;
                 document.body.appendChild(script);
             });
+
         });
     </script>
     
     <!-- Modern UI Components -->
     <script src="js/modern-ui-components.js"></script>
     
-    <!-- Component Loader - Load header, footer -->
+
     <script defer src="/js/component-loader.js"></script>
 </body>
 </html>
