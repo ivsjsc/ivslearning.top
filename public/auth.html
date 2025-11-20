@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html class="dark scroll-smooth" lang="vi">
+<<<<<<< HEAD
 <!-- merge marker removed -->
 <head>
     <meta charset="utf-8"/>
@@ -13,6 +14,8 @@
     <link href="css/modern-ui.css" rel="stylesheet"/>
     <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
 <!-- merge branch separator removed -->
+=======
+>>>>>>> bbcd2d2e1b7efb8ecec356062c83727e9ae95cb6
 
 <head>
     <meta charset="utf-8"/>
@@ -117,6 +120,7 @@
         /* Auth Container with bottom padding */
         main {
             padding-bottom: 5rem;
+            padding-top: 5rem;
         }
 
         /* Auth Card */
@@ -673,25 +677,35 @@
     </div>
 
 
+<<<<<<< HEAD
 <!-- merge marker removed -->
+=======
+>>>>>>> bbcd2d2e1b7efb8ecec356062c83727e9ae95cb6
     <!-- Firebase CDN v12.5.0 -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
+<<<<<<< HEAD
 <!-- conflict: HEAD cleaned -->
         import { getAuth } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
         import { firebaseConfig } from "/js/firebase-config.js";
 <!-- conflict separator cleaned -->
+=======
+>>>>>>> bbcd2d2e1b7efb8ecec356062c83727e9ae95cb6
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
         import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js';
         import { setUserDoc, safeSignOut } from '/js/auth-utils.js';
         import { firebaseConfig } from "/js/firebase-config.js";
         import { initiateGoogleLogin, handleOAuthCallback, isLoggedIn, getCurrentUser } from "/js/auth-flow.js";
+<<<<<<< HEAD
 <!-- conflict: main cleaned -->
+=======
+>>>>>>> bbcd2d2e1b7efb8ecec356062c83727e9ae95cb6
 
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const auth = getAuth(app);
+<<<<<<< HEAD
 // cleaned duplicate firebase export (kept consolidated version later)
     </script>
     <style>
@@ -775,6 +789,8 @@
 <script type="module" src="/js/auth.js"></script>
 
 <!-- removed merge separator -->
+=======
+>>>>>>> bbcd2d2e1b7efb8ecec356062c83727e9ae95cb6
         // Expose app + services globally for other scripts
         window.firebaseApp = app;
         window.firebaseAuth = auth;
@@ -1237,6 +1253,5 @@
 
     <!-- Component Loader - Load header, footer, and AIVY chatbot in one go -->
     <script defer src="/js/component-loader.js"></script>
->>>>>>> main
 </body>
 </html>
