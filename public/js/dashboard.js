@@ -80,8 +80,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         <span class="text-2xl font-bold text-blue-400">${course.progress}%</span>
                     </div>
                     <div class="mb-4">
-                        <div class="w-full bg-gray-700 rounded-full h-2">
-                            <div class="progress-bar" style="width: ${course.progress}%"></div>
+                            <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div class="progress-bar" data-progress="${course.progress}"></div>
                         </div>
                     </div>
                     <button class="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 rounded transition">
@@ -90,7 +90,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `).join('');
             
-            // Update stats
+            // setup progress bars created above and Update stats
+            document.querySelectorAll('#courses-container .progress-bar[data-progress]').forEach(function(el){
+                const v = el.dataset.progress || '0';
+                el.style.setProperty('--progress', v + '%');
+            });
             document.getElementById('total-courses').textContent = sampleCourses.length;
             const avgProgress = Math.round(sampleCourses.reduce((sum, c) => sum + c.progress, 0) / sampleCourses.length);
             document.getElementById('avg-progress').textContent = avgProgress + '%';

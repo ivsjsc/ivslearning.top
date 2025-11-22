@@ -350,9 +350,9 @@ class ModernUIComponents {
     modal.setAttribute('aria-label', message);
     
     modal.innerHTML = `
-      <div style="text-align: center;">
-        <div class="spinner spinner-lg" style="margin-bottom: 16px;"></div>
-        <p style="color: var(--color-text-secondary);">${message}</p>
+      <div class="text-center">
+        <div class="spinner spinner-lg mb-4"></div>
+        <p class="text-muted">${message}</p>
       </div>
     `;
     

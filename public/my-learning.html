@@ -347,7 +347,7 @@
                             <span>60%</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: 60%;"></div>
+                            <div class="progress-fill" data-progress="60"></div>
                         </div>
                     </div>
                     <div class="card-footer">
@@ -373,7 +373,7 @@
                             <span>100%</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: 100%;"></div>
+                            <div class="progress-fill" data-progress="100"></div>
                         </div>
                     </div>
                     <div class="card-footer">
@@ -399,7 +399,7 @@
                             <span>35%</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: 35%;"></div>
+                            <div class="progress-fill" data-progress="35"></div>
                         </div>
                     </div>
                     <div class="card-footer">
@@ -425,7 +425,7 @@
                             <span>75%</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: 75%;"></div>
+                            <div class="progress-fill" data-progress="75"></div>
                         </div>
                     </div>
                     <div class="card-footer">
@@ -451,7 +451,7 @@
                             <span>100%</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: 100%;"></div>
+                            <div class="progress-fill" data-progress="100"></div>
                         </div>
                     </div>
                     <div class="card-footer">
@@ -477,7 +477,7 @@
                             <span>20%</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: 20%;"></div>
+                            <div class="progress-fill" data-progress="20"></div>
                         </div>
                     </div>
                     <div class="card-footer">
@@ -552,6 +552,15 @@
                 }
             });
         };
+    </script>
+    <script>
+        // Initialize progress fills from data-progress attributes for accessibility and JS-driven updates
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.progress-fill[data-progress]').forEach(function(el){
+                const value = el.dataset.progress || '0';
+                el.style.setProperty('--progress', value + '%');
+            });
+        });
     </script>
     <!-- Component Loader - Load header, footer, and AIVY chatbot in one go -->
     <script defer src="/js/component-loader.js"></script>

@@ -333,6 +333,15 @@
             <h1 class="page-title">Lộ Trình Học Tập</h1>
             <p class="page-subtitle">Các lộ trình học được thiết kế chuyên biệt để giúp bạn đạt được mục tiêu</p>
         </div>
+    <script>
+        // Initialize path progress bars from data-progress attribute
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.progress-fill[data-progress]').forEach(function(el){
+                const v = el.dataset.progress || '0';
+                el.style.setProperty('--progress', v + '%');
+            });
+        });
+    </script>
 
         <!-- Paths Grid -->
         <div class="paths-grid">
@@ -520,7 +529,7 @@
                     <h3 class="path-detail-title">📊 Data Science Mastery</h3>
                     <div class="path-progress">
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: 30%;"></div>
+                            <div class="progress-fill" data-progress="30"></div>
                         </div>
                         <span class="progress-text">30% hoàn thành</span>
                     </div>

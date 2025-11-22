@@ -467,6 +467,14 @@ header {
   gap: 8px;
 }
 
+/* Mobile auth modifiers (used in component templates) */
+.mobile-auth-primary { background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); color: white; }
+.mobile-auth-success { background: linear-gradient(135deg, var(--color-success), #059669); color: white; }
+.mobile-auth-error { background: linear-gradient(135deg, var(--color-error), #dc2626); color: white; }
+
+/* header auth logout gap helper */
+.header-auth-logout { gap: 8px; }
+
 /* Breadcrumb */
 .breadcrumb-container {
   display: none;
@@ -665,6 +673,15 @@ header {
 /* Continue button helper */
 .btn-continue { background: var(--color-success); color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 700; }
 .btn-continue-success { background: var(--color-success); }
+
+/* Input-with-addon: make the contained input leave room for the addon button */
+.input-with-addon .form-input { padding-right: 2.5rem; }
+
+/* Progress helpers: allow JS to set --progress via dataset and use CSS-var for width */
+.progress-fill { width: var(--progress, 0%); transition: width 0.4s ease; }
+
+/* Support for components that use .progress-bar as the filler element */
+.progress-bar { width: var(--progress, 0%); transition: width 0.4s ease; }
 
 /* ========== CARD COMPONENT ========== */
 

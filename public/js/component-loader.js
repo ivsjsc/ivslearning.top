@@ -42,7 +42,7 @@ class ComponentLoader {
                     const mobileAuthContainer = document.getElementById('mobile-auth-container');
                     if (headerAuthContainer && mobileAuthContainer && (!window.firebaseAuth)) {
                         headerAuthContainer.innerHTML = `\n                            <a href="/auth.html" class="header-auth-button header-auth-login">\n                                <i class="fas fa-sign-in-alt"></i> Đăng nhập\n                            </a>\n                            <a href="/auth.html" class="header-auth-button header-auth-signup">\n                                <i class="fas fa-user-plus"></i> Đăng ký\n                            </a>\n                        `;
-                        mobileAuthContainer.innerHTML = `\n                            <a href="/auth.html" class="mobile-auth-button" style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); color: white;">\n                                <i class="fas fa-sign-in-alt"></i> Đăng nhập / Đăng ký\n                            </a>\n                        `;
+                        mobileAuthContainer.innerHTML = `\n                            <a href="/auth.html" class="mobile-auth-button mobile-auth-primary">\n                                <i class="fas fa-sign-in-alt"></i> Đăng nhập / Đăng ký\n                            </a>\n                        `;
                     }
                 }, 900);
             }
@@ -101,17 +101,17 @@ class ComponentLoader {
                     <a href="/dashboard.html" class="header-auth-button header-auth-user">
                         <i class="fas fa-user-circle"></i> ${emailPart}
                     </a>
-                    <button class="header-auth-button header-auth-logout logout-btn" style="gap: 8px;">
+                    <button class="header-auth-button header-auth-logout logout-btn">
                         <i class="fas fa-sign-out-alt"></i> Đăng xuất
                     </button>
                 `;
                 headerAuthContainer.innerHTML = userHTML;
 
                 const mobileUserHTML = `
-                    <a href="/dashboard.html" class="mobile-auth-button" style="background: linear-gradient(135deg, var(--color-success), #059669); color: white;">
+                    <a href="/dashboard.html" class="mobile-auth-button mobile-auth-success">
                         <i class="fas fa-user-circle"></i> Xem Dashboard
                     </a>
-                    <button class="mobile-auth-button logout-btn" style="background: linear-gradient(135deg, var(--color-error), #dc2626); color: white;">
+                    <button class="mobile-auth-button mobile-auth-error logout-btn">
                         <i class="fas fa-sign-out-alt"></i> Đăng Xuất
                     </button>
                 `;
@@ -144,7 +144,7 @@ class ComponentLoader {
                 headerAuthContainer.innerHTML = loginHTML;
 
                 const mobileLoginHTML = `
-                    <a href="/auth.html" class="mobile-auth-button" style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); color: white;">
+                    <a href="/auth.html" class="mobile-auth-button mobile-auth-primary">
                         <i class="fas fa-sign-in-alt"></i> Đăng nhập / Đăng ký
                     </a>
                 `;
