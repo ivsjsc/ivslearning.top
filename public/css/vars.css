@@ -16,9 +16,21 @@
   --ivs-bg-light: #1f2a36;
   --ivs-text-primary: #ffffff;
   --ivs-text-secondary: #cbd5e1;
+  /* Header / stacking tokens (centralized for consistency) */
+  --header-height: 4rem; /* default header height (64px) */
+  --z-header: 1000; /* header stack position */
+  --z-overlay: 1100; /* overlays / modal stacking */
+  --z-mobile-menu: 1050; /* mobile menu overlay */
+  /* Higher-level stacks */
+  --z-toasts: 2000; /* notifications */
+  --z-fab: 12050; /* floating action button container */
+  --z-fab-item: 1050; /* item level inside FAB */
+  --z-fab-submenu: 1045; /* fab submenu panel */
+  --z-fab-overlay: 99998; /* large overlay used by fab modals */
+  --z-topmost: 2147483647; /* reserved absolute top */
 }
 
 /* Small helpers (optional) */
-.text-ivs-accent { color: var(--ivs-accent) !important; }
-.bg-ivs-accent { background-color: var(--ivs-accent) !important; }
+.text-ivs-accent { color: var(--ivs-accent); }
+.bg-ivs-accent { background-color: var(--ivs-accent); }
 .ring-ivs-accent:focus { box-shadow: 0 0 0 3px var(--ivs-accent-12); }

@@ -20,6 +20,7 @@
     <meta content="website" property="og:type"/>
     <meta content="IVS JSC" name="author"/>
     <link href="/images/logo/logo.svg" rel="icon" type="image/svg+xml"/>
+    <link href="/css/vars.css" rel="stylesheet"/>
     <link href="/css/tailwind.css" rel="stylesheet"/>
     <link href="/css/modern-ui.css" rel="stylesheet"/>
     <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
@@ -37,7 +38,7 @@
         window.firebaseDB = getFirestore(app);
     </script>
 <style>
-        :root { --header-height: 4rem; }
+        /* header height centralized in /css/vars.css */
         body { background-color: #1a1a1a; color: #f4f4f5; font-family: 'Be Vietnam Pro', sans-serif; overflow-x: hidden; }
         section { scroll-margin-top: calc(var(--header-height) + 1rem); padding: 4rem 1rem; }
         @media (min-width: 768px) { section { padding: 6rem 2rem; } }

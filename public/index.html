@@ -1,260 +1,464 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title data-en="IVS Learning Hub - IVS JSC Learning & Application Center">IVS Learning Hub - Trung Tâm Học Tập & Ứng Dụng IVS JSC</title>
-    <!-- SEO Meta Tags -->
-    <meta content="Access IVS Learning Hub - The gateway to the education, technology, and interactive learning application ecosystem of IVS JSC." name="description" data-en-desc="Access IVS Learning Hub - The gateway to the education, technology, and interactive learning application ecosystem of IVS JSC."/>
-    <meta content="IVS Learning Hub, IVS JSC, EdTech, Educational Applications, IVS Ecosystem, Firebase Auth" name="keywords" data-en-kw="IVS Learning Hub, IVS JSC, EdTech, Educational Applications, IVS Ecosystem, Firebase Auth"/>
-    <link href="/images/logo/logo.svg" rel="icon" type="image/svg+xml"/>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet">
-    
-    <link href="css/modern-ui.css" rel="stylesheet"/>
-    <link href="css/redesign.css" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IVSLearning Community - Cùng Nhau Kiến Tạo Cộng Đồng Tri Thức</title>
+    <!-- Tải Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tải Lucide Icons (sử dụng qua JS) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Thiết lập font Inter mặc định, đảm bảo font chữ rõ ràng, hiện đại */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #101827; /* Màu chữ đậm cho nội dung */
+            background-color: #ffffff;
+        }
 
-    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
+        /* Định nghĩa màu tùy chỉnh dựa trên thiết kế */
+        .primary-green { background-color: #10B981; } /* Xanh lá chủ đạo */
+        .primary-green-hover { background-color: #059669; }
+        .secondary-purple { border-color: #9333ea; color: #9333ea; } /* Tím secondary */
+        .dark-bg { background-color: #101827; color: white; } /* Nền tối cho footer và section cuối */
+        .header-bg { background-color: #ffffff; }
 
-    <!-- Firebase CDN Initialization for Global Access (v12.5.0) -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
-        import { firebaseConfig } from "/js/firebase-config.js";
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const analytics = getAnalytics(app);
-
-        window.firebaseApp = app;
-        window.firebaseAuth = auth;
-        window.firebaseDB = db;
-        window.firebaseAnalytics = analytics;
-        
-        onAuthStateChanged(auth, (user) => {
-            const heroAuthCta = document.getElementById('hero-auth-cta');
-            if (heroAuthCta) {
-                if (user) {
-                    heroAuthCta.innerHTML = `
-                        <a href="dashboard.html" class="re-btn re-btn-primary">
-                            <i class="fas fa-rocket"></i> Đi đến Dashboard
-                        </a>`;
-                } else {
-                    heroAuthCta.innerHTML = `
-                        <a href="auth.html" class="re-btn re-btn-primary">
-                            Bắt đầu học tập ngay
-                        </a>
-                        <a href="#applications" class="re-btn re-btn-secondary">
-                            Khám phá ứng dụng
-                        </a>`;
-                }
-            }
-        });
-    </script>
+        /* Icon styling */
+        .icon-check {
+            color: #10B981; /* Màu xanh lá cho icon check */
+        }
+        .icon-purple {
+            color: #9333ea; /* Màu tím cho icon giáo dục */
+        }
+        .icon-green {
+            color: #10B981; /* Màu xanh lá cho icon học viên */
+        }
+    </style>
 </head>
 <body>
 
-    <div data-include="components/header-auth.html"></div>
+    <!-- 1. HEADER / NAVIGATION BAR -->
+    <header class="sticky top-0 z-50 shadow-md header-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="#" class="flex-shrink-0 flex items-center">
+                    <span class="text-xl font-bold text-gray-900">IVSLearning</span>
+                    <span class="ml-1 text-sm font-medium text-gray-500 hidden sm:block">COMMUNITY</span>
+                </a>
+
+                <!-- Navigation Links (Hidden on Mobile) -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-900 hover:text-green-600 font-medium transition duration-150">Trang Chủ</a>
+                    <a href="#" class="text-gray-900 hover:text-green-600 font-medium transition duration-150">Hệ Sinh Thái</a>
+                    <a href="#" class="text-gray-900 hover:text-green-600 font-medium transition duration-150">Vai Trò</a>
+                </nav>
+
+                <!-- Action Buttons -->
+                <div class="flex items-center space-x-3">
+                    <a href="#" class="text-gray-700 hover:text-gray-900 font-medium text-sm hidden sm:block">Đăng Nhập</a>
+                    <a href="#" class="primary-green text-white px-4 py-2 rounded-lg font-semibold text-sm hover:primary-green-hover transition duration-300 flex items-center shadow-lg">
+                        Tham Gia Ngay
+                        <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
 
     <main>
-        <!-- SECTION 1: HERO -->
-        <section class="re-hero">
-            <div class="re-container" data-aos="fade-up">
-                <h1 class="re-hero-title">
-                    <span data-en="The Future of Learning,">Tương Lai Của Học Tập,</span>
-                    <span class="highlight" data-en="Unified.">Hợp Nhất.</span>
+        <!-- 2. HERO SECTION -->
+        <section class="py-12 sm:py-20 lg:py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <!-- Badge -->
+                <div class="inline-flex items-center text-sm font-medium px-3 py-1 bg-green-100 text-green-700 rounded-full mb-6">
+                    <i data-lucide="check-circle" class="w-4 h-4 mr-1"></i>
+                    Hệ sinh thái học tập không giới hạn
+                </div>
+
+                <!-- Main Title -->
+                <h1 class="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 text-gray-900 leading-tight">
+                    Cùng Nhau Kiến Tạo <br class="hidden sm:inline">
+                    <span class="text-emerald-600">Cộng Đồng Tri Thức</span>
                 </h1>
-                <p class="re-hero-subtitle" data-en="The gateway to the entire ecosystem of education, technology, and interactive learning applications from IVS JSC.">
-                    Cổng vào toàn bộ hệ sinh thái giáo dục, công nghệ và các ứng dụng học tập tương tác của IVS JSC.
+
+                <!-- Subtitle -->
+                <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-10">
+                    IVSLearning là cầu nối uy tín giữa Nhà Giáo Dục tâm huyết và Người Học khát khao vươn lên.
+                    Chúng tôi tạo ra môi trường công bằng, chất lượng và bền vững.
                 </p>
-                <div id="hero-auth-cta" class="flex justify-center items-center gap-4">
-                    <a href="auth.html" class="re-btn re-btn-primary">
-                        <i class="fas fa-spinner fa-spin"></i> Đang tải...
-                    </a>
-                </div>
-            </div>
-        </section>
 
-        <!-- SECTION 2: APPLICATIONS PORTAL -->
-        <section id="applications" class="re-section re-section-subtle">
-            <div class="re-container">
-                <div class="re-section-header" data-aos="fade-up">
-                    <h2 class="re-section-title" data-en="Specialized Application Portal">Cổng Ứng Dụng Chuyên Môn</h2>
-                    <p class="re-section-subtitle" data-en="Platforms designed to support education and training at every level.">
-                        Các nền tảng được thiết kế riêng, hỗ trợ giáo dục và đào tạo ở mọi cấp độ.
-                    </p>
+                <!-- Action Buttons -->
+                <div class="flex justify-center space-x-4 mb-12">
+                    <button class="primary-green text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:primary-green-hover transition duration-300 flex items-center">
+                        <i data-lucide="graduation-cap" class="w-5 h-5 mr-2"></i>
+                        Tôi Muốn Học Tập
+                    </button>
+                    <button class="secondary-purple border-2 px-6 py-3 rounded-xl font-bold hover:bg-purple-50 transition duration-300 flex items-center">
+                        <i data-lucide="book-open" class="w-5 h-5 mr-2"></i>
+                        Tôi là Nhà Giáo Dục
+                    </button>
                 </div>
 
-                <div class="re-grid re-grid-3">
-                    <!-- App Card 1: IVS English Learners -->
-                    <div class="re-card" data-aos="fade-up" data-aos-delay="100">
-                        <i class="fas fa-book-reader re-card-icon" style="color: #10b981;"></i>
-                        <h3 class="re-card-title">IVS English Learners</h3>
-                        <p class="re-card-description" data-en="English learning platform with integrated E-books, AI practice, and gamification.">Nền tảng học Tiếng Anh tích hợp Sách điện tử, Luyện tập AI và hệ thống gamification.</p>
-                        <a href="https://ivseng.web.app" target="_blank" rel="noopener noreferrer" class="re-card-link">
-                            <span data-en="Access Application">Truy Cập Ứng Dụng</span> <i class="fas fa-arrow-right ml-1"></i>
-                        </a>
-                    </div>
-
-                    <!-- App Card 2: IVS Testing & Placement -->
-                    <div class="re-card" data-aos="fade-up" data-aos-delay="200">
-                        <i class="fas fa-clipboard-check re-card-icon" style="color: #007bff;"></i>
-                        <h3 class="re-card-title">IVS Testing & Placement</h3>
-                        <p class="re-card-description" data-en="System for accurately testing, evaluating, and placing students in foreign language levels.">Hệ thống kiểm tra, đánh giá và xếp lớp trình độ ngoại ngữ cho học viên.</p>
-                        <a href="https://testplacement.web.app/" target="_blank" rel="noopener noreferrer" class="re-card-link">
-                            <span data-en="Access Application">Truy Cập Ứng Dụng</span> <i class="fas fa-arrow-right ml-1"></i>
-                        </a>
-                    </div>
-
-                    <!-- App Card 3: IVS Kinderlink -->
-                    <div class="re-card" data-aos="fade-up" data-aos-delay="300">
-                        <i class="fas fa-child re-card-icon" style="color: #8b5cf6;"></i>
-                        <h3 class="re-card-title">IVS Kinderlink</h3>
-                        <p class="re-card-description" data-en="Kindergarten management application, effectively connecting the school and parents.">Ứng dụng quản lý trường mầm non, kết nối nhà trường và phụ huynh hiệu quả.</p>
-                        <a href="https://ivs-7221b.web.app/" target="_blank" rel="noopener noreferrer" class="re-card-link">
-                            <span data-en="Access Application">Truy Cập Ứng Dụng</span> <i class="fas fa-arrow-right ml-1"></i>
-                        </a>
+                <!-- Large Image Placeholder -->
+                <div class="relative w-full aspect-[16/9] lg:aspect-[18/8] bg-gray-100 rounded-3xl overflow-hidden shadow-2xl border border-gray-200">
+                    <img src="https://placehold.co/1200x500/E8F5E9/10B981?text=Khu+Vực+Học+Tập+Cộng+Đồng" alt="Khu Vực Học Tập Cộng Đồng" class="w-full h-full object-cover">
+                    <!-- Status Badge overlay -->
+                    <div class="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg border border-green-300">
+                        <p class="text-sm font-semibold text-gray-800 flex items-center">
+                            <i data-lucide="users" class="w-4 h-4 mr-2 text-emerald-500"></i>
+                            Kết nối hơn <span class="text-emerald-600 font-extrabold ml-1">50.000</span> thành viên
+                        </p>
                     </div>
                 </div>
             </div>
         </section>
-        
-        <!-- SECTION 3: FEATURED COURSES -->
-        <section id="courses" class="re-section">
-            <div class="re-container">
-                <div class="re-section-header" data-aos="fade-up">
-                    <h2 class="re-section-title" data-en="Featured Courses">Khóa Học Nổi Bật</h2>
-                    <p class="re-section-subtitle" data-en="Curated learning paths from industry experts to enhance your skills.">
-                        Những lộ trình học tập được chọn lọc kỹ càng từ chuyên gia để nâng cao kỹ năng của bạn.
-                    </p>
-                </div>
 
-                <div class="re-grid re-grid-3">
-                    <!-- Course Card 1: React -->
-                    <div class="re-card re-course-card" data-aos="fade-up" data-aos-delay="100">
-                        <div class="re-course-card-image" style="background: linear-gradient(135deg, #e0f7fa, #b2ebf2);">
-                            <i class="fab fa-react" style="color: #00bcd4;"></i>
+        <!-- 3. OPERATING MODEL SECTION (BA TRỤ CỘT) -->
+        <section class="py-16 sm:py-24 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 text-center mb-4">
+                    MÔ HÌNH HOẠT ĐỘNG
+                </h2>
+                <p class="text-xl text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+                    Ba trụ cột cốt lõi của IVSLearning và vai trò riêng biệt.
+                </p>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Pillar 1: Admin -->
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl border-t-4 border-gray-400 hover:shadow-2xl transition duration-300">
+                        <div class="flex items-center mb-4">
+                            <span class="text-3xl font-bold text-gray-900 mr-3">1.</span>
+                            <h3 class="text-xl font-semibold text-gray-900">
+                                Chúng Tôi <span class="text-gray-500">(Admin)</span>
+                            </h3>
+                            <i data-lucide="shield-check" class="w-6 h-6 ml-auto text-gray-500"></i>
                         </div>
-                        <div class="re-card-content">
-                            <span class="re-course-card-tag" style="background-color: #e0f7fa; color: #00838f;">Lập Trình</span>
-                            <h3 class="re-card-title">React.js Từ Cơ Bản Đến Nâng Cao</h3>
-                            <p class="re-card-description">Học React với dự án thực tế. Nắm vững hooks, state management, và best practices.</p>
-                            <div class="re-course-card-footer">
-                                <span style="color: #6c757d;"><i class="fas fa-star" style="color: #ffc107;"></i> 4.8 (120)</span>
-                                <a href="/courses.html" class="re-card-link">Xem chi tiết <i class="fas fa-arrow-right ml-1"></i></a>
+                        <p class="text-gray-600 mb-6 text-sm">
+                            Đóng vai trò là Người Kiểm Soát và Giám Sát. Chúng tôi xây dựng nền tảng kỹ thuật và chịu trách nhiệm kiểm duyệt chặt chẽ mọi nội dung khóa học.
+                        </p>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 icon-check"></i>Đảm bảo chất lượng đầu vào</li>
+                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 icon-check"></i>Bảo vệ quyền lợi cộng đồng</li>
+                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 icon-check"></i>Hỗ trợ kỹ thuật 24/7</li>
+                        </ul>
+                    </div>
+
+                    <!-- Pillar 2: Educators -->
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl border-t-4 border-purple-600 hover:shadow-2xl transition duration-300">
+                        <div class="flex items-center mb-4">
+                            <span class="text-3xl font-bold text-gray-900 mr-3">2.</span>
+                            <h3 class="text-xl font-semibold text-gray-900">
+                                Educators <span class="text-gray-500">(Nhà Giáo Dục)</span>
+                            </h3>
+                            <i data-lucide="book-open" class="w-6 h-6 ml-auto icon-purple"></i>
+                        </div>
+                        <p class="text-gray-600 mb-6 text-sm">
+                            Các cá nhân hoặc tổ chức giáo dục có chuyên môn cao. Nơi bạn chia sẻ kiến thức, xuất bản khóa học và cấp chứng chỉ.
+                        </p>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 icon-check"></i>Đăng tải khóa học (Miễn phí/Có phí)</li>
+                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 icon-check"></i>Xây dựng thương hiệu cá nhân</li>
+                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 icon-check"></i>Thông kê và quản lý học viên</li>
+                        </ul>
+                    </div>
+
+                    <!-- Pillar 3: Learners -->
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl border-t-4 border-emerald-600 hover:shadow-2xl transition duration-300">
+                        <div class="flex items-center mb-4">
+                            <span class="text-3xl font-bold text-gray-900 mr-3">3.</span>
+                            <h3 class="text-xl font-semibold text-gray-900">
+                                Learners <span class="text-gray-500">(Học Viên)</span>
+                            </h3>
+                            <i data-lucide="scroll-text" class="w-6 h-6 ml-auto icon-green"></i>
+                        </div>
+                        <p class="text-gray-600 mb-6 text-sm">
+                            Những người học tập suốt đời. Bạn tham gia để tiếp thu kiến thức, hoàn thiện kỹ năng và trở thành phiên bản xuất chúng.
+                        </p>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 icon-check"></i>Tiếp cận kho tàng tri thức</li>
+                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 icon-check"></i>Sưu tầm chứng chỉ số</li>
+                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 icon-check"></i>Xây dựng hồ sơ năng lực</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. STRICT REVIEW SECTION -->
+        <section class="py-16 sm:py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <!-- Left Content -->
+                    <div>
+                        <div class="inline-flex items-center text-sm font-medium px-3 py-1 bg-green-100 text-green-700 rounded-full mb-4">
+                            Cam Kết Chất Lượng Admin
+                        </div>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6">
+                            Quy Trình Kiểm Duyệt Nghiêm Ngặt
+                        </h2>
+                        <p class="text-lg text-gray-600 mb-8">
+                            IVSLearning, chúng tôi hiểu rằng "Chất lượng là danh dự". Đội ngũ Admin không chỉ quản lý hệ thống mà còn là bộ lọc khắt khe nhất. Mọi khóa học từ Educators đều phải trải qua 3 bước trước khi đến tay Learners.
+                        </p>
+
+                        <ul class="space-y-6">
+                            <li class="flex items-start">
+                                <i data-lucide="user-check" class="w-6 h-6 mr-3 mt-1 text-emerald-600 flex-shrink-0"></i>
+                                <div>
+                                    <h4 class="font-semibold text-xl text-gray-900">Xác minh danh tính Educator</h4>
+                                    <p class="text-gray-600 text-sm">Đảm bảo người dạy là chuyên gia thực thụ hoặc có sự uy tín.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-lucide="file-text" class="w-6 h-6 mr-3 mt-1 text-emerald-600 flex-shrink-0"></i>
+                                <div>
+                                    <h4 class="font-semibold text-xl text-gray-900">Thẩm định nội dung giáo án</h4>
+                                    <p class="text-gray-600 text-sm">Nội dung phải chính xác, cập nhật và có tính sư phạm cao.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-lucide="monitor-play" class="w-6 h-6 mr-3 mt-1 text-emerald-600 flex-shrink-0"></i>
+                                <div>
+                                    <h4 class="font-semibold text-xl text-gray-900">Kiểm tra tài nguyên & học liệu</h4>
+                                    <p class="text-gray-600 text-sm">Video, bài tập, tài liệu đi kèm phải đạt chuẩn HD và rõ ràng.</p>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 mt-10">
+                            <button class="secondary-purple border-2 px-6 py-3 rounded-xl font-bold hover:bg-purple-50 transition duration-300">
+                                Dành Cho Educators
+                            </button>
+                            <button class="primary-green text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:primary-green-hover transition duration-300">
+                                Dành Cho Learners
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right Image Placeholder -->
+                    <div class="flex justify-center items-center">
+                        <img src="https://placehold.co/400x400/D1F3EE/10B981?text=Bảo+Mật+Kiểm+Duyệt" alt="Bảo Mật Kiểm Duyệt" class="w-full max-w-sm rounded-xl shadow-2xl object-cover">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. LEARNER TRACK SECTION (TRỞ THÀNH CÁ NHÂN XUẤT SẮC) -->
+        <section class="py-16 sm:py-24 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <!-- Left Image Placeholder -->
+                    <div class="order-2 lg:order-1 flex justify-center items-center">
+                        <img src="https://placehold.co/400x500/F0F9FF/0E7490?text=Học+Viên+Thành+Công" alt="Học Viên Thành Công" class="w-full max-w-sm rounded-2xl shadow-xl object-cover">
+                    </div>
+
+                    <!-- Right Content (Learner) -->
+                    <div class="order-1 lg:order-2">
+                        <div class="inline-flex items-center text-sm font-medium px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full mb-4">
+                            Thành tựu tuổi mới | Chiến binh IVS
+                        </div>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6">
+                            HỌC TẬP & PHÁT TRIỂN <br>
+                            Trở Thành Cá Nhân Xuất Sắc
+                        </h2>
+                        <p class="text-lg text-gray-600 mb-8">
+                            Không chỉ là học, IVSLearning là nơi bạn xây dựng "Hồ sơ năng lực số". Mỗi khóa học hoàn thành, mỗi kỹ năng đạt được đều được ghi nhận để chứng minh năng lực của bạn với thế giới.
+                        </p>
+
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <i data-lucide="layers" class="w-5 h-5 mr-3 mt-1 icon-check flex-shrink-0"></i>
+                                <div>
+                                    <h4 class="font-semibold text-lg text-gray-900">Kho kiến thức đa dạng</h4>
+                                    <p class="text-gray-600 text-sm">Hàng ngàn khóa học từ cơ bản đến chuyên sâu đã được kiểm duyệt kỹ.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-lucide="award" class="w-5 h-5 mr-3 mt-1 icon-check flex-shrink-0"></i>
+                                <div>
+                                    <h4 class="font-semibold text-lg text-gray-900">Sưu tầm chứng chỉ</h4>
+                                    <p class="text-gray-600 text-sm">Hoàn thành khóa học, nhận chứng chỉ, làm đẹp CV.</p>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <!-- Main Action Button -->
+                        <button class="primary-green text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:primary-green-hover transition duration-300 flex items-center mt-8">
+                            Bắt Đầu Học Ngay
+                            <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. SHARING/EDUCATOR TRACK SECTION (LAN TỎA TRI THỨC) -->
+        <section class="py-16 sm:py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <!-- Left Content (Educator) -->
+                    <div>
+                        <div class="inline-flex items-center text-sm font-medium px-3 py-1 bg-purple-100 text-purple-700 rounded-full mb-4">
+                            CHIA SẺ & THU NHẬP
+                        </div>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6">
+                            Lan Tỏa Tri Thức - <br>
+                            <span class="text-purple-600">Khẳng Định Vị Thế</span>
+                        </h2>
+                        <p class="text-lg text-gray-600 mb-8">
+                            Hệ thống quản lý khóa học (LMS) chuyên nghiệp giúp bạn dễ dàng số hóa bài giảng. Dù là khóa học miễn phí để xây dựng cộng đồng hay khóa học chuyên sâu có phí, chúng tôi đều hỗ trợ trọn đời cho bạn.
+                        </p>
+
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <i data-lucide="download" class="w-5 h-5 mr-3 mt-1 icon-purple flex-shrink-0"></i>
+                                <div>
+                                    <h4 class="font-semibold text-lg text-gray-900">Tải về dễ dàng</h4>
+                                    <p class="text-gray-600 text-sm">Hỗ trợ đa dạng định dạng: Video, Slide, Quiz, Bài tập.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-lucide="certificate" class="w-5 h-5 mr-3 mt-1 icon-purple flex-shrink-0"></i>
+                                <div>
+                                    <h4 class="font-semibold text-lg text-gray-900">Cấp chứng chỉ uy tín</h4>
+                                    <p class="text-gray-600 text-sm">Tự tạo mẫu chứng chỉ mang dấu ấn riêng của bạn.</p>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <!-- Main Action Button -->
+                        <div class="flex items-center space-x-6 mt-8">
+                            <button class="secondary-purple border-2 px-6 py-3 rounded-xl font-bold hover:bg-purple-50 transition duration-300 flex items-center">
+                                Trở Thành Giảng Viên
+                                <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
+                            </button>
+                            <!-- Price Tag Card -->
+                            <div class="hidden sm:block p-3 bg-white border border-gray-200 rounded-xl shadow-md">
+                                <p class="text-sm font-medium text-gray-500">Doanh thu trung bình</p>
+                                <p class="text-xl font-bold text-emerald-600">25.000.000đ</p>
                             </div>
                         </div>
                     </div>
-                    <!-- Course Card 2: UI/UX -->
-                    <div class="re-card re-course-card" data-aos="fade-up" data-aos-delay="200">
-                        <div class="re-course-card-image" style="background: linear-gradient(135deg, #f3e5f5, #e1bee7);">
-                             <i class="fas fa-palette" style="color: #8e24aa;"></i>
-                        </div>
-                        <div class="re-card-content">
-                            <span class="re-course-card-tag" style="background-color: #f3e5f5; color: #6a1b9a;">Thiết Kế</span>
-                            <h3 class="re-card-title">UI/UX Design Masterclass</h3>
-                            <p class="re-card-description">Thiết kế giao diện tuyệt vời. Học Figma, design thinking, và user research.</p>
-                            <div class="re-course-card-footer">
-                                <span style="color: #6c757d;"><i class="fas fa-star" style="color: #ffc107;"></i> 4.9 (98)</span>
-                                <a href="/courses.html" class="re-card-link">Xem chi tiết <i class="fas fa-arrow-right ml-1"></i></a>
+
+                    <!-- Right Image Placeholder -->
+                    <div class="flex justify-center items-center order-2">
+                        <div class="relative w-full max-w-sm p-4 bg-white rounded-2xl shadow-2xl">
+                            <img src="https://placehold.co/400x300/F3F4F6/9CA3AF?text=Lớp+Học+Tương+Tác" alt="Lớp Học Tương Tác" class="w-full h-auto rounded-xl object-cover">
+                            <!-- Floating Card -->
+                            <div class="absolute bottom-6 -left-16 bg-white p-3 rounded-xl shadow-lg border border-gray-100 hidden md:block">
+                                <p class="text-sm font-medium text-gray-500">Dự kiến thu nhập/tháng</p>
+                                <p class="text-lg font-bold text-emerald-600">25.000.000đ</p>
                             </div>
                         </div>
                     </div>
-                    <!-- Course Card 3: Data Analytics -->
-                    <div class="re-card re-course-card" data-aos="fade-up" data-aos-delay="300">
-                        <div class="re-course-card-image" style="background: linear-gradient(135deg, #e8f5e9, #c8e6c9);">
-                            <i class="fas fa-chart-bar" style="color: #388e3c;"></i>
-                        </div>
-                        <div class="re-card-content">
-                            <span class="re-course-card-tag" style="background-color: #e8f5e9; color: #2e7d32;">Data Science</span>
-                            <h3 class="re-card-title">Data Analytics với Python & SQL</h3>
-                            <p class="re-card-description">Phân tích dữ liệu chuyên nghiệp. Học Pandas, SQL, và visualization.</p>
-                             <div class="re-course-card-footer">
-                                <span style="color: #6c757d;"><i class="fas fa-star" style="color: #ffc107;"></i> 4.7 (85)</span>
-                                <a href="/courses.html" class="re-card-link">Xem chi tiết <i class="fas fa-arrow-right ml-1"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                 <div class="text-center mt-16" data-aos="fade-up">
-                    <a href="/courses.html" class="re-btn re-btn-primary">
-                        <span data-en="View All Courses">Xem Tất Cả Khóa Học</span>
-                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 4: CALL TO ACTION -->
-        <section class="re-section">
-            <div class="re-container">
-                <div class="re-cta-section" data-aos="zoom-in">
-                    <h2 class="re-cta-title" data-en="Need a Specialized Solution?">Cần một Giải pháp Chuyên biệt?</h2>
-                    <p class="re-cta-subtitle" data-en="Our team is ready to develop custom Web/App solutions for management and education tailored to your needs.">
-                        Đội ngũ chúng tôi sẵn sàng phát triển các giải pháp Web/App quản lý và giáo dục tùy chỉnh theo yêu cầu của bạn.
-                    </p>
-                    <a href="/Pages/webdesign.html" class="re-btn re-btn-white">
-                       <span data-en="Request a Consultation">Yêu Cầu Tư Vấn</span>
-                    </a>
+        <!-- 7. JOIN SECTION (CTA) -->
+        <section class="py-16 sm:py-24 dark-bg">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl sm:text-5xl font-extrabold text-white mb-6 leading-tight">
+                    Bạn đã sẵn sàng gia nhập?
+                </h2>
+                <p class="text-lg text-gray-400 mb-12 max-w-3xl mx-auto">
+                    Hãy chọn vai trò phù hợp nhất với mục tiêu của bạn và bắt đầu hành trình ngay hôm nay.
+                </p>
+
+                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <!-- Học Viên Card -->
+                    <div class="p-8 border border-gray-700 rounded-2xl text-left bg-gray-800 transition duration-300 hover:border-emerald-500">
+                        <div class="flex items-center mb-4">
+                            <i data-lucide="book-open-check" class="w-8 h-8 mr-3 icon-green"></i>
+                            <h3 class="text-2xl font-bold text-white">Tôi là Học Viên</h3>
+                        </div>
+                        <p class="text-gray-400 mb-6">
+                            Tôi muốn học tập, nâng cao kỹ năng và nhận chứng chỉ.
+                        </p>
+                        <a href="#" class="inline-flex items-center font-semibold text-emerald-500 hover:text-emerald-400 transition duration-150">
+                            ĐĂNG KÝ TÀI KHOẢN HỌC VIÊN
+                            <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                        </a>
+                    </div>
+
+                    <!-- Educator Card -->
+                    <div class="p-8 border border-gray-700 rounded-2xl text-left bg-gray-800 transition duration-300 hover:border-purple-500">
+                        <div class="flex items-center mb-4">
+                            <i data-lucide="podcast" class="w-8 h-8 mr-3 icon-purple"></i>
+                            <h3 class="text-2xl font-bold text-white">Tôi là Educator</h3>
+                        </div>
+                        <p class="text-gray-400 mb-6">
+                            Tôi muốn chia sẻ kiến thức và xây dựng khóa học.
+                        </p>
+                        <a href="#" class="inline-flex items-center font-semibold text-purple-500 hover:text-purple-400 transition duration-150">
+                            ĐĂNG KÝ TÀI KHOẢN GIẢNG VIÊN
+                            <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
-        
+
     </main>
 
-    <div data-include="components/footer-auth.html"></div>
+    <!-- 8. FOOTER -->
+    <footer class="dark-bg py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 border-b border-gray-700 pb-8 mb-8">
+                <!-- Col 1: Logo & Slogan -->
+                <div>
+                    <a href="#" class="flex-shrink-0 flex items-center mb-4">
+                        <span class="text-xl font-bold text-white">IVSLearning</span>
+                        <span class="ml-1 text-sm font-medium text-gray-400 hidden sm:block">COMMUNITY</span>
+                    </a>
+                    <p class="text-sm text-gray-400 max-w-xs">
+                        Kết nối tri thức, kiến tạo tương lai. Nền tảng học tập trọn đời dành cho mọi người.
+                    </p>
+                </div>
 
-    <!-- Scripts -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+                <!-- Col 2: Khám Phá -->
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Khám Phá</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Tất cả khóa học</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Dành cho Người mới bắt đầu</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Blog giáo dục</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Cộng Đồng -->
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Cộng Đồng</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Dành cho Learners</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Dành cho Educators</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Quy tắc ứng xử</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Hỗ Trợ -->
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Hỗ Trợ</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Trung tâm trợ giúp</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Liên hệ Admin</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Chính sách bảo mật</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="text-center md:text-left text-sm text-gray-400">
+                © 2025 IVSLearning Community. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Khởi tạo Lucide Icons sau khi tải xong trang -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize AOS
-            if (typeof AOS !== 'undefined') {
-                AOS.init({
-                    duration: 800,
-                    once: true,
-                    offset: 50,
-                    easing: 'ease-out-cubic',
-                });
-            }
-            
-            // Smooth Scroll
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        const headerOffset = 80; // Adjust if you have a fixed header
-                        const elementPosition = target.getBoundingClientRect().top;
-                        const offsetPosition = window.pageYOffset + elementPosition - headerOffset;
-
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-
-            // Load other essential scripts
-            const scriptFiles = ["js/utils.js", "js/language.js"];
-            scriptFiles.forEach(src => {
-                const script = document.createElement('script');
-                script.src = src;
-                script.defer = true;
-                document.body.appendChild(script);
-            });
-        });
+        lucide.createIcons();
     </script>
-    
-    <script src="js/component-loader.js" defer></script>
-
 </body>
 </html>

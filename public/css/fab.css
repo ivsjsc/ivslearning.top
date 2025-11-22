@@ -27,7 +27,7 @@ body.ivs-assistant-modal-open {
     position: fixed;
     bottom: var(--fab-spacing);
     right: var(--fab-spacing);
-    z-index: 12050; /* intentionally high but below .fab-topmost (2147483647) */
+    z-index: var(--z-fab); /* intentionally high but below .fab-topmost (2147483647) */
     display: flex;
     flex-direction: column-reverse;
     align-items: flex-end;
@@ -52,8 +52,8 @@ body.ivs-assistant-modal-open {
 }
 
 /* Ensure FABs and submenu panels overlay other page content */
-.fab-item { z-index: 1050; }
-.fab-submenu-panel { z-index: 1045; }
+.fab-item { z-index: var(--z-fab-item); }
+.fab-submenu-panel { z-index: var(--z-fab-submenu); }
 
 /* Top-most utility for assistant window */
 .fab-topmost { z-index: 2147483647 !important; }
@@ -189,7 +189,7 @@ body.ivs-assistant-modal-open {
 .fab-hidden { display: none !important; }
 #contact-options:not(.fab-hidden),
 #share-options:not(.fab-hidden) { display: flex; flex-direction: column; align-items: flex-end; }
-#contact-options, #share-options { z-index: 1000; }
+#contact-options, #share-options { z-index: var(--z-overlay); }
 
 /* Responsive tweaks */
 @media (max-width:768px) { #fab-container{ right:1rem; bottom:7rem } .fab-submenu-panel{ min-width:200px } }
@@ -213,7 +213,7 @@ body.ivs-assistant-modal-open {
     align-items: center;
     justify-content: center;
     background: rgba(0,0,0,0);
-    z-index: 99998;
+    z-index: var(--z-fab-overlay);
     opacity: 0;
     pointer-events: none;
     transition: background 220ms ease, opacity 220ms ease;
