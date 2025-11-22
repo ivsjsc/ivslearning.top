@@ -1,0 +1,35 @@
+/* ------------------------------------------------------------------------------------------------
+ * CSS TÙY CHỈNH CHO IVSLEARNING COMMUNITY LANDING PAGE
+ * Mục tiêu: Chỉ chứa các quy tắc không thể xử lý bằng utility classes của Tailwind (ví dụ: font, hiệu ứng chung)
+ * ------------------------------------------------------------------------------------------------
+ */
+
+/* 1. Thiết lập Font và Quy tắc chung */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+body {
+    /* Đảm bảo font Inter được áp dụng */
+    font-family: 'Inter', sans-serif;
+    /* Ngăn cuộn ngang trên thiết bị di động (Mobile First) */
+    overflow-x: hidden;
+}
+
+/* 2. Các Hiệu ứng Tương tác (Transitions) */
+
+/* Áp dụng hiệu ứng chuyển động mượt mà cho các card hoặc khối nội dung */
+.card-hover {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Hiệu ứng khi di chuột (hover) vào card: Nâng lên và đổ bóng */
+.card-hover:hover {
+    transform: translateY(-4px); /* Nâng card lên 4px */
+    /* Tạo bóng lớn và rõ hơn khi hover */
+    box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.15), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* 3. Tùy chỉnh màu sắc (Nên dùng Tailwind utilities trực tiếp) */
+/* Nếu vẫn muốn định nghĩa màu theo tên, hãy giữ như sau (nhưng không khuyến khích trong môi trường Tailwind thuần): */
+/*
+.bg-primary-green { background-color: #10B981; }
+.hover-primary-green:hover { background-color: #059669; }
+*/

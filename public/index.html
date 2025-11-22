@@ -4,88 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IVSLearning Community - Cùng Nhau Kiến Tạo Cộng Đồng Tri Thức</title>
-    <!-- Tải Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Tải Lucide Icons -->
+    <!-- Fonts + design system styles -->
+    <link crossorigin href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+    <link href="/css/vars.css" rel="stylesheet"/>
+    <link href="/css/tailwind.css" rel="stylesheet"/>
+    <link href="/css/modern-ui.css" rel="stylesheet"/>
+    <link href="/css/home.css" rel="stylesheet"/>
+    <link href="/css/hero-styles.css" rel="stylesheet"/>
+    <!-- Page-specific custom CSS for the landing page (non-utility rules) -->
+    <link href="/css/landing.css" rel="stylesheet"/>
+    <link href="/css/styles.css" rel="stylesheet"/>
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        /* Thiết lập font Inter mặc định */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            color: #101827; /* Màu chữ đậm cho nội dung */
-            background-color: #ffffff;
-            /* Ngăn cuộn ngang trên thiết bị di động */
-            overflow-x: hidden;
-        }
-
-        /* Thêm transition mượt mà cho các phần tử */
-        .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Tùy chỉnh màu sắc để dễ bảo trì bằng Tailwind */
-        .bg-primary-green { background-color: #10B981; } /* Emerald-600 */
-        .hover-primary-green { background-color: #059669; } /* Emerald-700 */
-    </style>
+    <meta name="color-scheme" content="light dark"/>
 </head>
-<body>
+<body class="home-page antialiased">
 
-    <!-- 1. HEADER / NAVIGATION BAR -->
-    <header class="sticky top-0 z-50 shadow-md bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
-                <a href="#" class="flex-shrink-0 flex items-center">
-                    <span class="text-xl font-bold text-gray-900">IVSLearning</span>
-                    <span class="ml-1 text-sm font-medium text-gray-500 hidden sm:block">COMMUNITY</span>
-                </a>
-
-                <!-- Navigation Links (Desktop) -->
-                <nav class="hidden md:flex space-x-8">
-                    <a href="#" class="text-gray-900 hover:text-emerald-600 font-medium transition duration-150">Trang Chủ</a>
-                    <a href="#" class="text-gray-900 hover:text-emerald-600 font-medium transition duration-150">Hệ Sinh Thái</a>
-                    <a href="#" class="text-gray-900 hover:text-emerald-600 font-medium transition duration-150">Vai Trò</a>
-                </nav>
-
-                <!-- Action Buttons (Desktop) -->
-                <div class="hidden md:flex items-center space-x-3">
-                    <a href="#" class="text-gray-700 hover:text-gray-900 font-medium text-sm transition duration-150">Đăng Nhập</a>
-                    <a href="#" class="bg-emerald-600 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:bg-emerald-700 transition duration-300 flex items-center shadow-lg">
-                        Tham Gia Ngay
-                        <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
-                    </a>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <button id="menu-button" class="md:hidden p-2 text-gray-900 rounded-lg hover:bg-gray-100 transition duration-150" aria-label="Toggle navigation menu">
-                    <i data-lucide="menu" class="w-6 h-6"></i>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Mobile Menu (Off-canvas) -->
-    <div id="mobile-menu" class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-50 hidden transition-all duration-300 ease-in-out">
-        <div class="absolute right-0 top-0 w-64 h-full bg-white shadow-2xl p-6 transform translate-x-0 transition-transform duration-300 ease-in-out">
-            <div class="flex justify-end mb-8">
-                <button id="close-menu-button" class="p-2 text-gray-700 hover:bg-gray-100 rounded-lg" aria-label="Close navigation menu">
-                    <i data-lucide="x" class="w-6 h-6"></i>
-                </button>
-            </div>
-            <nav class="flex flex-col space-y-4">
-                <a href="#" class="text-gray-900 hover:text-emerald-600 font-medium text-lg border-b border-gray-100 pb-2">Trang Chủ</a>
-                <a href="#" class="text-gray-900 hover:text-emerald-600 font-medium text-lg border-b border-gray-100 pb-2">Hệ Sinh Thái</a>
-                <a href="#" class="text-gray-900 hover:text-emerald-600 font-medium text-lg border-b border-gray-100 pb-2">Vai Trò</a>
-                <a href="#" class="text-gray-700 hover:text-gray-900 font-medium text-lg pt-4">Đăng Nhập</a>
-                <a href="#" class="bg-emerald-600 text-white px-4 py-3 rounded-lg font-semibold text-base text-center hover:bg-emerald-700 transition duration-300 flex items-center justify-center mt-4">
-                    Tham Gia Ngay
-                    <i data-lucide="chevron-right" class="w-4 h-4 ml-2"></i>
-                </a>
-            </nav>
-        </div>
-    </div>
+    <!-- 1. HEADER / NAVIGATION BAR - centralized component -->
+    <header id="header-placeholder" aria-label="Top navigation"></header>
 
     <main>
         <!-- 2. HERO SECTION -->
@@ -423,97 +361,14 @@
 
     </main>
 
-    <!-- 8. FOOTER -->
-    <footer class="bg-gray-900 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 border-b border-gray-700 pb-8 mb-8">
-                <!-- Col 1: Logo & Slogan -->
-                <div>
-                    <a href="#" class="flex-shrink-0 flex items-center mb-4">
-                        <span class="text-xl font-bold text-white">IVSLearning</span>
-                        <span class="ml-1 text-sm font-medium text-gray-400 hidden sm:block">COMMUNITY</span>
-                    </a>
-                    <p class="text-sm text-gray-400 max-w-xs">
-                        Kết nối tri thức, kiến tạo tương lai. Nền tảng học tập trọn đời dành cho mọi người.
-                    </p>
-                </div>
+    <!-- 8. FOOTER - centralized component -->
+    <footer id="footer-placeholder"></footer>
 
-                <!-- Col 2: Khám Phá -->
-                <div>
-                    <h4 class="text-lg font-semibold text-white mb-4">Khám Phá</h4>
-                    <ul class="space-y-3 text-sm">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Tất cả khóa học</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Dành cho Người mới bắt đầu</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Blog giáo dục</a></li>
-                    </ul>
-                </div>
-
-                <!-- Col 3: Cộng Đồng -->
-                <div>
-                    <h4 class="text-lg font-semibold text-white mb-4">Cộng Đồng</h4>
-                    <ul class="space-y-3 text-sm">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Dành cho Learners</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Dành cho Educators</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Quy tắc ứng xử</a></li>
-                    </ul>
-                </div>
-
-                <!-- Col 4: Hỗ Trợ -->
-                <div>
-                    <h4 class="text-lg font-semibold text-white mb-4">Hỗ Trợ</h4>
-                    <ul class="space-y-3 text-sm">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Trung tâm trợ giúp</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Liên hệ Admin</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Chính sách bảo mật</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Copyright -->
-            <div class="text-center md:text-left text-sm text-gray-400">
-                © 2025 IVSLearning Community. All rights reserved.
-            </div>
-        </div>
-    </footer>
-
-    <!-- JavaScript cho Mobile Menu và Icons -->
     <script>
-        lucide.createIcons();
-
-        // Logic cho Mobile Menu
-        const menuButton = document.getElementById('menu-button');
-        const closeMenuButton = document.getElementById('close-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        function toggleMenu() {
-            // Thay vì dùng class 'hidden' tĩnh, dùng thuộc tính 'aria-expanded' hoặc 'display'
-            // để kiểm soát trạng thái và dùng JS để thêm/bỏ class transform.
-            const isMenuOpen = mobileMenu.classList.contains('flex');
-
-            if (isMenuOpen) {
-                mobileMenu.classList.remove('flex');
-                mobileMenu.classList.add('hidden');
-            } else {
-                mobileMenu.classList.remove('hidden');
-                mobileMenu.classList.add('flex');
-            }
-        }
-
-        menuButton.addEventListener('click', toggleMenu);
-        closeMenuButton.addEventListener('click', toggleMenu);
-
-        // Đóng menu khi click ra ngoài (khu vực overlay)
-        mobileMenu.addEventListener('click', (event) => {
-            if (event.target === mobileMenu) {
-                toggleMenu();
-            }
-        });
-
-        // Đóng menu khi click vào một liên kết
-        mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', toggleMenu);
-        });
-
+        // Ensure icons are replaced wherever Lucide is used
+        if (window.lucide) lucide.createIcons();
     </script>
+    <!-- Component loader will insert canonical header + footer + any chatbot -->
+    <script defer src="/js/component-loader.js"></script>
 </body>
 </html>

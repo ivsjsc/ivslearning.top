@@ -685,6 +685,15 @@ header {
   box-shadow: var(--shadow-lg);
 }
 
+/* Backwards-compat helpers used by older page styles */
+.card-hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+}
+
+.bg-primary-green { background-color: var(--color-success); }
+.hover-primary-green:hover { background-color: #059669; }
+
 .card-icon {
   width: 60px;
   height: 60px;

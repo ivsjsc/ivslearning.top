@@ -15,12 +15,15 @@ class ComponentLoader {
             const response = await fetch('/components/header.html');
             const html = await response.text();
             
-            // Create header container
-            const headerContainer = document.createElement('div');
-            headerContainer.innerHTML = html;
-            
-            // Insert at the beginning of body
-            document.body.insertBefore(headerContainer, document.body.firstChild);
+            // If a placeholder exists, render header into it, otherwise insert at the beginning of body
+            const headerPlaceholder = document.getElementById('header-placeholder');
+            if (headerPlaceholder) {
+                headerPlaceholder.innerHTML = html;
+            } else {
+                const headerContainer = document.createElement('div');
+                headerContainer.innerHTML = html;
+                document.body.insertBefore(headerContainer, document.body.firstChild);
+            }
             
             // Setup header auth if Firebase is available; otherwise fall back to a default
             if (window.firebaseAuth) {
@@ -53,12 +56,15 @@ class ComponentLoader {
             const response = await fetch('/components/footer.html');
             const html = await response.text();
             
-            // Create footer container
-            const footerContainer = document.createElement('div');
-            footerContainer.innerHTML = html;
-            
-            // Insert before the last closing body tag
-            document.body.appendChild(footerContainer);
+            // Render footer into placeholder if present, otherwise append to body
+            const footerPlaceholder = document.getElementById('footer-placeholder');
+            if (footerPlaceholder) {
+                footerPlaceholder.innerHTML = html;
+            } else {
+                const footerContainer = document.createElement('div');
+                footerContainer.innerHTML = html;
+                document.body.appendChild(footerContainer);
+            }
         } catch (error) {
             console.error('Error loading footer component:', error);
         }
