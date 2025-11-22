@@ -81,10 +81,10 @@
                     <a href="#" class="footer-link">
                             <i class="fas fa-chevron-right footer-chevron"></i> Chính Sách Bảo Mật
                     </a>
-                    <a href="#" style="color: var(--color-text-secondary); text-decoration: none; font-size: 14px; transition: color 0.2s;" onmouseover="this.style.color='var(--color-secondary)'" onmouseout="this.style.color='var(--color-text-secondary)'">
+                    <a href="#" class="footer-link footer-link-muted">
                             <i class="fas fa-chevron-right footer-chevron"></i> Cookie
                     </a>
-                    <a href="#" style="color: var(--color-text-secondary); text-decoration: none; font-size: 14px; transition: color 0.2s;" onmouseover="this.style.color='var(--color-secondary)'" onmouseout="this.style.color='var(--color-text-secondary)'">
+                    <a href="#" class="footer-link footer-link-muted">
                         <i class="fas fa-chevron-right footer-chevron"></i> Giấy Phép
                     </a>
                 </nav>
@@ -150,6 +150,19 @@
         footer > div {
             padding: 32px 16px !important;
         }
+    }
+
+    /* Muted footer links (used for less-prominent/legal items) */
+    .footer-link-muted {
+        color: var(--color-text-secondary);
+        font-size: 14px;
+        transition: color 0.2s ease;
+        text-decoration: none;
+    }
+
+    .footer-link-muted:hover,
+    .footer-link-muted:focus {
+        color: var(--color-secondary);
     }
 </style>
 

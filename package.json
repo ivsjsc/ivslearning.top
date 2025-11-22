@@ -4,7 +4,8 @@
   "description": "IVS Learning Hub - Online Learning Platform",
   "scripts": {
     "dev": "npx http-server -p 8000 -c-1",
-    "start": "npx http-server -p 8000 -c-1"
+    "start": "npx http-server -p 8000 -c-1",
+    "build": "echo \"No build step defined — this is a static site. Use start/dev to serve files.\""
   },
   "dependencies": {
     "firebase": "^12.5.0"
