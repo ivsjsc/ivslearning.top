@@ -1,3 +1,4 @@
+
 /* Hero Section */
 .hero-section {
     background: linear-gradient(135deg, rgba(76, 94, 247, 0.15) 0%, rgba(34, 211, 238, 0.1) 100%),
@@ -55,7 +56,7 @@
 }
 
 .cta-primary {
-    background: linear-gradient(135deg, #4c5ef7 0%, #3b4fd6 100%);
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: white;
 }
 
@@ -145,6 +146,26 @@
     font-weight: 600;
     margin-bottom: 0.5rem;
     width: fit-content;
+}
+
+/* Homepage light-mode (page-specific) */
+body.home-page {
+    background-color: #ffffff;
+    color: #0b1220;
+}
+
+body.home-page header {
+    background: #ffffff;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+body.home-page .hero-visual {
+    background: linear-gradient(135deg, rgba(12, 26, 52, 0.02) 0%, rgba(40, 116, 166, 0.03) 100%);
+}
+
+/* Make hero subtitle darker on the light homepage */
+body.home-page .hero-subtitle {
+    color: #475569; /* slate-600 */
 }
 
 .course-title {
