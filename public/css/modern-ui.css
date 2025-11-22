@@ -639,6 +639,33 @@ header {
   margin-top: var(--spacing-xs);
 }
 
+/* ===== Form helper utilities ===== */
+.input-with-addon { position: relative; }
+.input-addon-button { position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--color-text-secondary); cursor: pointer; padding: 0.5rem; }
+.input-addon-button:focus-visible { outline: 2px solid var(--color-secondary); outline-offset: 2px; }
+
+.select-country-code { width: 70px; padding: 0.75rem; background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; color: var(--color-text); }
+.recaptcha-box { margin: 1rem 0; padding: 1rem; background: rgba(255,255,255,0.03); border-radius: 8px; text-align: center; font-size: 0.875rem; color: var(--color-text-secondary); }
+.otp-input { text-align: center; font-size: 1.5rem; letter-spacing: 0.5rem; }
+.text-muted { color: var(--color-text-secondary); }
+.link-action { color: var(--color-secondary); text-decoration: none; font-weight: 600; }
+
+/* Misc small helpers used during sweep */
+.text-error { color: var(--color-error); }
+.mt-10px { margin-top: 10px; }
+
+/* Animation delay helpers (used for decorative elements) */
+.anim-delay-1 { animation-delay: 1s; }
+.anim-delay-2 { animation-delay: 2s; }
+
+/* Iframe helper classes */
+.iframe-frame-large { height: 1000px; min-height: 85vh; border: none; background-color: #f0f0f0; overflow: auto; }
+.iframe-frame-med { height: 800px; min-height: 70vh; border: none; background-color: #f0f0f0; overflow: auto; }
+
+/* Continue button helper */
+.btn-continue { background: var(--color-success); color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 700; }
+.btn-continue-success { background: var(--color-success); }
+
 /* ========== CARD COMPONENT ========== */
 
 .card {
