@@ -1547,6 +1547,20 @@ footer {
 .toast-success { border-left-color: var(--color-success); }
 .toast-error { border-left-color: var(--color-error); }
 .toast-warning { border-left-color: var(--color-warning); }
+
+/* ====== Accent utilities (small helpers for page-specific accents) ====== */
+.text-success { color: var(--color-success); }
+.bg-success { background-color: var(--color-success); color: white; }
+.border-success { border-color: var(--color-success); }
+
+.text-warning { color: var(--color-warning); }
+.bg-warning { background-color: var(--color-warning); color: white; }
+.border-warning { border-color: var(--color-warning); }
+
+/* Purple is used across some pages. Pages may declare --color-purple; fall back to a tailwind token when available. */
+.text-purple { color: var(--color-purple, var(--color-ivs-purple)); }
+.bg-purple { background-color: var(--color-purple, var(--color-ivs-purple)); color: white; }
+.border-purple { border-color: var(--color-purple, var(--color-ivs-purple)); }
 .toast-info { border-left-color: var(--color-secondary); }
 
 .toast-icon {

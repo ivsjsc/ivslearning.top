@@ -4,81 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IVSLearning Community - Cùng Nhau Kiến Tạo Cộng Đồng Tri Thức</title>
-    <!-- Fonts + design system styles -->
-    <link crossorigin href="https://fonts.googleapis.com" rel="preconnect"/>
-    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
-    <link href="/css/vars.css" rel="stylesheet"/>
-    <link href="/css/tailwind.css" rel="stylesheet"/>
-    <link href="/css/modern-ui.css" rel="stylesheet"/>
-    <link href="/css/home.css" rel="stylesheet"/>
-    <link href="/css/hero-styles.css" rel="stylesheet"/>
-    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
-    <link href="/css/styles.css" rel="stylesheet"/>
-    <!-- Lucide icons; page also uses FontAwesome in design system when needed -->
+    <!-- Tải Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tải Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <meta name="color-scheme" content="light dark"/>
+    <style>
+        /* Thiết lập font Inter mặc định */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #101827; /* Màu chữ đậm cho nội dung */
+            background-color: #ffffff;
+            /* Ngăn cuộn ngang trên thiết bị di động */
+            overflow-x: hidden;
+        }
+
+        /* Thêm transition mượt mà cho các phần tử */
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Tùy chỉnh màu sắc để dễ bảo trì bằng Tailwind */
+        .bg-primary-green { background-color: #10B981; } /* Emerald-600 */
+        .hover-primary-green { background-color: #059669; } /* Emerald-700 */
+    </style>
 </head>
-<body class="home-page antialiased">
+<body>
 
     <!-- 1. HEADER / NAVIGATION BAR -->
-    <!-- Canonical header (modern-ui) -->
-    <header id="main-header" aria-label="Top navigation">
-        <div id="navbar" class="header-inner">
-            <a href="/" class="header-logo">
-                <img alt="IVS Logo" class="header-logo-img" src="/images/logo/logo.svg" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4c5ef7/ffffff?text=IVS';"/>
-                <div class="header-logo-text">
-                    <span class="header-logo-text-main">IVSLearning</span>
-                    <span class="header-logo-text-sub">COMMUNITY</span>
+    <header class="sticky top-0 z-50 shadow-md bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="#" class="flex-shrink-0 flex items-center">
+                    <span class="text-xl font-bold text-gray-900">IVSLearning</span>
+                    <span class="ml-1 text-sm font-medium text-gray-500 hidden sm:block">COMMUNITY</span>
+                </a>
+
+                <!-- Navigation Links (Desktop) -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-900 hover:text-emerald-600 font-medium transition duration-150">Trang Chủ</a>
+                    <a href="#" class="text-gray-900 hover:text-emerald-600 font-medium transition duration-150">Hệ Sinh Thái</a>
+                    <a href="#" class="text-gray-900 hover:text-emerald-600 font-medium transition duration-150">Vai Trò</a>
+                </nav>
+
+                <!-- Action Buttons (Desktop) -->
+                <div class="hidden md:flex items-center space-x-3">
+                    <a href="#" class="text-gray-700 hover:text-gray-900 font-medium text-sm transition duration-150">Đăng Nhập</a>
+                    <a href="#" class="bg-emerald-600 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:bg-emerald-700 transition duration-300 flex items-center shadow-lg">
+                        Tham Gia Ngay
+                        <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                    </a>
                 </div>
-            </a>
 
-            <nav class="header-nav">
-                <a href="index.html" class="header-nav-item active">Trang Chủ</a>
-                <a href="live_index.html" class="header-nav-item">Hệ Sinh Thái</a>
-                <a href="learning-resources.html" class="header-nav-item">Vai Trò</a>
-            </nav>
-
-            <div class="header-auth" id="header-auth-container">
-                <a href="/login.html" class="header-auth-button header-auth-login">Đăng Nhập</a>
-                <a href="/signup.html" class="header-auth-button header-auth-signup">Tham Gia Ngay</a>
+                <!-- Mobile Menu Button -->
+                <button id="menu-button" class="md:hidden p-2 text-gray-900 rounded-lg hover:bg-gray-100 transition duration-150" aria-label="Toggle navigation menu">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
             </div>
-
-            <button class="header-menu-toggle" id="mobile-menu-toggle" aria-label="Mở menu">
-                <i class="fas fa-bars"></i>
-            </button>
         </div>
     </header>
 
-    <!-- Mobile Menu Overlay (same as other pages) -->
-    <div class="mobile-menu-overlay" id="mobile-menu-overlay" role="navigation" aria-label="Mobile Menu">
-        <nav class="mobile-nav">
-            <a href="live_index.html" class="mobile-nav-item">Giới Thiệu IVS JSC</a>
-            <a href="index.html#applications" class="mobile-nav-item">Ứng Dụng Học Tập</a>
-            <a href="learning-resources.html" class="mobile-nav-item">Tài Nguyên EdTech</a>
-            <a href="analytics.html" class="mobile-nav-item">Thống Kê (Admin)</a>
-            <div class="mobile-auth">
-                <a href="/login.html" class="mobile-auth-button header-auth-login">Đăng Nhập</a>
-                <a href="/signup.html" class="mobile-auth-button header-auth-signup">Tham Gia Ngay</a>
+    <!-- Mobile Menu (Off-canvas) -->
+    <div id="mobile-menu" class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-50 hidden transition-all duration-300 ease-in-out">
+        <div class="absolute right-0 top-0 w-64 h-full bg-white shadow-2xl p-6 transform translate-x-0 transition-transform duration-300 ease-in-out">
+            <div class="flex justify-end mb-8">
+                <button id="close-menu-button" class="p-2 text-gray-700 hover:bg-gray-100 rounded-lg" aria-label="Close navigation menu">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
             </div>
-        </nav>
+            <nav class="flex flex-col space-y-4">
+                <a href="#" class="text-gray-900 hover:text-emerald-600 font-medium text-lg border-b border-gray-100 pb-2">Trang Chủ</a>
+                <a href="#" class="text-gray-900 hover:text-emerald-600 font-medium text-lg border-b border-gray-100 pb-2">Hệ Sinh Thái</a>
+                <a href="#" class="text-gray-900 hover:text-emerald-600 font-medium text-lg border-b border-gray-100 pb-2">Vai Trò</a>
+                <a href="#" class="text-gray-700 hover:text-gray-900 font-medium text-lg pt-4">Đăng Nhập</a>
+                <a href="#" class="bg-emerald-600 text-white px-4 py-3 rounded-lg font-semibold text-base text-center hover:bg-emerald-700 transition duration-300 flex items-center justify-center mt-4">
+                    Tham Gia Ngay
+                    <i data-lucide="chevron-right" class="w-4 h-4 ml-2"></i>
+                </a>
+            </nav>
+        </div>
     </div>
 
     <main>
         <!-- 2. HERO SECTION -->
-        <section class="hero-section">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="hero-content text-center mx-auto">
+        <section class="py-12 sm:py-20 lg:py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <!-- Badge -->
-                <div class="inline-flex items-center text-sm font-medium px-3 py-1 bg-green-100 text-green-700 rounded-full mb-6">
+                <div class="inline-flex items-center text-sm font-medium px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full mb-6">
                     <i data-lucide="check-circle" class="w-4 h-4 mr-1"></i>
                     Hệ sinh thái học tập không giới hạn
                 </div>
 
                 <!-- Main Title -->
-                <h1 class="hero-title">
+                <h1 class="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 text-gray-900 leading-tight">
                     Cùng Nhau Kiến Tạo <br class="hidden sm:inline">
-                    <span class="hero-highlight">Cộng Đồng Tri Thức</span>
+                    <span class="text-emerald-600">Cộng Đồng Tri Thức</span>
                 </h1>
 
                 <!-- Subtitle -->
@@ -88,19 +110,27 @@
                 </p>
 
                 <!-- Action Buttons -->
-                <div class="hero-cta-group justify-center mb-12">
-                    <a href="/courses.html" class="cta-button cta-primary"> <i data-lucide="graduation-cap" class="w-5 h-5 mr-2"></i> Tôi Muốn Học Tập</a>
-                    <a href="/become-educator.html" class="cta-button cta-secondary"> <i data-lucide="book-open" class="w-5 h-5 mr-2"></i> Tôi là Nhà Giáo Dục</a>
+                <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 mb-12">
+                    <button class="bg-emerald-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-emerald-700 transition duration-300 flex items-center justify-center">
+                        <i data-lucide="graduation-cap" class="w-5 h-5 mr-2"></i>
+                        Tôi Muốn Học Tập
+                    </button>
+                    <button class="border-2 border-purple-600 text-purple-600 px-6 py-3 rounded-xl font-bold hover:bg-purple-50 transition duration-300 flex items-center justify-center">
+                        <i data-lucide="book-open" class="w-5 h-5 mr-2"></i>
+                        Tôi là Nhà Giáo Dục
+                    </button>
                 </div>
 
                 <!-- Large Image Placeholder -->
-                <div class="relative w-full aspect-[16/9] lg:aspect-[18/8] bg-gray-100 rounded-3xl overflow-hidden shadow-2xl border border-gray-200 hero-visual">
+                <div class="relative w-full aspect-[16/9] lg:aspect-[18/8] bg-gray-100 rounded-3xl overflow-hidden shadow-2xl border border-gray-200">
                     <img src="https://placehold.co/1200x500/E8F5E9/10B981?text=Khu+Vực+Học+Tập+Cộng+Đồng" alt="Khu Vực Học Tập Cộng Đồng" class="w-full h-full object-cover">
                     <!-- Status Badge overlay -->
-                    <div class="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 badge badge-success">
-                        <p class="text-sm font-semibold">Kết nối hơn <span class="font-extrabold">50.000</span> thành viên</p>
+                    <div class="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg border border-emerald-300">
+                        <p class="text-sm font-semibold text-gray-800 flex items-center">
+                            <i data-lucide="users" class="w-4 h-4 mr-2 text-emerald-600"></i>
+                            Kết nối hơn <span class="text-emerald-600 font-extrabold ml-1">50.000</span> thành viên
+                        </p>
                     </div>
-                </div>
                 </div>
             </div>
         </section>
@@ -117,7 +147,7 @@
 
                 <div class="grid md:grid-cols-3 gap-8">
                     <!-- Pillar 1: Admin -->
-                    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl border-t-4 border-gray-400 hover:shadow-2xl transition duration-300">
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl border-t-4 border-gray-400 hover:shadow-2xl transition duration-300 card-hover">
                         <div class="flex items-center mb-4">
                             <span class="text-3xl font-bold text-gray-900 mr-3">1.</span>
                             <h3 class="text-xl font-semibold text-gray-900">
@@ -129,47 +159,47 @@
                             Đóng vai trò là Người Kiểm Soát và Giám Sát. Chúng tôi xây dựng nền tảng kỹ thuật và chịu trách nhiệm kiểm duyệt chặt chẽ mọi nội dung khóa học.
                         </p>
                         <ul class="space-y-2 text-sm text-gray-700">
-                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 icon-check"></i>Đảm bảo chất lượng đầu vào</li>
-                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 icon-check"></i>Bảo vệ quyền lợi cộng đồng</li>
-                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 icon-check"></i>Hỗ trợ kỹ thuật 24/7</li>
+                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 text-emerald-600"></i>Đảm bảo chất lượng đầu vào</li>
+                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 text-emerald-600"></i>Bảo vệ quyền lợi cộng đồng</li>
+                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 text-emerald-600"></i>Hỗ trợ kỹ thuật 24/7</li>
                         </ul>
                     </div>
 
                     <!-- Pillar 2: Educators -->
-                    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl border-t-4 border-purple-600 hover:shadow-2xl transition duration-300">
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl border-t-4 border-purple-600 hover:shadow-2xl transition duration-300 card-hover">
                         <div class="flex items-center mb-4">
                             <span class="text-3xl font-bold text-gray-900 mr-3">2.</span>
                             <h3 class="text-xl font-semibold text-gray-900">
                                 Educators <span class="text-gray-500">(Nhà Giáo Dục)</span>
                             </h3>
-                            <i data-lucide="book-open" class="w-6 h-6 ml-auto icon-purple"></i>
+                            <i data-lucide="book-open" class="w-6 h-6 ml-auto text-purple-600"></i>
                         </div>
                         <p class="text-gray-600 mb-6 text-sm">
                             Các cá nhân hoặc tổ chức giáo dục có chuyên môn cao. Nơi bạn chia sẻ kiến thức, xuất bản khóa học và cấp chứng chỉ.
                         </p>
                         <ul class="space-y-2 text-sm text-gray-700">
-                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 icon-check"></i>Đăng tải khóa học (Miễn phí/Có phí)</li>
-                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 icon-check"></i>Xây dựng thương hiệu cá nhân</li>
-                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 icon-check"></i>Thông kê và quản lý học viên</li>
+                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 text-emerald-600"></i>Đăng tải khóa học (Miễn phí/Có phí)</li>
+                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 text-emerald-600"></i>Xây dựng thương hiệu cá nhân</li>
+                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 text-emerald-600"></i>Thông kê và quản lý học viên</li>
                         </ul>
                     </div>
 
                     <!-- Pillar 3: Learners -->
-                    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl border-t-4 border-emerald-600 hover:shadow-2xl transition duration-300">
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl border-t-4 border-emerald-600 hover:shadow-2xl transition duration-300 card-hover">
                         <div class="flex items-center mb-4">
                             <span class="text-3xl font-bold text-gray-900 mr-3">3.</span>
                             <h3 class="text-xl font-semibold text-gray-900">
                                 Learners <span class="text-gray-500">(Học Viên)</span>
                             </h3>
-                            <i data-lucide="scroll-text" class="w-6 h-6 ml-auto icon-green"></i>
+                            <i data-lucide="scroll-text" class="w-6 h-6 ml-auto text-emerald-600"></i>
                         </div>
                         <p class="text-gray-600 mb-6 text-sm">
                             Những người học tập suốt đời. Bạn tham gia để tiếp thu kiến thức, hoàn thiện kỹ năng và trở thành phiên bản xuất chúng.
                         </p>
                         <ul class="space-y-2 text-sm text-gray-700">
-                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 icon-check"></i>Tiếp cận kho tàng tri thức</li>
-                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 icon-check"></i>Sưu tầm chứng chỉ số</li>
-                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 icon-check"></i>Xây dựng hồ sơ năng lực</li>
+                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 text-emerald-600"></i>Tiếp cận kho tàng tri thức</li>
+                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 text-emerald-600"></i>Sưu tầm chứng chỉ số</li>
+                            <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 text-emerald-600"></i>Xây dựng hồ sơ năng lực</li>
                         </ul>
                     </div>
                 </div>
@@ -182,7 +212,7 @@
                 <div class="grid lg:grid-cols-2 gap-12 items-center">
                     <!-- Left Content -->
                     <div>
-                        <div class="inline-flex items-center text-sm font-medium px-3 py-1 bg-green-100 text-green-700 rounded-full mb-4">
+                        <div class="inline-flex items-center text-sm font-medium px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full mb-4">
                             Cam Kết Chất Lượng Admin
                         </div>
                         <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6">
@@ -218,10 +248,10 @@
 
                         <!-- Action Buttons -->
                         <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 mt-10">
-                            <button class="secondary-purple border-2 px-6 py-3 rounded-xl font-bold hover:bg-purple-50 transition duration-300">
+                            <button class="border-2 border-purple-600 text-purple-600 px-6 py-3 rounded-xl font-bold hover:bg-purple-50 transition duration-300">
                                 Dành Cho Educators
                             </button>
-                            <button class="primary-green text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:primary-green-hover transition duration-300">
+                            <button class="bg-emerald-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-emerald-700 transition duration-300">
                                 Dành Cho Learners
                             </button>
                         </div>
@@ -229,7 +259,7 @@
 
                     <!-- Right Image Placeholder -->
                     <div class="flex justify-center items-center">
-                        <img src="https://placehold.co/400x400/D1F3EE/10B981?text=Bảo+Mật+Kiểm+Duyệt" alt="Bảo Mật Kiểm Duyệt" class="w-full max-w-sm rounded-xl shadow-2xl object-cover">
+                        <img src="https://placehold.co/400x400/D1F3EE/10B981?text=Bảo+Mật+Kiểm+Duyệt" alt="Bảo Mật Kiểm Duyệt" class="w-full max-w-sm rounded-xl shadow-2xl object-cover transition-transform duration-500 hover:scale-[1.02]">
                     </div>
                 </div>
             </div>
@@ -241,7 +271,7 @@
                 <div class="grid lg:grid-cols-2 gap-12 items-center">
                     <!-- Left Image Placeholder -->
                     <div class="order-2 lg:order-1 flex justify-center items-center">
-                        <img src="https://placehold.co/400x500/F0F9FF/0E7490?text=Học+Viên+Thành+Công" alt="Học Viên Thành Công" class="w-full max-w-sm rounded-2xl shadow-xl object-cover">
+                        <img src="https://placehold.co/400x500/F0F9FF/0E7490?text=Học+Viên+Thành+Công" alt="Học Viên Thành Công" class="w-full max-w-sm rounded-2xl shadow-xl object-cover transition-transform duration-500 hover:scale-[1.02]">
                     </div>
 
                     <!-- Right Content (Learner) -->
@@ -259,14 +289,14 @@
 
                         <ul class="space-y-4">
                             <li class="flex items-start">
-                                <i data-lucide="layers" class="w-5 h-5 mr-3 mt-1 icon-check flex-shrink-0"></i>
+                                <i data-lucide="layers" class="w-5 h-5 mr-3 mt-1 text-emerald-600 flex-shrink-0"></i>
                                 <div>
                                     <h4 class="font-semibold text-lg text-gray-900">Kho kiến thức đa dạng</h4>
                                     <p class="text-gray-600 text-sm">Hàng ngàn khóa học từ cơ bản đến chuyên sâu đã được kiểm duyệt kỹ.</p>
                                 </div>
                             </li>
                             <li class="flex items-start">
-                                <i data-lucide="award" class="w-5 h-5 mr-3 mt-1 icon-check flex-shrink-0"></i>
+                                <i data-lucide="award" class="w-5 h-5 mr-3 mt-1 text-emerald-600 flex-shrink-0"></i>
                                 <div>
                                     <h4 class="font-semibold text-lg text-gray-900">Sưu tầm chứng chỉ</h4>
                                     <p class="text-gray-600 text-sm">Hoàn thành khóa học, nhận chứng chỉ, làm đẹp CV.</p>
@@ -275,7 +305,7 @@
                         </ul>
 
                         <!-- Main Action Button -->
-                        <button class="primary-green text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:primary-green-hover transition duration-300 flex items-center mt-8">
+                        <button class="bg-emerald-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-emerald-700 transition duration-300 flex items-center mt-8 justify-center">
                             Bắt Đầu Học Ngay
                             <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
                         </button>
@@ -303,14 +333,14 @@
 
                         <ul class="space-y-4">
                             <li class="flex items-start">
-                                <i data-lucide="download" class="w-5 h-5 mr-3 mt-1 icon-purple flex-shrink-0"></i>
+                                <i data-lucide="download" class="w-5 h-5 mr-3 mt-1 text-purple-600 flex-shrink-0"></i>
                                 <div>
                                     <h4 class="font-semibold text-lg text-gray-900">Tải về dễ dàng</h4>
                                     <p class="text-gray-600 text-sm">Hỗ trợ đa dạng định dạng: Video, Slide, Quiz, Bài tập.</p>
                                 </div>
                             </li>
                             <li class="flex items-start">
-                                <i data-lucide="certificate" class="w-5 h-5 mr-3 mt-1 icon-purple flex-shrink-0"></i>
+                                <i data-lucide="certificate" class="w-5 h-5 mr-3 mt-1 text-purple-600 flex-shrink-0"></i>
                                 <div>
                                     <h4 class="font-semibold text-lg text-gray-900">Cấp chứng chỉ uy tín</h4>
                                     <p class="text-gray-600 text-sm">Tự tạo mẫu chứng chỉ mang dấu ấn riêng của bạn.</p>
@@ -319,13 +349,13 @@
                         </ul>
 
                         <!-- Main Action Button -->
-                        <div class="flex items-center space-x-6 mt-8">
-                            <button class="secondary-purple border-2 px-6 py-3 rounded-xl font-bold hover:bg-purple-50 transition duration-300 flex items-center">
+                        <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-6 mt-8">
+                            <button class="border-2 border-purple-600 text-purple-600 px-6 py-3 rounded-xl font-bold hover:bg-purple-50 transition duration-300 flex items-center justify-center">
                                 Trở Thành Giảng Viên
                                 <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
                             </button>
                             <!-- Price Tag Card -->
-                            <div class="hidden sm:block p-3 bg-white border border-gray-200 rounded-xl shadow-md">
+                            <div class="p-3 bg-white border border-gray-200 rounded-xl shadow-md hidden sm:block">
                                 <p class="text-sm font-medium text-gray-500">Doanh thu trung bình</p>
                                 <p class="text-xl font-bold text-emerald-600">25.000.000đ</p>
                             </div>
@@ -335,9 +365,9 @@
                     <!-- Right Image Placeholder -->
                     <div class="flex justify-center items-center order-2">
                         <div class="relative w-full max-w-sm p-4 bg-white rounded-2xl shadow-2xl">
-                            <img src="https://placehold.co/400x300/F3F4F6/9CA3AF?text=Lớp+Học+Tương+Tác" alt="Lớp Học Tương Tác" class="w-full h-auto rounded-xl object-cover">
+                            <img src="https://placehold.co/400x300/F3F4F6/9CA3AF?text=Lớp+Học+Tương+Tác" alt="Lớp Học Tương Tác" class="w-full h-auto rounded-xl object-cover transition-transform duration-500 hover:scale-[1.02]">
                             <!-- Floating Card -->
-                            <div class="absolute bottom-6 -left-16 bg-white p-3 rounded-xl shadow-lg border border-gray-100 hidden md:block">
+                            <div class="absolute bottom-6 -left-16 bg-white p-3 rounded-xl shadow-lg border border-gray-100 hidden md:block transition-transform duration-500 hover:scale-105">
                                 <p class="text-sm font-medium text-gray-500">Dự kiến thu nhập/tháng</p>
                                 <p class="text-lg font-bold text-emerald-600">25.000.000đ</p>
                             </div>
@@ -348,7 +378,7 @@
         </section>
 
         <!-- 7. JOIN SECTION (CTA) -->
-        <section class="py-16 sm:py-24 dark-bg">
+        <section class="py-16 sm:py-24 bg-gray-900">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="text-4xl sm:text-5xl font-extrabold text-white mb-6 leading-tight">
                     Bạn đã sẵn sàng gia nhập?
@@ -359,9 +389,9 @@
 
                 <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                     <!-- Học Viên Card -->
-                    <div class="p-8 border border-gray-700 rounded-2xl text-left bg-gray-800 transition duration-300 hover:border-emerald-500">
+                    <div class="p-8 border border-gray-700 rounded-2xl text-left bg-gray-800 transition duration-300 hover:border-emerald-500 card-hover">
                         <div class="flex items-center mb-4">
-                            <i data-lucide="book-open-check" class="w-8 h-8 mr-3 icon-green"></i>
+                            <i data-lucide="book-open-check" class="w-8 h-8 mr-3 text-emerald-600"></i>
                             <h3 class="text-2xl font-bold text-white">Tôi là Học Viên</h3>
                         </div>
                         <p class="text-gray-400 mb-6">
@@ -374,9 +404,9 @@
                     </div>
 
                     <!-- Educator Card -->
-                    <div class="p-8 border border-gray-700 rounded-2xl text-left bg-gray-800 transition duration-300 hover:border-purple-500">
+                    <div class="p-8 border border-gray-700 rounded-2xl text-left bg-gray-800 transition duration-300 hover:border-purple-500 card-hover">
                         <div class="flex items-center mb-4">
-                            <i data-lucide="podcast" class="w-8 h-8 mr-3 icon-purple"></i>
+                            <i data-lucide="podcast" class="w-8 h-8 mr-3 text-purple-600"></i>
                             <h3 class="text-2xl font-bold text-white">Tôi là Educator</h3>
                         </div>
                         <p class="text-gray-400 mb-6">
@@ -394,7 +424,7 @@
     </main>
 
     <!-- 8. FOOTER -->
-    <footer class="dark-bg py-12">
+    <footer class="bg-gray-900 py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 border-b border-gray-700 pb-8 mb-8">
                 <!-- Col 1: Logo & Slogan -->
@@ -446,9 +476,44 @@
         </div>
     </footer>
 
-    <!-- Khởi tạo Lucide Icons sau khi tải xong trang -->
+    <!-- JavaScript cho Mobile Menu và Icons -->
     <script>
         lucide.createIcons();
+
+        // Logic cho Mobile Menu
+        const menuButton = document.getElementById('menu-button');
+        const closeMenuButton = document.getElementById('close-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        function toggleMenu() {
+            // Thay vì dùng class 'hidden' tĩnh, dùng thuộc tính 'aria-expanded' hoặc 'display'
+            // để kiểm soát trạng thái và dùng JS để thêm/bỏ class transform.
+            const isMenuOpen = mobileMenu.classList.contains('flex');
+
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('flex');
+                mobileMenu.classList.add('hidden');
+            } else {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('flex');
+            }
+        }
+
+        menuButton.addEventListener('click', toggleMenu);
+        closeMenuButton.addEventListener('click', toggleMenu);
+
+        // Đóng menu khi click ra ngoài (khu vực overlay)
+        mobileMenu.addEventListener('click', (event) => {
+            if (event.target === mobileMenu) {
+                toggleMenu();
+            }
+        });
+
+        // Đóng menu khi click vào một liên kết
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', toggleMenu);
+        });
+
     </script>
 </body>
 </html>
