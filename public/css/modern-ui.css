@@ -1101,6 +1101,79 @@ footer {
 }
 
 @media (min-width: 768px) {
+
+/* ---------- Site footer (centralized) ---------- */
+.site-footer {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+  border-top: 1px solid var(--color-border);
+  margin-top: 64px;
+  color: var(--color-text);
+}
+.footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 40px;
+  margin-bottom: 40px;
+}
+.footer-brand { display:flex; gap: 12px; align-items:center; margin-bottom: 16px; }
+.footer-logo { height: 32px; width: auto; }
+.footer-brand-title { font-size: 18px; font-weight: 700; margin: 0; background: linear-gradient(135deg, var(--color-primary), var(--color-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.footer-brand-sub { font-size: 12px; color: var(--color-text-secondary); margin-top: 4px; }
+.footer-description { color: var(--color-text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
+.footer-socials { display:flex; gap: 12px; }
+.social-btn { display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:8px; transition: background .18s ease, transform .12s ease; border: none; }
+.social-btn i { font-size: 14px; }
+.social-facebook { background: rgba(76,94,247,0.08); color: var(--color-primary); }
+.social-facebook:hover { background: rgba(76,94,247,0.22); }
+.social-twitter { background: rgba(34,211,238,0.08); color: var(--color-secondary); }
+.social-twitter:hover { background: rgba(34,211,238,0.22); }
+.social-linkedin { background: rgba(16,185,129,0.08); color: var(--color-success); }
+.social-linkedin:hover { background: rgba(16,185,129,0.22); }
+.social-youtube { background: rgba(249,115,22,0.06); color: var(--color-warning); }
+.social-youtube:hover { background: rgba(249,115,22,0.22); }
+.footer-heading { color: var(--color-text); font-size: 14px; font-weight: 700; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 0.5px; }
+.footer-nav { display:flex; flex-direction:column; gap:8px; }
+.footer-link { color: var(--color-text-secondary); text-decoration:none; font-size:14px; display:flex; align-items:center; gap:8px; transition: color .15s ease; }
+.footer-link:hover { color: var(--color-secondary); }
+.footer-chevron { margin-right: 8px; font-size: 10px; display: inline-block; }
+.footer-divider { height: 1px; background: var(--color-border); margin-bottom: 24px; }
+.footer-stats { display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:16px; width:100%; max-width:600px; }
+.footer-stat-card { padding:12px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background: rgba(255,255,255,0.02); text-align:center; }
+.footer-stat-card .stat-value { font-size:20px; font-weight:700; margin-bottom:4px; }
+.stat-users .stat-value { color: var(--color-primary); }
+.stat-courses .stat-value { color: var(--color-secondary); }
+.stat-apps .stat-value { color: var(--color-success); }
+.footer-bottom { padding-top:16px; border-top:1px solid var(--color-border); display:flex; flex-direction:column; gap:8px; align-items:center; text-align:center; }
+.footer-copy { color: var(--color-text-secondary); font-size:14px; margin:0; }
+.footer-meta { color: var(--color-text-secondary); font-size:12px; margin:0; }
+.footer-heart { color: var(--color-error); margin-left:6px; }
+.footer-version { margin-top:12px; padding:8px 16px; background: rgba(76,94,247,0.05); border-radius:6px; border:1px solid rgba(76,94,247,0.1); display:inline-block; }
+.version-meta { color: var(--color-text-secondary); font-size:12px; }
+
+@media (max-width: 768px) {
+  .footer-inner { padding: 32px 16px; }
+  .footer-grid { gap: 20px; }
+  .footer-stats { grid-template-columns: 1fr; max-width: 100%; }
+}
+
+.footer-bottom-wrapper { display:flex; flex-direction: column; gap:16px; align-items:center; text-align:center; }
+
+/* mobile close button in overlay menus */
+.mobile-menu-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
   .hidden-desktop { display: none !important; }
 }
 

@@ -28,6 +28,13 @@
     background-clip: text;
 }
 
+.hero-title .hero-highlight {
+    background: linear-gradient(135deg,#4c5ef7,#a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
 .hero-subtitle {
     font-size: 1.25rem;
     color: var(--color-text-secondary);

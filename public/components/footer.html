@@ -1,33 +1,33 @@
 <!-- PROFESSIONAL FOOTER COMPONENT -->
-<footer style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%); border-top: 1px solid var(--color-border); margin-top: 64px;">
-    <div style="max-width: 1280px; margin: 0 auto; padding: 48px 24px;">
+<footer class="site-footer">
+    <div class="footer-inner">
         <!-- Footer Content Grid -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 40px; margin-bottom: 40px;">
+        <div class="footer-grid">
             
             <!-- Brand Section -->
             <div>
-                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-                    <img alt="IVS Logo" src="/images/logo/logo.svg" style="height: 32px; width: auto;" onerror="this.onerror=null;this.src='https://placehold.co/32x32/4c5ef7/ffffff?text=IVS';"/>
+                <div class="footer-brand">
+                    <img alt="IVS Logo" src="/images/logo/logo.svg" class="footer-logo" onerror="this.onerror=null;this.src='https://placehold.co/32x32/4c5ef7/ffffff?text=IVS';"/>
                     <div>
-                        <h3 style="font-size: 18px; font-weight: 700; margin: 0; background: linear-gradient(135deg, var(--color-primary), var(--color-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">IVS Learning Hub</h3>
-                        <p style="font-size: 12px; color: var(--color-text-secondary); margin: 4px 0 0 0;">Cổng học tập & ứng dụng</p>
+                        <h3 class="footer-brand-title">IVS Learning Hub</h3>
+                        <p class="footer-brand-sub">Cổng học tập & ứng dụng</p>
                     </div>
                 </div>
-                <p style="color: var(--color-text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 16px;">
+                <p class="footer-description">
                     Nền tảng học tập hiện đại của IVS JSC cung cấp các giải pháp giáo dục toàn diện cho cộng đồng.
                 </p>
                 <!-- Social Links -->
-                <div style="display: flex; gap: 12px;">
-                    <a href="#" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: rgba(76, 94, 247, 0.1); border-radius: 8px; color: var(--color-primary); transition: all 0.2s; border: none;" onmouseover="this.style.background='rgba(76, 94, 247, 0.2)'" onmouseout="this.style.background='rgba(76, 94, 247, 0.1)'">
+                <div class="footer-socials">
+                    <a href="#" class="social-btn social-facebook" aria-label="Facebook">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="#" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: rgba(34, 211, 238, 0.1); border-radius: 8px; color: var(--color-secondary); transition: all 0.2s; border: none;" onmouseover="this.style.background='rgba(34, 211, 238, 0.2)'" onmouseout="this.style.background='rgba(34, 211, 238, 0.1)'">
+                    <a href="#" class="social-btn social-twitter" aria-label="Twitter">
                         <i class="fab fa-twitter"></i>
                     </a>
-                    <a href="#" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: rgba(16, 185, 129, 0.1); border-radius: 8px; color: var(--color-success); transition: all 0.2s; border: none;" onmouseover="this.style.background='rgba(16, 185, 129, 0.2)'" onmouseout="this.style.background='rgba(16, 185, 129, 0.1)'">
+                    <a href="#" class="social-btn social-linkedin" aria-label="LinkedIn">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
-                    <a href="#" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: rgba(249, 115, 22, 0.1); border-radius: 8px; color: var(--color-warning); transition: all 0.2s; border: none;" onmouseover="this.style.background='rgba(249, 115, 22, 0.2)'" onmouseout="this.style.background='rgba(249, 115, 22, 0.1)'">
+                    <a href="#" class="social-btn social-youtube" aria-label="YouTube">
                         <i class="fab fa-youtube"></i>
                     </a>
                 </div>
@@ -35,99 +35,92 @@
 
             <!-- Product Links -->
             <div>
-                <h4 style="color: var(--color-text); font-size: 14px; font-weight: 700; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 0.5px;">Sản Phẩm</h4>
-                <nav style="display: flex; flex-direction: column; gap: 8px;">
-                    <a href="/" style="color: var(--color-text-secondary); text-decoration: none; font-size: 14px; transition: color 0.2s;" onmouseover="this.style.color='var(--color-secondary)'" onmouseout="this.style.color='var(--color-text-secondary)'">
-                        <i class="fas fa-chevron-right" style="margin-right: 8px; font-size: 10px;"></i> Trang Chủ
+                <h4 class="footer-heading">Sản Phẩm</h4>
+                <nav class="footer-nav">
+                    <a href="/" class="footer-link">
+                            <i class="fas fa-chevron-right footer-chevron"></i> Trang Chủ
                     </a>
-                    <a href="/dashboard.html" style="color: var(--color-text-secondary); text-decoration: none; font-size: 14px; transition: color 0.2s;" onmouseover="this.style.color='var(--color-secondary)'" onmouseout="this.style.color='var(--color-text-secondary)'">
-                        <i class="fas fa-chevron-right" style="margin-right: 8px; font-size: 10px;"></i> Dashboard
+                    <a href="/dashboard.html" class="footer-link">
+                            <i class="fas fa-chevron-right footer-chevron"></i> Dashboard
                     </a>
-                    <a href="/learning-materials.html" style="color: var(--color-text-secondary); text-decoration: none; font-size: 14px; transition: color 0.2s;" onmouseover="this.style.color='var(--color-secondary)'" onmouseout="this.style.color='var(--color-text-secondary)'">
-                        <i class="fas fa-chevron-right" style="margin-right: 8px; font-size: 10px;"></i> Tài Liệu Học Tập
+                    <a href="/learning-materials.html" class="footer-link">
+                            <i class="fas fa-chevron-right footer-chevron"></i> Tài Liệu Học Tập
                     </a>
-                    <a href="/learning-resources.html" style="color: var(--color-text-secondary); text-decoration: none; font-size: 14px; transition: color 0.2s;" onmouseover="this.style.color='var(--color-secondary)'" onmouseout="this.style.color='var(--color-text-secondary)'">
-                        <i class="fas fa-chevron-right" style="margin-right: 8px; font-size: 10px;"></i> Tài Nguyên EdTech
+                    <a href="/learning-resources.html" class="footer-link">
+                            <i class="fas fa-chevron-right footer-chevron"></i> Tài Nguyên EdTech
                     </a>
                 </nav>
             </div>
 
             <!-- Company Links -->
             <div>
-                <h4 style="color: var(--color-text); font-size: 14px; font-weight: 700; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 0.5px;">Công Ty</h4>
-                <nav style="display: flex; flex-direction: column; gap: 8px;">
-                    <a href="/live_index.html" style="color: var(--color-text-secondary); text-decoration: none; font-size: 14px; transition: color 0.2s;" onmouseover="this.style.color='var(--color-secondary)'" onmouseout="this.style.color='var(--color-text-secondary)'">
-                        <i class="fas fa-chevron-right" style="margin-right: 8px; font-size: 10px;"></i> Về IVS JSC
+                <h4 class="footer-heading">Công Ty</h4>
+                <nav class="footer-nav">
+                    <a href="/live_index.html" class="footer-link">
+                            <i class="fas fa-chevron-right footer-chevron"></i> Về IVS JSC
                     </a>
-                    <a href="#" style="color: var(--color-text-secondary); text-decoration: none; font-size: 14px; transition: color 0.2s;" onmouseover="this.style.color='var(--color-secondary)'" onmouseout="this.style.color='var(--color-text-secondary)'">
-                        <i class="fas fa-chevron-right" style="margin-right: 8px; font-size: 10px;"></i> Thương Mại
+                    <a href="#" class="footer-link">
+                            <i class="fas fa-chevron-right footer-chevron"></i> Thương Mại
                     </a>
-                    <a href="#" style="color: var(--color-text-secondary); text-decoration: none; font-size: 14px; transition: color 0.2s;" onmouseover="this.style.color='var(--color-secondary)'" onmouseout="this.style.color='var(--color-text-secondary)'">
-                        <i class="fas fa-chevron-right" style="margin-right: 8px; font-size: 10px;"></i> Liên Hệ
+                    <a href="#" class="footer-link">
+                            <i class="fas fa-chevron-right footer-chevron"></i> Liên Hệ
                     </a>
-                    <a href="#" style="color: var(--color-text-secondary); text-decoration: none; font-size: 14px; transition: color 0.2s;" onmouseover="this.style.color='var(--color-secondary)'" onmouseout="this.style.color='var(--color-text-secondary)'">
-                        <i class="fas fa-chevron-right" style="margin-right: 8px; font-size: 10px;"></i> Tuyển Dụng
+                    <a href="#" class="footer-link">
+                        <i class="fas fa-chevron-right footer-chevron"></i> Tuyển Dụng
                     </a>
                 </nav>
             </div>
 
             <!-- Legal Links -->
             <div>
-                <h4 style="color: var(--color-text); font-size: 14px; font-weight: 700; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 0.5px;">Pháp Lý</h4>
-                <nav style="display: flex; flex-direction: column; gap: 8px;">
-                    <a href="#" style="color: var(--color-text-secondary); text-decoration: none; font-size: 14px; transition: color 0.2s;" onmouseover="this.style.color='var(--color-secondary)'" onmouseout="this.style.color='var(--color-text-secondary)'">
-                        <i class="fas fa-chevron-right" style="margin-right: 8px; font-size: 10px;"></i> Điều Khoản Dịch Vụ
+                <h4 class="footer-heading">Pháp Lý</h4>
+                <nav class="footer-nav">
+                    <a href="#" class="footer-link">
+                            <i class="fas fa-chevron-right footer-chevron"></i> Điều Khoản Dịch Vụ
+                    </a>
+                    <a href="#" class="footer-link">
+                            <i class="fas fa-chevron-right footer-chevron"></i> Chính Sách Bảo Mật
                     </a>
                     <a href="#" style="color: var(--color-text-secondary); text-decoration: none; font-size: 14px; transition: color 0.2s;" onmouseover="this.style.color='var(--color-secondary)'" onmouseout="this.style.color='var(--color-text-secondary)'">
-                        <i class="fas fa-chevron-right" style="margin-right: 8px; font-size: 10px;"></i> Chính Sách Bảo Mật
+                            <i class="fas fa-chevron-right footer-chevron"></i> Cookie
                     </a>
                     <a href="#" style="color: var(--color-text-secondary); text-decoration: none; font-size: 14px; transition: color 0.2s;" onmouseover="this.style.color='var(--color-secondary)'" onmouseout="this.style.color='var(--color-text-secondary)'">
-                        <i class="fas fa-chevron-right" style="margin-right: 8px; font-size: 10px;"></i> Cookie
-                    </a>
-                    <a href="#" style="color: var(--color-text-secondary); text-decoration: none; font-size: 14px; transition: color 0.2s;" onmouseover="this.style.color='var(--color-secondary)'" onmouseout="this.style.color='var(--color-text-secondary)'">
-                        <i class="fas fa-chevron-right" style="margin-right: 8px; font-size: 10px;"></i> Giấy Phép
+                        <i class="fas fa-chevron-right footer-chevron"></i> Giấy Phép
                     </a>
                 </nav>
             </div>
         </div>
 
         <!-- Divider -->
-        <div style="height: 1px; background: var(--color-border); margin-bottom: 24px;"></div>
+        <div class="footer-divider"></div>
 
         <!-- Footer Bottom -->
-        <div style="display: flex; flex-direction: column; gap: 16px; align-items: center; text-align: center;">
+            <div class="footer-bottom-wrapper">
             <!-- Stats Row -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; width: 100%; max-width: 600px;">
-                <div style="padding: 12px; background: rgba(76, 94, 247, 0.05); border-radius: 8px; border: 1px solid rgba(76, 94, 247, 0.1);">
-                    <div style="font-size: 20px; font-weight: 700; color: var(--color-primary); margin-bottom: 4px;">50K+</div>
-                    <div style="font-size: 12px; color: var(--color-text-secondary);">Người Dùng</div>
+            <div class="footer-stats">
+                <div class="footer-stat-card stat-users">
+                    <div class="stat-value">50K+</div>
+                    <div class="stat-label">Người Dùng</div>
                 </div>
-                <div style="padding: 12px; background: rgba(34, 211, 238, 0.05); border-radius: 8px; border: 1px solid rgba(34, 211, 238, 0.1);">
-                    <div style="font-size: 20px; font-weight: 700; color: var(--color-secondary); margin-bottom: 4px;">100+</div>
-                    <div style="font-size: 12px; color: var(--color-text-secondary);">Khóa Học</div>
+                <div class="footer-stat-card stat-courses">
+                    <div class="stat-value">100+</div>
+                    <div class="stat-label">Khóa Học</div>
                 </div>
-                <div style="padding: 12px; background: rgba(16, 185, 129, 0.05); border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.1);">
-                    <div style="font-size: 20px; font-weight: 700; color: var(--color-success); margin-bottom: 4px;">10+</div>
-                    <div style="font-size: 12px; color: var(--color-text-secondary);">Ứng Dụng</div>
+                <div class="footer-stat-card stat-apps">
+                    <div class="stat-value">10+</div>
+                    <div class="stat-label">Ứng Dụng</div>
                 </div>
             </div>
 
             <!-- Copyright & Info -->
-            <div style="padding-top: 16px; border-top: 1px solid var(--color-border);">
-                <p style="color: var(--color-text-secondary); font-size: 14px; margin: 0 0 8px 0;">
-                    © 2025 IVS JSC. Tất cả quyền được bảo lưu.
-                </p>
-                <p style="color: var(--color-text-secondary); font-size: 12px; margin: 0;">
-                    Được xây dựng với <i class="fas fa-heart" style="color: var(--color-error);"></i> bởi IVS Development Team
-                </p>
+            <div class="footer-bottom">
+                <p class="footer-copy">© 2025 IVS JSC. Tất cả quyền được bảo lưu.</p>
+                <p class="footer-meta">Được xây dựng với <i class="fas fa-heart footer-heart"></i> bởi IVS Development Team</p>
             </div>
 
             <!-- Version Info -->
-            <div style="margin-top: 12px; padding: 8px 16px; background: rgba(76, 94, 247, 0.05); border-radius: 6px; border: 1px solid rgba(76, 94, 247, 0.1);">
-                <span style="color: var(--color-text-secondary); font-size: 12px;">
-                    <i class="fas fa-info-circle" style="margin-right: 6px; color: var(--color-secondary);"></i>
-                    v2.0.0 — <span id="footer-version-date">November 2025</span>
-                </span>
+            <div class="footer-version">
+                <span class="version-meta"><i class="fas fa-info-circle"></i> v2.0.0 — <span id="footer-version-date">November 2025</span></span>
             </div>
         </div>
     </div>
